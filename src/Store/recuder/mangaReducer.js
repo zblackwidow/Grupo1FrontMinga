@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getMangas, getMangaById, createManga, updateManga, deleteMangaById } from "../actions/mangaActions";
+import { getMangas, getManga, createManga, updateManga, deleteMangaById } from "../actions/mangaActions";
 
 const initialState = {
     mangas: [],
@@ -15,22 +15,22 @@ const mangaReducer = createReducer(initialState, (builder) => {
             state.error = null;
         })
         .addCase(getMangas.fulfilled, (state, action) => {
-            state.loading = false;            
+            state.loading = false;
             state.mangas = action.payload;
         })
         .addCase(getMangas.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         })
-        .addCase(getMangaById.pending, (state) => {
+        .addCase(getManga.pending, (state) => {
             state.loading = true;
             state.error = null;
         })
-        .addCase(getMangaById.fulfilled, (state, action) => {
+        .addCase(getManga.fulfilled, (state, action) => {
             state.loading = false;
-            state.manga = action.payload;
+            state.mangas = action.payload;
         })
-        .addCase(getMangaById.rejected, (state, action) => {
+        .addCase(getManga.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         })
@@ -40,7 +40,7 @@ const mangaReducer = createReducer(initialState, (builder) => {
         })
         .addCase(createManga.fulfilled, (state, action) => {
             state.loading = false;
-            state.manga = action.payload;
+            state.mangas = action.payload;
         })
         .addCase(createManga.rejected, (state, action) => {
             state.loading = false;
@@ -52,7 +52,7 @@ const mangaReducer = createReducer(initialState, (builder) => {
         })
         .addCase(updateManga.fulfilled, (state, action) => {
             state.loading = false;
-            state.manga = action.payload;
+            state.mangas = action.payload;
         })
         .addCase(updateManga.rejected, (state, action) => {
             state.loading = false;
@@ -64,7 +64,7 @@ const mangaReducer = createReducer(initialState, (builder) => {
         })
         .addCase(deleteMangaById.fulfilled, (state, action) => {
             state.loading = false;
-            state.manga = action.payload;
+            state.mangas = action.payload;
         })
         .addCase(deleteMangaById.rejected, (state, action) => {
             state.loading = false;

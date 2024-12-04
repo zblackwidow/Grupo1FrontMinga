@@ -100,4 +100,3 @@ export const deleteMangaById = createAsyncThunk(
   }
 );
 
-export { getManga, getMangaById, createManga, updateManga, deleteMangaById }
