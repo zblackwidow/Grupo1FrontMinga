@@ -3,7 +3,7 @@ import { getMangas, getManga, createManga, updateManga, deleteMangaById } from "
 
 const initialState = {
     mangas: [],
-    manga: null,
+    manga: [],
     error: null,
     loading: false,
 };
@@ -28,7 +28,7 @@ const mangaReducer = createReducer(initialState, (builder) => {
         })
         .addCase(getManga.fulfilled, (state, action) => {
             state.loading = false;
-            state.mangas = action.payload;
+            state.manga = action.payload;
         })
         .addCase(getManga.rejected, (state, action) => {
             state.loading = false;
@@ -52,7 +52,7 @@ const mangaReducer = createReducer(initialState, (builder) => {
         })
         .addCase(updateManga.fulfilled, (state, action) => {
             state.loading = false;
-            state.mangas = action.payload;
+            state.manga = action.payload;
         })
         .addCase(updateManga.rejected, (state, action) => {
             state.loading = false;
@@ -64,7 +64,7 @@ const mangaReducer = createReducer(initialState, (builder) => {
         })
         .addCase(deleteMangaById.fulfilled, (state, action) => {
             state.loading = false;
-            state.mangas = action.payload;
+            state.manga = action.payload;
         })
         .addCase(deleteMangaById.rejected, (state, action) => {
             state.loading = false;
