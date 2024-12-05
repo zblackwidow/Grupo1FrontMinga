@@ -5,7 +5,7 @@ import logo from '../../../public/logo.png'; // Ajusta la ruta según tu estruct
 
 function Login() {
 
-   
+
     return (
         <main className="w-full h-screen flex justify-center items-center font-poppins">
             <div className="hidden md:block md:w-[50%]">
@@ -15,30 +15,30 @@ function Login() {
                 <div className=" md:w-[20vw] w-[80vw]">
                     <div className='flex flex-col items-center'>
                         <img src={logo} alt="logo" className="object-contain w-[127px]" />
-                        <div>
-                        <h1 className="text-2xl text-gray-900 font-bold mb-6">Welcome</h1><p className='text-[#f8781a]'>back!</p>
+                        <div className='flex font-bold text-2xl'>
+                            <h1 className=" text-gray-900  mr-2 mb-4">Welcome</h1>
+                            <p className='text-[#f8781a]'>back!</p>
                         </div>
-                        
                         <p className='text-gray-500 font-semibold text-center'>Discover manga, manhua and manhwa, track your progress, have fun, read manga.</p>
                     </div>
                     <form >
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Email</label>
-                            <input 
-                                type="email" 
-                                className="w-full px-3 py-2 border rounded-lg" 
-                                placeholder="Email" 
-                               
+                            <input
+                                type="email"
+                                className="w-full px-3 py-2 border rounded-lg"
+                                placeholder="Email"
+
                             />
                         </div>
-                        
+
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Password</label>
-                            <input 
-                                type="password" 
-                                className="w-full px-3 py-2 border rounded-lg" 
-                                placeholder="Password" 
-                              
+                            <input
+                                type="password"
+                                className="w-full px-3 py-2 border rounded-lg"
+                                placeholder="Password"
+
                             />
                         </div>
                         <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-lg hover:bg-blue-700">
@@ -50,7 +50,7 @@ function Login() {
                     </button>
                     <div className="mt-4 text-center">
                         <p className="text-gray-500">
-                            You don't have an account yet? <NavLink to="/register" className="text-[#f8781a] font-bold hover:underline">Sign UP</NavLink>
+                            You don't have an account yet? <NavLink to="/register" className="text-[#f8781a] font-bold hover:underline">Sign up</NavLink>
                         </p>
                         <p className="text-gray-500">
                             Go back to <NavLink to="/" className="text-[#f8781a] font-bold hover:underline">home page</NavLink>
@@ -58,7 +58,7 @@ function Login() {
                     </div>
                 </div>
             </div>
-            
+
         </main>
     );
 }
