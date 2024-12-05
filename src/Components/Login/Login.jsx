@@ -1,7 +1,7 @@
 
 import { NavLink } from 'react-router-dom';
 
-import logo from '../../../public/logo.png'; // Ajusta la ruta según tu estructura de archivos
+import logo from '../../../public/logo.png';
 
 function Login() {
 
