@@ -39,9 +39,5 @@ const validateToken = createAsyncThunk(
     }
   }
 );
-const setUser = createAction("SET_USER", (data) => {
-  return {
-    payload: data,
-  };
-});
-export { login, validateToken, setUser }; 
+
+export { login, validateToken }; 

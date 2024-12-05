@@ -1,8 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { login, validateToken, setUser } from "../actions/authActions";
+import { login, validateToken } from "../actions/authActions";
 
 const initialState = {
-    user: null,
+    user: [],
     token: null,
     error: null,
     loading: false,
@@ -36,10 +36,6 @@ const authReducer = createReducer(initialState, (builder) => {
         .addCase(validateToken.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;   
-        })
-        .addCase(setUser, (state, action) => {
-            state.user = action.payload.user;
-            state.token = action.payload.token;
         })
     })
 
