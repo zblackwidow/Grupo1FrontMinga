@@ -87,7 +87,13 @@ const Navbar = () => {
 
       {/* Menú desplegable */}
       {isMenuOpen && (
-        <div className="absolute top-14 left-0 bg-gradient-to-r from-[#FF5722] to-[#F97316] text-white p-4 shadow-md">
+        <div className="fixed inset-0 bg-gradient-to-r from-[#FF5722] to-[#F97316] text-white p-4 shadow-md sm:inset-x-0 sm:inset-y-0 sm:w-[50%] sm:right-0 lg:w-[25%]">
+            <button 
+        className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        ✖
+      </button>
           <ul>
             <li className="cursor-pointer  rounded-md hover:text-[#FF5722] hover:bg-white  px-3 py-2 text-sm font-medium " >Inicio</li>
             <li className="cursor-pointer  rounded-md hover:text-[#FF5722] hover:bg-white  px-3 py-2 text-sm font-medium ">Acerca de</li>
@@ -122,13 +128,25 @@ const Navbar = () => {
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-0" 
           onClick={closeProfile}
-        ></div>
+
+        >
+        </div>
       )}
+
 
       {/* Menú de perfil */}
       {isProfileOpen && (
-        <div className="absolute top-14 right-24 bg-gradient-to-r from-[#FF5722] to-[#F97316] text-white p-4 shadow-md rounded-md">
+        <div className="fixed inset-0 bg-gradient-to-r from-[#FF5722] to-[#F97316] text-white p-4 shadow-md rounded-md
+  sm:inset-y-0 sm:inset-x-auto sm:w-[50%] sm:right-0 lg:w-[25%]">
           {/* <p className=" rounded-md hover:text-[#FF5722] hover:bg-white  px-3 py-2 text-sm font-medium ">User</p> */}
+            {/* Botón para cerrar */}
+      <button 
+        className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+        onClick={() => setIsProfileOpen(false)}
+      >
+        ✖
+      </button>
+      
           <div className=" cursor-pointer  flex justify-center"><img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80" alt="user" className="w-10 h-10 rounded-full flex justify-items-center"/></div>
           
           <p className="text-sm text-white ">user@email.com</p>
