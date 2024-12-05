@@ -3,9 +3,9 @@ import React, { useState } from "react";
 const Navbar = () => {
   // Estados para mostrar/ocultar los menús
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   const closeMenu=()=> setIsMenuOpen(false);
-  const closeProfile=()=> setIsProfileOpen(false);
+  
 
   return (
     <nav className="fixed top-8 left-0 w-full h-14 flex items-center justify-between px-24 py-3 bg-transparent text-white z-50">
@@ -87,7 +87,7 @@ const Navbar = () => {
 
       {/* Menú desplegable */}
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-gradient-to-b from-[#FF5722] to-[#F97316] text-white p-4 shadow-md sm:inset-x-0 sm:inset-y-0 sm:w-[50%] sm:right-0 lg:w-[25%]">
+        <div className="fixed inset-0 bg-gradient-to-b flex align-items-center from-[#FF5722] to-[#F97316] text-white p-4 shadow-md sm:inset-x-0 sm:inset-y-0 sm:w-[50%] sm:right-0 lg:w-[25%]">
             <button 
         className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
         onClick={() => setIsMenuOpen(false)}
@@ -97,7 +97,7 @@ const Navbar = () => {
       </svg>
       </button>  
       
-      <div className=" cursor-pointer  flex justify-center"><img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80" alt="user" className="w-10 h-10 rounded-full flex justify-items-center"/></div>
+      <div className=" cursor-pointer  flex justify-center"><img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80" alt="user" className="w-10 h-10 rounded-full flex justify-items-center align-items-center"/></div>
       <p className="text-sm text-white ">user@email.com</p>
           <ul className="mt-4 ">
           
