@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import StandarLayout from './layout/StandarLayout'
 import Home from '../src/Pages/Home'
 import NotFound from '../src/Pages/NotFound'
+import Panel from '../src/Pages/Panel'
 
 const router = createBrowserRouter([
     {
@@ -11,7 +12,7 @@ const router = createBrowserRouter([
             { path: '/', element: <Home /> },
             { path: '/home', element: <Home /> },
             { path: '/*', element: <NotFound></NotFound> },
-            { path: '/*', element: <NotFound></NotFound> },
+            { path: "/panel", element: <Panel></Panel> },
         ],
     },
 ])

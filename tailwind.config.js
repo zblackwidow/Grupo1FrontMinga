@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'panel': "url('./src/assets/panel.png')", // Ajusta la ruta según tu estructura
+      },
+    },
   },
   plugins: [],
 }
