@@ -6,10 +6,12 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: { poppins: ['Poppins', 'sans-serif']
+    },
       backgroundImage: {
         'panel': "url('./src/assets/panel.png')", // Ajusta la ruta según tu estructura
       },
-    },
   },
   plugins: [],
+}
 }
