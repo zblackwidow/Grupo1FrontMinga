@@ -5,8 +5,8 @@ const Footer = () => {
   return (
     <footer className="bg-white relative w-full pt-1 pb-6">
       {/* Fondo curvo */}
-      <div className="w-full  h-auto object-cover" >
-        <img className="w-full h-auto" src="/image-footer.svg" alt="" />
+      <div >
+        <img className="w-full" src="/image-footer.svg" alt="" />
       </div>
 
       {/* Contenedor  principal */}
