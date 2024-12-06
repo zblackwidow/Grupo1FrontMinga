@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const getCompanies = createAsyncThunk("GET_COMPANIES", async (token) => {
     try {

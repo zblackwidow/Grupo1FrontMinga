@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const getCategories = createAsyncThunk("GET_CATEGORIES", async (token) => {
     try {

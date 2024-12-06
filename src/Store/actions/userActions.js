@@ -1,4 +1,5 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const setUser = createAction("SET_USER", (data) => {
     return {
