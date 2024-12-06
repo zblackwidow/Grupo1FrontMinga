@@ -3,7 +3,7 @@ import React from 'react'
 export default function Section() {
     return (
         <>
-            <div className="flex justify-center items-center p-20">
+            <div className="hidden lg:flex justify-center items-center p-20">
                 <div className="w-full h-[300px] bg-[#f97316] rounded-lg">
                     <div className="flex justify-between items-center w-full h-[300px] px-10 z-1">
                         <div className="bg-[#FACDB0] rounded-full p-1">

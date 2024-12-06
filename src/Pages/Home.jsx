@@ -6,8 +6,8 @@ import Section from '../Components/Home/Section'
 export default function Home() {
     return (
         <>
-            <Banner />
-            <Section />
+            <Banner/>
+            <Section/>
         </>
     )
 }
