@@ -32,12 +32,16 @@ function Login() {
     };
 
     return (
-        <main className="w-full flex justify-center items-center font-poppins">
+// contenedor principal
+    <div className="w-full flex justify-center items-center font-poppins">
+{/* contenedor de la imagen */}
             <div className="hidden md:block md:w-[50%]">
-                <img className='w-full' src="https://s3-alpha-sig.figma.com/img/cd7b/cfec/c07083cef0707bd5864b287bac613f2b?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Aa72~qaQ-Re8JBUPxzkxXnEmKnF~Nksubt4JQlzlSyaNzCKI0yOFHb4M3jaIdNjawWVO7VvkTsBWhTN03z4KsmZA8WhV2jMxWVM2PJAnD0piJN30WPlc~QnVykKFP4CwvEbbwihCfqj9VoAAHWocAqPpcZDmnlZvtbifXp5LaI6iv8fUVn5-MuCjlzaYt1mRYVISghahbU3i2vVtbPt5V7gYm5Kq6vJX4et7u36v8lwqsnUviMfvNVJlj3t1c8l6vYcPmsBFDMzEU~6r3HAvc-IIchLyEBooDoJHVTy9IaK2pFeS-Gwe3nW6UApCQiKHRAitgbRjVrp7MqrZqRXw4g__" alt="" />
+                <img className='w-full h-[100vh] object-cover' src="https://s3-alpha-sig.figma.com/img/cd7b/cfec/c07083cef0707bd5864b287bac613f2b?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Aa72~qaQ-Re8JBUPxzkxXnEmKnF~Nksubt4JQlzlSyaNzCKI0yOFHb4M3jaIdNjawWVO7VvkTsBWhTN03z4KsmZA8WhV2jMxWVM2PJAnD0piJN30WPlc~QnVykKFP4CwvEbbwihCfqj9VoAAHWocAqPpcZDmnlZvtbifXp5LaI6iv8fUVn5-MuCjlzaYt1mRYVISghahbU3i2vVtbPt5V7gYm5Kq6vJX4et7u36v8lwqsnUviMfvNVJlj3t1c8l6vYcPmsBFDMzEU~6r3HAvc-IIchLyEBooDoJHVTy9IaK2pFeS-Gwe3nW6UApCQiKHRAitgbRjVrp7MqrZqRXw4g__" alt="" />
             </div>
-            <div className="w-full my-16 md:my-32  md:w-[50%] flex justify-center">
-                <div className="md:w-[20vw] w-[80vw]">
+
+            {/* contenedor del formulario */}
+            <div className="w-full my-16 md:w-[50%] flex justify-center">
+                <div className="md:w-[30vw] w-[90vw]">
                     <div className='flex flex-col items-center'>
                         <img src={logo} alt="logo" className="object-contain w-[127px]" />
                         <div className='flex font-bold text-2xl'>
@@ -92,7 +96,7 @@ function Login() {
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     );
 }
 
