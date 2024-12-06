@@ -8,11 +8,7 @@ const Navbar = () => {
   
 
   return (
-<<<<<<< HEAD
     <nav className="top-8 left-0 w-full h-14 flex items-center justify-between px-24 py-3 bg-gray-800 text-white z-50">
-=======
-    <nav className="fixed top-8 left-0 w-full h-14 flex align-items-center justify-between px-24 py-3 bg-transparent text-white z-50">
->>>>>>> 135024bf511ef74ecb448a498947b5ff0c5122f6
       {/* Menú hamburguesa */}
       <button
         className="text-orange-500"
