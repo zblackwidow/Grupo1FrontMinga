@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const getReactions = createAsyncThunk("GET_REACTIONS", async (token) => {
     try {

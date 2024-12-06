@@ -8,7 +8,7 @@ import chapterReducer from "./reducer/chapterReducer";
 import companyReducer from "./reducer/companyReducer";
 import reactionReducer from "./reducer/reactionReducer";
 
-const mangas = configureStore({
+const addMangas = configureStore({
     reducer: {
         auth: authReducer,
         manga: mangaReducer,
@@ -21,4 +21,4 @@ const mangas = configureStore({
     },
 })
 
-export default mangas
+export default addMangas
