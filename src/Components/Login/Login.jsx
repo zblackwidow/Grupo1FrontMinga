@@ -1,7 +1,32 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 import logo from '../../../public/logo.png'; // Ajusta la ruta según tu estructura de archivos
 
 function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setError('');
+        try {
+            const response = await axios.post('http://localhost:8080/api/auth/signIn', {
+                email,
+                password,
+            });
+            console.log('Inicio de sesión exitoso:', response.data);
+            // Redirigir o manejar el éxito del inicio de sesión
+        } catch (error) {
+            console.error('Error en el inicio de sesión:', error);
+            if (error.response) {
+                console.error('Detalles del error:', error.response.data);
+                setError(error.response.data.message);
+            }
+        }
+    };
+
     const handleGoogleSignIn = () => {
         window.location.href = "http://localhost:8080/api/auth/signIn/google";
     };
@@ -23,13 +48,16 @@ function Login() {
                             Discover manga, manhua and manhwa, track your progress, have fun, read manga.
                         </p>
                     </div>
-                    <form>
+                    {error && <p className="text-red-500">{error}</p>}
+                    <form onSubmit={handleSubmit}>
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Email</label>
                             <input
                                 type="email"
                                 className="w-full px-3 py-2 border rounded-lg"
                                 placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
 
@@ -39,6 +67,8 @@ function Login() {
                                 type="password"
                                 className="w-full px-3 py-2 border rounded-lg"
                                 placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                         <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-lg hover:bg-blue-700">
