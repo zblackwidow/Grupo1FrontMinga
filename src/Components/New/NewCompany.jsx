@@ -36,7 +36,8 @@ function NewCompany() {
 
     return (
         <>
-            <div className="w-full h-[80vh] flex justify-center items-center">
+            <div className="w-full flex items-center">
+            <div className="w-full md:w-1/2 my-24 md:my-32 flex justify-center items-center">
                 <form onSubmit={handleSubmit} className="flex flex-col w-full md:w-[40vw] gap-4  p-4">
                     <h1 className="text-2xl text-center font-bold mb-6">New Company</h1>
                     {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
@@ -84,6 +85,10 @@ function NewCompany() {
                         Send
                     </button>
                 </form>
+            </div>
+            <div  className="w-1/2 hidden md:block">
+                <img className="w-full" src="https://s3-alpha-sig.figma.com/img/b8b4/c1ca/d91c01d1ff2a1a1341ce3c24609e0349?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gqOlUaZrihLOcb8a3YFZ7Ab9cCdJgSozuary8Lfwzg~Qm2qbvbDU7onI-m8Wdue-ZUDzDAUmJ9BbtX6RUVGlUJLA-AZz~32HVTU7TcptrojKmmyc~IA~TEPcBiJP8gUvBfi1bctlKNkVBGklXo4n0gmdvoQwdmOARzm52LnXUUZQ0aXouvrCPWcePVswxYiZGXb36tHY0HccbIPF~SyUNto3ev7kZ1I2SZ4PtmrV2wvPGljVAdz-oGf4F-v0Stw68W2D9j2ycWUCLrwR06bmfID5lbvsWHvMYp7BULmbAqHLjBigaQdqyjOE-TRopZYkpOCjB0bYBsgHHqGxlaA1cg__" alt="" />
+            </div>
             </div>
         </>
     );
