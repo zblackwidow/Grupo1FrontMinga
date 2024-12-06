@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Navbar = () => {
   // Estados para mostrar/ocultar los menús
@@ -8,7 +8,7 @@ const Navbar = () => {
   const closeProfile=()=> setIsProfileOpen(false);
 
   return (
-    <nav className="fixed top-8 left-0 w-full h-14 flex items-center justify-between px-24 py-3 bg-gray-800 text-white z-50">
+    <nav className="top-8 left-0 w-full h-14 flex items-center justify-between px-24 py-3 bg-gray-800 text-white z-50">
       {/* Menú hamburguesa */}
       <button
         className="text-orange-500"
@@ -172,16 +172,16 @@ const Navbar = () => {
           <ul className="mt-4 ">
           
           <li className="w-full">
-            <a className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium w-full" href="/home">
+            <a className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium w-full" href="/login">
               Sing In
             </a>
           </li>
             <li className="w-full">
-            <a className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium w-full" href="/home">
+            <a className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium w-full" href="/register">
               Sing Up
             </a>
           </li>
-          <li className="w-full">
+          <li className="w-full"> 
             <a className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium w-full" href="/home">
               Help
             </a>
