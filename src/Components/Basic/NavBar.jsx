@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Navbar = () => {
   // Estados para mostrar/ocultar los menús
@@ -8,7 +8,7 @@ const Navbar = () => {
   
 
   return (
-    <nav className="fixed top-8 left-0 w-full h-14 flex align-items-center justify-between px-24 py-3 bg-transparent text-white z-50">
+    <nav className="fixed top-8 left-0 w-full h-14  align-items-center justify-between px-24 py-3 bg-transparent text-white z-50">
       {/* Menú hamburguesa */}
       <button
         className="text-orange-500"
