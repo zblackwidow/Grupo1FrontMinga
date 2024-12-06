@@ -30,7 +30,7 @@ function Register() {
     };
 
     return (
-        <main className="w-full h-screen flex justify-center items-center font-poppins">
+        <main className="w-full  flex justify-center items-center font-poppins">
             <div className="w-full md:w-[50%] flex justify-center">
                 <div className="md:w-[20vw] w-[80vw]">
                     <div className='flex flex-col items-center'>
