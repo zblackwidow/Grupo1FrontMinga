@@ -40,43 +40,43 @@ function NewCompany() {
                 <form onSubmit={handleSubmit} className="flex flex-col w-full md:w-[40vw] gap-4  p-4">
                     <h1 className="text-2xl text-center font-bold mb-6">New Company</h1>
                     {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <input
                             type="text"
                             name="nombre"
                             value={formData.nombre}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border-b-gray-700 "
+                            className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                             placeholder="Name"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <input
                             type="url"
                             name="website"
                             value={formData.website}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border-b-gray-700 "
+                            className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                             placeholder="Website"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <input
                             type="url"
                             name="photo"
                             value={formData.photo}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border-0 outline-none border-b-2 border-gray-700 focus:border-gray-900 bg-transparent"
+                            className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                             placeholder="Photo URL"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <input
                             type="text"
                             name="description"	
                             value={formData.description}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border-b-gray-700 "
+                            className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                             placeholder="Descruption"
                         />
                     </div>
