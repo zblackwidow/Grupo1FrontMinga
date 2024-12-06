@@ -11,6 +11,8 @@ import NewManga from './Components/New/NewManga'
 import NewCompany from './Components/New/NewCompany'
 import NewChapter from './Components/New/Newchapter'
 import NewRole from './Components/New/NewRole'
+import Chapters from './Pages/Chapters'
+import Mangas from './Pages/Mangas'
 
 const router = createBrowserRouter([
     {
@@ -18,6 +20,7 @@ const router = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/home', element: <Home /> },
+            { path: '/mangas', element: <Mangas></Mangas> },
             { path: '/*', element: <NotFound></NotFound> },
             { path: '/*', element: <NotFound></NotFound> },
             { path: '/register', element: <Register /> },
@@ -28,6 +31,7 @@ const router = createBrowserRouter([
             { path: "/newManga", element: <NewManga/> },
             { path: "/newCompany", element: <NewCompany/> },
             { path: "/newRole", element: <NewRole/> },
+            { path: '/chapters', element: <Chapters /> },
         ],
     },
 ])
