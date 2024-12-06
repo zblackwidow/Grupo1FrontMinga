@@ -1,6 +1,3 @@
-import React from 'react'
-import homeImg from '../../assets/home-img.png'
-
 export default function Banner() {
     return (
         <>
