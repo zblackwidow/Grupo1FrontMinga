@@ -10,6 +10,7 @@ import NewAuthor from './Components/New/NewAuthor'
 import NewManga from './Components/New/NewManga'
 import NewCompany from './Components/New/NewCompany'
 import NewChapter from './Components/New/Newchapter'
+import NewRole from './Components/New/NewRole'
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
             { path: "/newChapter", element: <NewChapter/> },
             { path: "/newManga", element: <NewManga/> },
             { path: "/newCompany", element: <NewCompany/> },
+            { path: "/newRole", element: <NewRole/> },
         ],
     },
 ])

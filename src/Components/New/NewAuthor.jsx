@@ -41,52 +41,52 @@ function NewAuthor() {
                 <form onSubmit={handleSubmit} className="flex flex-col w-full md:w-[40vw] gap-4  p-4">
                     <h1 className="text-2xl text-center font-bold mb-6">New Author</h1>
                     {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <input
                             type="text"
                             name="nombre"
                             value={formData.nombre}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg"
+                            className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                             placeholder="Name"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <input
                             type="text"
                             name="surname"
                             value={formData.surname}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg"
+                            className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                             placeholder="Surname"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <input
                             type="text"
                             name="city"
                             value={formData.city}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg"
+                            className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                             placeholder="City"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <input
                             type="date"
                             name="birthday"
                             value={formData.birthday}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg"
+                            className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <input
                             type="url"
                             name="photo"
                             value={formData.photo}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg"
+                            className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                             placeholder="Photo URL"
                         />
                     </div>
