@@ -1,7 +1,10 @@
+//import NavBarComponents from '../Components/NavBarComponents'
 import { Outlet } from 'react-router-dom'
 //import FooterComponents from '../Components/FooterComponents'
 import '../index.css'
 import Navbar from '../Components/Basic/NavBar'
+import Footer from '../Components/Basic/Footer'
+
 
 export default function StandarLayout() {
     return (
@@ -11,7 +14,9 @@ export default function StandarLayout() {
             <main>
                 <Outlet />
             </main>
+            
             {/* <FooterComponents /> */}
+            <Footer />  
         </>
     )
 }
