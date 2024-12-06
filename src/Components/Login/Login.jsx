@@ -1,13 +1,38 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 import logo from '../../../public/logo.png'; // Ajusta la ruta según tu estructura de archivos
 
 function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setError('');
+        try {
+            const response = await axios.post('http://localhost:8080/api/auth/signIn', {
+                email,
+                password,
+            });
+            console.log('Inicio de sesión exitoso:', response.data);
+            // Redirigir o manejar el éxito del inicio de sesión
+        } catch (error) {
+            console.error('Error en el inicio de sesión:', error);
+            if (error.response) {
+                console.error('Detalles del error:', error.response.data);
+                setError(error.response.data.message);
+            }
+        }
+    };
+
     const handleGoogleSignIn = () => {
         window.location.href = "http://localhost:8080/api/auth/signIn/google";
     };
 
     return (
-        <main className="w-full h-screen flex justify-center items-center font-poppins">
+        <main className="w-full  flex justify-center items-center font-poppins">
             <div className="hidden md:block md:w-[50%]">
                 <img className='w-full' src="https://s3-alpha-sig.figma.com/img/cd7b/cfec/c07083cef0707bd5864b287bac613f2b?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Aa72~qaQ-Re8JBUPxzkxXnEmKnF~Nksubt4JQlzlSyaNzCKI0yOFHb4M3jaIdNjawWVO7VvkTsBWhTN03z4KsmZA8WhV2jMxWVM2PJAnD0piJN30WPlc~QnVykKFP4CwvEbbwihCfqj9VoAAHWocAqPpcZDmnlZvtbifXp5LaI6iv8fUVn5-MuCjlzaYt1mRYVISghahbU3i2vVtbPt5V7gYm5Kq6vJX4et7u36v8lwqsnUviMfvNVJlj3t1c8l6vYcPmsBFDMzEU~6r3HAvc-IIchLyEBooDoJHVTy9IaK2pFeS-Gwe3nW6UApCQiKHRAitgbRjVrp7MqrZqRXw4g__" alt="" />
             </div>
@@ -23,13 +48,16 @@ function Login() {
                             Discover manga, manhua and manhwa, track your progress, have fun, read manga.
                         </p>
                     </div>
-                    <form>
+                    {error && <p className="text-red-500">{error}</p>}
+                    <form onSubmit={handleSubmit}>
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Email</label>
                             <input
                                 type="email"
                                 className="w-full px-3 py-2 border rounded-lg"
                                 placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
 
@@ -39,6 +67,8 @@ function Login() {
                                 type="password"
                                 className="w-full px-3 py-2 border rounded-lg"
                                 placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                         <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-lg hover:bg-blue-700">
