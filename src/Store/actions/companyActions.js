@@ -52,7 +52,7 @@ const createCompany = createAsyncThunk("CREATE_COMPANY", async (company, token) 
 const updateCompany = createAsyncThunk("UPDATE_COMPANY", async (company, token) => {
     try {
         const response = await axios.put(
-            `http://localhost:8080/api/company/update/${company.id}`, company, {
+            `http://localhost:8080/api/company/update/active`, company, {
                     headers: {
                             Authorization: `Bearer ${token}`,
                     },
@@ -60,7 +60,7 @@ const updateCompany = createAsyncThunk("UPDATE_COMPANY", async (company, token) 
         )
         return response.data
     } catch (error) {
-        return error.response?.data?.message || "Token validation failed"
+        return error.response.data.message || "Token validation failed"
         
     }
 })

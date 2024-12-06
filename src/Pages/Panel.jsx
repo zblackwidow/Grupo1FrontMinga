@@ -1,44 +1,74 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCompanies } from "../Store/actions/companyActions";
-import { getAuthors } from "../Store/actions/authorActions";
+import { getCompanies, updateCompany } from "../Store/actions/companyActions";
+import { getAuthors, updateAuthor } from "../Store/actions/authorActions";
 
 const Panel = () => {
-  const [view, setView] = useState("companies"); // Estado para alternar entre "companies" y "authors"
+  const [view, setView] = useState("companies");
+  const [localCompanies, setLocalCompanies] = useState([]);
+  const [localAuthors, setLocalAuthors] = useState([]);
   const { companies } = useSelector((state) => state.company);
-  const { author } = useSelector((state) => state.author);
- const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphdmllcjJAZ21haWwuY29tIiwiaWF0IjoxNzMzNDUxMjU1LCJleHAiOjE3MzM0NTQ4NTV9.T2KLrYVQAOzzTFf-hc38mHS6aDuEB4qXHqZfNCD3VlU"
+  const { authors } = useSelector((state) => state.author);
+
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphdmllcjJAZ21haWwuY29tIiwiaWF0IjoxNzMzNDYzMzYwLCJleHAiOjE3MzM0NjY5NjB9.mUDSTY9iBlRstQteTgyzHBRSFa140pwJATmKzwpOyBg";
   const dispatch = useDispatch();
 
+  // Cargar datos iniciales
   useEffect(() => {
-    dispatch(getCompanies(token))
+    dispatch(getCompanies(token));
     dispatch(getAuthors(token));
   }, [dispatch]);
 
-  console.log(companies);
-  console.log(author);
-  
-  
+  // Sincronizar el estado local con las compañías desde el store
+  useEffect(() => {
+    if (companies) {
+      setLocalCompanies(companies);
+    }
+  }, [companies]);
 
-  // Simulando datos para Companies y Authors
-  const companiess = [
-    { name: "Blue Team", url: "www.blueteam.com" },
-    { name: "Red Team", url: "www.redteam.com" },
-    { name: "Orange Team", url: "www.orangeteam.com" },
-    { name: "Purple Team", url: "www.purpleteam.com" },
-  ];
+useEffect(() => {
+  if (Array.isArray(authors)) {
+    setLocalAuthors(authors);
+  }
+}, [authors]);
 
-  const authorss = [
-    { name: "Author 1", profile: "Profile 1" },
-    { name: "Author 2", profile: "Profile 2" },
-    { name: "Author 3", profile: "Profile 3" },
-    { name: "Author 4", profile: "Profile 4" },
-  ];
+  // Manejar el cambio de estado de 'active' al interactuar con el checkbox
+  const handleToggleActive = (company) => {
+    const updatedCompany = { ...company, active: !company.active };
+
+    // Actualizar en el backend
+    dispatch(
+      updateCompany({ _id: company._id, active: updatedCompany.active }, token)
+    );
+
+    // Actualizar en el estado local
+    setLocalCompanies((prevCompanies) =>
+      prevCompanies.map((comp) =>
+        comp._id === company._id ? updatedCompany : comp
+      )
+    );
+  };
+
+  const handleToggleActiveAuthor = (author) => {
+    const updatedAuthor = { ...author, active: !author.active };
+
+    
+
+    // Enviar actualización al backend
+    dispatch(updateAuthor({ author: { _id: author._id, active: updatedAuthor.active }, token }));
+    
+    // Actualizar el estado local de forma segura
+    setLocalAuthors((prevAuthors) =>
+      prevAuthors.map((auth) =>
+        auth._id === author._id ? updatedAuthor : auth
+      )
+    );
+  };
 
   return (
-    <div>
-      {/* Header con imagen de fondo */}
-      <div className="w-full h-screen bg-cover bg-center bg-panel px-10">
+    <div className="">
+      <div className="w-full h-min-screen bg-[length:w-full_721px] bg-no-repeat bg-panel px-10">
         <h1 className="flex justify-center items-center text-[64px] text-white pt-[260px] h-[500px]">
           Panel
         </h1>
@@ -49,11 +79,10 @@ const Panel = () => {
             </h1>
           </div>
 
-          {/* Sección de botones */}
-          <section className="grid  grid-cols-2 border-solid  border-t-2 border-r-2 border-l-2 rounded-t-lg border-gray-300 ">
+          <section className="grid grid-cols-2 border-solid border-t-2 border-r-2 border-l-2 rounded-t-lg border-gray-300 ">
             <button
               onClick={() => setView("companies")}
-              className={`text-[24px] font-semibold ${
+              className={`text-[24px] py-3 font-semibold ${
                 view === "companies"
                   ? " text-[#ffffff] bg-[#FF5722] rounded-tl-lg "
                   : "border-b-[3px] text-[#FF5722] rounded-tl-lg bg-[#F9F9FC] border-[#FF5722]"
@@ -66,65 +95,74 @@ const Panel = () => {
               className={`text-[24px] font-semibold ${
                 view === "authors"
                   ? "text-[#ffffff] bg-[#FF5722] rounded-tr-lg"
-                  : "border-b-[3px] text-[#FF5722] rounded-tr-lg bg-[#F9F9FC]  border-[#FF5722]"
+                  : "border-b-[3px] text-[#FF5722] rounded-tr-lg bg-[#F9F9FC] border-[#FF5722]"
               }`}
             >
               Authors
             </button>
           </section>
 
-          {/* Tabla dinámica */}
           <table className="w-full border-collapse border border-gray-300">
             {view === "companies" ? (
-              <>
-                <thead className="w-full">
-                  <tr>
-                    <th className="border border-gray-300 p-2 text-left">
-                      Companies
-                    </th>
-                    <th className="border border-gray-300 p-2 text-left">
-                      URL
-                    </th>
+              <tbody>
+                {localCompanies.map((company) => (
+                  <tr key={company._id}>
+                    <td className="border border-gray-300 p-2">
+                      {company.name}
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                      {company.website}
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                      <img
+                        src={company.photo}
+                        alt={company.name}
+                        className="w-8 h-8 rounded-full"
+                      />
+                    </td>
+                    <td className="border border-gray-300 p-2 text-center">
+                      <label class="relative inline-flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          class="sr-only peer"
+                          checked={company.active}
+                          onChange={() => handleToggleActive(company)}
+                        />
+                        <div class="group peer bg-gray-200 rounded-full duration-300 w-16 h-8 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-6 after:w-6 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-checked:after:translate-x-8 peer-hover:after:scale-95"></div>
+                      </label>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="w-full">
-                  {companiess.map((company, index) => (
-                    <tr key={index} className="w-full">
-                      <td className="border border-gray-300 p-2">
-                        {company.name}
-                      </td>
-                      <td className="border border-gray-300 p-2">
-                        {company.url}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </>
+                ))}
+              </tbody>
             ) : (
-              <>
-                <thead className="w-full">
-                  <tr>
-                    <th className="border border-gray-300 p-2 text-left">
-                      Authors
-                    </th>
-                    <th className="border border-gray-300 p-2 text-left">
-                      Profile
-                    </th>
+              <tbody>
+                {localAuthors.map((auth) => (
+                  <tr key={auth._id}>
+                    <td className="border border-gray-300 p-2">
+                      {auth.name + " " + auth.lastName}
+                    </td>
+                    <td className="border border-gray-300 p-2">{new Date(auth.date).toLocaleDateString()}</td>
+                    <td className="border border-gray-300 p-2">{auth.city}</td>
+                    <td className="border border-gray-300 p-2">
+                      <img src={auth.photo} alt={auth.name} className="w-8 h-8 rounded-full mx-auto" />
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                    <div className="flex justify-center items-center">
+
+                      <label class="relative inline-flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          class="sr-only peer"
+                          checked={auth.active}
+                          onChange={() => handleToggleActiveAuthor(auth)}
+                        />
+                        <div class="group peer bg-gray-200 rounded-full duration-300 w-16 h-8 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-6 after:w-6 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-checked:after:translate-x-8 peer-hover:after:scale-95"></div>
+                      </label>
+                    </div>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="w-full">
-                  {authorss.map((author, index) => (
-                    <tr key={index} className="w-full">
-                      <td className="border border-gray-300 p-2">
-                        {author.name}
-                      </td>
-                      <td className="border border-gray-300 p-2">
-                        {author.profile}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </>
+                ))}
+              </tbody>
             )}
           </table>
         </div>
