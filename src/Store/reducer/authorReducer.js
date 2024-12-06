@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { getAuthors, getAuthorById, createAuthor, updateAuthor, deleteAuthor } from "../actions/authorActions";
 
 const initialState = {
-    author: [],
+    authors: [],
     token: null,
     error: null,
     loading: false,
@@ -16,7 +16,7 @@ const authorReducer = createReducer(initialState, (builder) => {
         })
         .addCase(getAuthors.fulfilled, (state, action) => {
             state.loading = false;
-            state.author = action.payload;
+            state.authors = action.payload;
         })
         .addCase(getAuthors.rejected, (state, action) => {
             state.loading = false;
@@ -28,7 +28,7 @@ const authorReducer = createReducer(initialState, (builder) => {
         })
         .addCase(getAuthorById.fulfilled, (state, action) => {
             state.loading = false;
-            state.author = action.payload;
+            state.authors = action.payload;
         })
         .addCase(getAuthorById.rejected, (state, action) => {
             state.loading = false;
@@ -40,7 +40,7 @@ const authorReducer = createReducer(initialState, (builder) => {
         })
         .addCase(createAuthor.fulfilled, (state, action) => {
             state.loading = false;
-            state.author = action.payload;
+            state.authors = action.payload;
         })
         .addCase(createAuthor.rejected, (state, action) => {
             state.loading = false;
@@ -52,7 +52,7 @@ const authorReducer = createReducer(initialState, (builder) => {
         })
         .addCase(updateAuthor.fulfilled, (state, action) => {
             state.loading = false;
-            state.author = action.payload;
+            state.authors = action.payload;
         })
         .addCase(updateAuthor.rejected, (state, action) => {
             state.loading = false;
@@ -64,7 +64,7 @@ const authorReducer = createReducer(initialState, (builder) => {
         })
         .addCase(deleteAuthor.fulfilled, (state, action) => {
             state.loading = false;
-            state.author = action.payload;
+            state.authors = action.payload;
         })
         .addCase(deleteAuthor.rejected, (state, action) => {
             state.loading = false;
