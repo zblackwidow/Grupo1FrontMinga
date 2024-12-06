@@ -1,15 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const getCategories = createAsyncThunk("GET_CATEGORIES", async (token) => {
+const getCategories = createAsyncThunk("GET_CATEGORIES", async () => {
     try {
         const response = await axios.get(
             "http://localhost:8080/api/category/all", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+             
             }
         ) 
-        return response.data
+        return response.data.response
     } catch (error) {
         return error.response?.data?.message || "Token validation failed"
         
