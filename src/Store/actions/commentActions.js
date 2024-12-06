@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const getComments = createAsyncThunk("GET_COMMENTS", async (token) => {
     try {
