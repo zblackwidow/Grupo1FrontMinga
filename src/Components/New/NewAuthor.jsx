@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from 'axios'; 
 
-function UserForm() {
+function NewAuthor() {
     const [formData, setFormData] = useState({
         nombre: '',
         surname: '',
@@ -38,7 +38,7 @@ function UserForm() {
     return (
         <>
             <div className="w-full h-[80vh] flex justify-center items-center">
-                <form onSubmit={handleSubmit} className="flex flex-col w-full md:w-[30vw] gap-4  p-4">
+                <form onSubmit={handleSubmit} className="flex flex-col w-full md:w-[40vw] gap-4  p-4">
                     <h1 className="text-2xl text-center font-bold mb-6">New Author</h1>
                     {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
                     <div className="mb-4">
@@ -99,4 +99,4 @@ function UserForm() {
     );
 }
 
-export default UserForm;
+export default NewAuthor;
