@@ -100,7 +100,7 @@ const Navbar = () => {
       
           <ul className="mt-4   ">
           <li>
-          <div className=" cursor-pointer  flex justify-center"><img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80" alt="user" className="w-10 h-10 rounded-full "/></div>
+          <div className=" cursor-pointer  flex justify-center "><img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80" alt="user" className="w-10 h-10 rounded-full "/></div>
           <p className="text-sm text-white ">user@email.com</p>
           </li>
           <li className="w-full">
