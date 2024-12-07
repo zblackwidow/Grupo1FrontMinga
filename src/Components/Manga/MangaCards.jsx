@@ -2,22 +2,19 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMangas } from "../../Store/actions/mangaActions";
-import { getCategories } from "../../Store/actions/categoryActions";
+
 const MangaCards = () => {
  
   const {mangas} = useSelector((state) => state.manga);
-  const {categories}= useSelector((state) => state.category);
+ 
 
 
  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMangas({}));
-    
-  }, [dispatch]);
-
-
-console.log(categories)
+   
+  }, []);
 
 
   const navigate = useNavigate();
@@ -31,20 +28,14 @@ console.log(categories)
         <div className="flex justify-center items-center">
   <div className="absolute top-[70%] rounded-3xl bg-white w-[95%] flex flex-wrap justify-center gap-5">
     {mangas.map((mg) => {
-     
-      const category = categories.find((category) => category._id === mg.category_id);
-     {console.log(category.color+" este es el color")}
+  
       return (
         <div
           key={mg._id}
           className="flex flex-row w-full sm:w-1/2 lg:w-1/3 m-2 transform transition duration-500 hover:scale-105"
         >
           <div
-            className={`flex items-center rounded-2xl w-full sm:w-[80%] m-4 lg:w-[70%] overflow-hidden shadow-lg ${
-              category && category.color
-                ? `border-l-[10px] border-[${category.color}]` // Si se encuentra la categoría y tiene color, lo aplicamos
-                : "border-l-[10px] border-transparent" // Si no, aplicamos un borde transparente
-            }`}
+            className={`flex items-center rounded-2xl w-full sm:w-[80%] m-4 lg:w-[70%] overflow-hidden shadow-lg  border-l-[10px] border-${mg.category_id.color}`} // Si se encuentra la categoría y tiene color, lo aplicamos`}
           >
             <div className="flex flex-col justify-center p-2 w-[70%] h-[70%]">
               <div className="flex h-full items-center justify-center w-full">
