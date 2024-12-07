@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="bg-white relative w-full pt-1 pb-6">
       {/* Fondo curvo */}
       <div >
-        <img className="w-full" src="/image-footer.svg" alt="" />
+        <img className="w-full h-auto" src="/image-footer.svg" alt="" />
       </div>
 
       {/* Contenedor  principal */}
@@ -28,6 +28,7 @@ const Footer = () => {
           </div>
 
           {/* Redes sociales */}
+          <div>
           <div className="flex space-x-4 text-gray-600">
             <a
               href="#"
@@ -58,12 +59,15 @@ const Footer = () => {
               <FaYoutube size={20} />
             </a>
           </div>
-
+          
           {/* Botón Donate */}
-          <button className="flex items-center space-x-2 bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition">
+          <button className="flex items-center mt-4 space-x-2 bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition">
             <span>Donate</span>
             <span className="text-xl">❤️</span>
           </button>
+          </div>
+         
+
         </div>
       </div>
     </footer>
