@@ -8,7 +8,7 @@ function Register() {
     const [photo, setPhoto] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError('');
@@ -41,6 +41,10 @@ function Register() {
                 setError('Hubo un error en el servidor.');
             }
         }
+    };
+
+    const handleGoogleSignIn = () => {
+        window.location.href = 'http://localhost:8080/api/auth/signIn/google';
     };
 
     return (
@@ -90,7 +94,10 @@ function Register() {
                             Sign up
                         </button>
                     </form>
-                    <button className="w-full mt-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700">
+                    <button 
+                        className="w-full mt-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700"
+                        onClick={handleGoogleSignIn}
+                    >
                         Sign in with Google
                     </button>
                     <div className="mt-4 text-center">
