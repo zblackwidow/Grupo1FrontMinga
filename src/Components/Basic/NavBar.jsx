@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   // Estados para mostrar/ocultar los menús
@@ -99,26 +100,27 @@ const Navbar = () => {
 
     <ul className="mt-4 w-full">
       <li className="text-center">
-        <div className="cursor-pointer flex justify-center mb-2">
+        <div className="cursor-pointer flex justify-center items-center gap-3 mb-2">
           <img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80" alt="user" className="w-10 h-10 rounded-full"/>
+        <p className="text-sm text-white">userdfafda@email.com</p>
         </div>
-        <p className="text-sm text-white">user@email.com</p>
       </li>
       <li className="w-full">
-        <a className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center" href="/home">
+        <NavLink to="/home" className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center" href="/home" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          Home
+        </NavLink>
+      </li>
+      <li className="w-full">
+        <NavLink to="/register" className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center" onClick={() => setIsMenuOpen(!isMenuOpen)} >
+          Register
+        </NavLink>
+      </li>
+      <li className="w-full">
+        <NavLink to="/login" className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center" onClick={() => setIsMenuOpen(!isMenuOpen)} >
           Sign In
-        </a>
+        </NavLink>
       </li>
-      <li className="w-full">
-        <a className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center" href="/home">
-          Sign Up
-        </a>
-      </li>
-      <li className="w-full">
-        <a className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center" href="/home">
-          Help
-        </a>
-      </li>
+    
     </ul>
   </div>
 )}
