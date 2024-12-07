@@ -30,9 +30,11 @@ function Register() {
     };
 
     return (
-        <main className="w-full  flex justify-center items-center font-poppins">
-            <div className="w-full md:w-[50%] flex justify-center">
-                <div className="md:w-[20vw] w-[80vw]">
+        // contenedor principal
+        <div className="w-full flex justify-center items-center font-poppins">
+            {/* contenedor de formulario */}
+            <div className="w-full my-16 md:w-[50%] flex justify-center">
+                <div className="md:w-[30vw] w-[90vw]">
                     <div className='flex flex-col items-center'>
                         <img src={logo} alt="logo" className="object-contain w-[127px]" />
                         <h1 className="text-2xl text-gray-900 font-bold mb-6">Welcome!</h1>
@@ -87,10 +89,11 @@ function Register() {
                     </div>
                 </div>
             </div>
+            {/* contenedor de imagen */}
             <div className="md:w-[50%] hidden md:block">
-                <img className='w-full' src="https://s3-alpha-sig.figma.com/img/5d98/eac1/025f012e94a72840af6fc1f67a349f61?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=MtGJF7E0D6~8zP9qJDOh~vl~H-KfvC-43eCh-x0l1DphvRvw-q4VjRKc2pvAyU07MpdMI8DnytXVjzZ2sLz7qxUEJFsWD4pJd3VQqkPJmCr-ucqj2OuyAfiYHd8j7zWEzIm8AqrsMcLVWAsQ9E1juZy3ZGgxL5iJZwG5Neuvn~oU-pdeDLybUkdtBxbWN5-VvYmeeteKMPy9WaRQaByX-g4ieNpvdeCUqZngEkVytLr4tbYBe55HhSMhQGvxwwlXEYfkFT9LRvwVOfkCgum2tY4Ry2S~9lVhZTdjAMc~zXjodSKPWOFHggoN4GrSA-qAkaaGbQi0J2xdcEuop1nJkA__" alt="" />
+                <img className='w-full h-[100vh] object-cover' src="https://s3-alpha-sig.figma.com/img/5d98/eac1/025f012e94a72840af6fc1f67a349f61?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=MtGJF7E0D6~8zP9qJDOh~vl~H-KfvC-43eCh-x0l1DphvRvw-q4VjRKc2pvAyU07MpdMI8DnytXVjzZ2sLz7qxUEJFsWD4pJd3VQqkPJmCr-ucqj2OuyAfiYHd8j7zWEzIm8AqrsMcLVWAsQ9E1juZy3ZGgxL5iJZwG5Neuvn~oU-pdeDLybUkdtBxbWN5-VvYmeeteKMPy9WaRQaByX-g4ieNpvdeCUqZngEkVytLr4tbYBe55HhSMhQGvxwwlXEYfkFT9LRvwVOfkCgum2tY4Ry2S~9lVhZTdjAMc~zXjodSKPWOFHggoN4GrSA-qAkaaGbQi0J2xdcEuop1nJkA__" alt="" />
             </div>
-        </main>
+        </div>
     );
 }
 

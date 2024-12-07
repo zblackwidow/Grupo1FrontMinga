@@ -7,13 +7,10 @@ import Footer from '../Components/Basic/Footer'
 export default function StandarLayout() {
     return (
         <>
-           <div>
-            <Navbar/>
-            <main>
-                <Outlet />
-            </main>
-            </div>
-            <Footer />  
+
+            <Navbar />
+            <Outlet />
+            <Footer />
         </>
     )
 }

@@ -1,6 +1,5 @@
 import { FaFacebookF, FaTwitter, FaVimeoV, FaYoutube } from "react-icons/fa";
 
-
 const Footer = () => {
   return (
     <footer className="bg-white relative w-full pt-1 pb-6">
