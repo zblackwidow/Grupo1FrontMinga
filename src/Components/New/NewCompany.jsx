@@ -20,13 +20,10 @@ function NewCompany() {
         e.preventDefault();
         setMessage('');
         try {
-            const response = await axios.post('http://localhost:8080/api/company/create', formData);
-            console.log('Form Data Sent:', response.data);
+             await axios.post('http://localhost:8080/api/company/create', formData);
             setMessage('Author created successfully!');
         } catch (error) {
-            console.error('Error sending form data:', error);
             if (error.response) {
-                console.error('Error details:', error.response.data);
                 setMessage(`Error: ${error.response.data.message}`);
             } else {
                 setMessage('An error occurred. Please try again.');
@@ -80,7 +77,7 @@ function NewCompany() {
                                 value={formData.description}
                                 onChange={handleChange}
                                 className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                placeholder="Descruption"
+                                placeholder="Description"
                             />
                         </div>
                         <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700">
