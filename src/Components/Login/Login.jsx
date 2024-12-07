@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../../../public/logo.png'; // Ajusta la ruta según tu estructura de archivos
-import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -10,7 +9,6 @@ function Login() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const navigate = useNavigate();
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError('');
