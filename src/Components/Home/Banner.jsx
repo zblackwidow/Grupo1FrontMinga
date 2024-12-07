@@ -1,3 +1,6 @@
+import {NavLink} from "react-router-dom";
+
+
 export default function Banner() {
     return (
         <>
@@ -25,7 +28,9 @@ export default function Banner() {
                     </div>
                     <div className="py-2">
                         <button className="bg-[#ffffff] text-[#ff5722] rounded-md w-[240px] h-[55px] text-[24px] font-medium  font-poppins">
+                            <NavLink to={'/login'}>
                             Sign In!
+                            </NavLink>
                         </button>
                     </div>
                 </div>
