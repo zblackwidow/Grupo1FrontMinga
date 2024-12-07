@@ -1,18 +1,35 @@
-import React from "react";
-import { useDispatch,useSelector } from "react-redux";
-import { FiSearch } from "react-icons/fi";
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-export default function FilterManga(){
-        return(
-                <div className="relative w-4/5 sm:w-2/3 lg:w-1/2">
-                <div className="absolute inset-y-0 left-0 flex items-center mt-10 pl-1 text-gray-500">
-                  <FiSearch size={20} />
+
+export default function FilterManga() {
+    return (
+        <div className="relative w-[60%]">
+            <div className="relative">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg
+                        className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                    >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                    </svg>
                 </div>
                 <input
-                  type="text"
-                  placeholder="Find your manga here"
-                  className="w-full pl-8 mt-10 pr-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    type="search"
+                    id="default-search"
+                    className="block w-full p-4 ps-10 text-sm rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    placeholder="Find your manga here"
                 />
-              </div>
-        )
+            </div>
+        </div>
+    )
 }
