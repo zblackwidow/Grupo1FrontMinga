@@ -20,7 +20,7 @@ const validateToken = createAsyncThunk(
   async (token, thunkAPI) => {
     try {
       const response = await axios.get(
-        "https://mytinerary-back-javiergutierrez.onrender.com/api/auth/validateToken",
+        "http://localhost:8080/api/auth/validateToken",
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -3,25 +3,23 @@ import axios from 'axios';
 
 function NewChapter() {
     const [formData, setFormData] = useState({
-        nombre: '',
-        surname: '',
-        city: '',
-        birthday: '',
-        photo: '',
+        title: '',
+        order: '',
+        pages: ''
     });
 
     const [message, setMessage] = useState('');
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { title, value } = e.target;
+        setFormData({ ...formData, [title]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
         try {
-            const response = await axios.post('http://localhost:8080/api/author/create', formData);
+            const response = await axios.post('http://localhost:8080/api/chapter/create', formData);
             console.log('Form Data Sent:', response.data);
             setMessage('Author created successfully!');
         } catch (error) {
@@ -40,15 +38,15 @@ function NewChapter() {
             {/* contenedor principal */}
             <div className="w-full flex justify-center items-center">
                 {/* contenedor de formulario */}
-                <div className="md:w-1/2 my-16 flex justify-center items-center">
+                <div className="md:w-1/2 my-32 md:my-16 flex justify-center items-center">
                     <form onSubmit={handleSubmit} className="flex flex-col w-[90vw] md:w-[40vw] gap-4 p-4">
                         <h1 className="text-2xl text-center font-bold mb-6">New Chapter</h1>
                         {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
                         <div className="mb-6">
                             <input
                                 type="text"
-                                name="nombre"
-                                value={formData.nombre}
+                                name="title"
+                                value={formData.title}
                                 onChange={handleChange}
                                 className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Name"
@@ -57,43 +55,24 @@ function NewChapter() {
                         <div className="mb-6">
                             <input
                                 type="text"
-                                name="surname"
-                                value={formData.surname}
+                                name="Order"
+                                value={formData.order}
                                 onChange={handleChange}
                                 className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                placeholder="Surname"
+                                placeholder="Order"
                             />
                         </div>
                         <div className="mb-6">
                             <input
                                 type="text"
-                                name="city"
-                                value={formData.city}
+                                name="Pages"
+                                value={formData.pages}
                                 onChange={handleChange}
                                 className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                placeholder="City"
+                                placeholder="Pages"
                             />
                         </div>
-                        <div className="mb-6">
-                            <input
-                                type="date"
-                                name="birthday"
-                                value={formData.birthday}
-                                onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                            />
-                        </div>
-                        <div className="mb-6">
-                            <input
-                                type="url"
-                                name="photo"
-                                value={formData.photo}
-                                onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                placeholder="Photo URL"
-                            />
-                        </div>
-                        <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700">
+                         <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700">
                             Send
                         </button>
                     </form>

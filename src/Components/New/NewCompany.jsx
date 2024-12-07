@@ -20,13 +20,10 @@ function NewCompany() {
         e.preventDefault();
         setMessage('');
         try {
-            const response = await axios.post('http://localhost:8080/api/company/create', formData);
-            console.log('Form Data Sent:', response.data);
+             await axios.post('http://localhost:8080/api/company/create', formData);
             setMessage('Author created successfully!');
         } catch (error) {
-            console.error('Error sending form data:', error);
             if (error.response) {
-                console.error('Error details:', error.response.data);
                 setMessage(`Error: ${error.response.data.message}`);
             } else {
                 setMessage('An error occurred. Please try again.');
@@ -39,7 +36,7 @@ function NewCompany() {
             {/* contenedor principal */}
             <div className="w-full h-[100vh] flex items-center justify-center">
                 {/* contenedor de formulario */}
-                <div className="md:w-1/2 my-16 flex justify-center items-center">
+                <div className="md:w-1/2 my-32 md:my-16 flex justify-center items-center">
                     <form onSubmit={handleSubmit} className="flex flex-col w-[80vw] md:w-[40vw] gap-4 p-4">
                         <h1 className="text-2xl text-center font-bold mb-6">New Company</h1>
                         {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
@@ -80,7 +77,7 @@ function NewCompany() {
                                 value={formData.description}
                                 onChange={handleChange}
                                 className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                placeholder="Descruption"
+                                placeholder="Description"
                             />
                         </div>
                         <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700">
