@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../../../public/logo.png'; // Ajusta la ruta según tu estructura de archivos
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const navigate = useNavigate();
     const handleSubmit = async (event) => {
@@ -24,9 +25,7 @@ function Login() {
                 navigate('/');
             }
         } catch (error) {
-            console.error('Error en el inicio de sesión:', error);
             if (error.response) {
-                console.error('Detalles del error:', error.response.data);
                 setError(error.response.data.message);
             }
         }

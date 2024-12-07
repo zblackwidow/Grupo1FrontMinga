@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../../../public/logo.png';
 
@@ -8,8 +8,10 @@ function Register() {
     const [photo, setPhoto] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
+        
         event.preventDefault();
         setError('');
 
@@ -30,6 +32,7 @@ function Register() {
             });
 
             if (response.data.success) {
+                Navigate('/');
                 console.log("Usuario registrado exitosamente", response.data);
             } else {
                 setError('Hubo un problema al registrar al usuario.');

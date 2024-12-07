@@ -4,7 +4,7 @@ import MangaCards from "../Components/Manga/MangaCards";
 
 export default function Mangas() {
   return (
-    <div className="min-h-[70vh] w-full">
+    <div className="w-full">
       <div>
         <HeroManga></HeroManga>
       </div>
