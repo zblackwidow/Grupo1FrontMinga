@@ -36,7 +36,7 @@ function NewManga() {
             {/* contenedor principal */}
             <div className="w-full h-[100vh] flex items-center justify-center">
                 {/* contenedor de formulario */}
-                <div className="md:w-1/2 my-16 flex justify-center items-center">
+                <div className="md:w-1/2 my-32 md:my-16 flex justify-center items-center">
                     <form onSubmit={handleSubmit} className="flex flex-col w-[80vw] md:w-[40vw] gap-4 p-4">
                         <h1 className="text-2xl text-center font-bold mb-6">New Manga</h1>
                         {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
