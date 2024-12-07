@@ -13,6 +13,7 @@ import NewChapter from './Components/New/Newchapter'
 import NewRole from './Components/New/NewRole'
 import Chapters from './Pages/Chapters'
 import Mangas from './Pages/Mangas'
+import LayoutSinFotter from './Layout/LayoutSinFotter'
 
 const router = createBrowserRouter([
     {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
             { path: '/*', element: <NotFound></NotFound> },
             { path: '/*', element: <NotFound></NotFound> },
             { path: '/register', element: <Register /> },
-            { path: '/login', element: <Login /> },
+
             { path: "/panel", element: <Panel></Panel> },
             { path: "/newAuthor", element: <NewAuthor/> },
             { path: "/newChapter", element: <NewChapter/> },
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
             { path: "/newCompany", element: <NewCompany/> },
             { path: "/newRole", element: <NewRole/> },
             { path: '/chapters', element: <Chapters /> },
+        ],
+    },
+    {
+        element: <LayoutSinFotter />,
+        children: [
+
+            { path: '/login', element: <Login /> },
+
         ],
     },
 ])

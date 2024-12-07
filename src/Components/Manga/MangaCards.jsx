@@ -17,8 +17,8 @@ const MangaCards = () => {
   };
 
   return (
-    <div className="flex relative justify-center items-center min-h-screen">
-      <div className=" absolute -top-[10%] rounded-3xl bg-white w-[95%] min-h-screen flex flex-wrap justify-center gap-5">
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="rounded-3xl bg-white w-[95%] min-h-screen flex flex-wrap justify-center gap-5">
         {mangas.map((mg) => {
           // Validar si category_id y su propiedad color existen
           const borderColor = mg.category_id?.color || "gray-300"; // Color predeterminado si no existe.
