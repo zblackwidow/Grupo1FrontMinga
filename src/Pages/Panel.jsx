@@ -10,8 +10,12 @@ const Panel = () => {
   const { companies } = useSelector((state) => state.company);
   const { authors } = useSelector((state) => state.author);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphdmllcjJAZ21haWwuY29tIiwiaWF0IjoxNzMzNDYzMzYwLCJleHAiOjE3MzM0NjY5NjB9.mUDSTY9iBlRstQteTgyzHBRSFa140pwJATmKzwpOyBg";
+  const tokenData = JSON.parse(localStorage.getItem("userManga"));
+  const token = tokenData.token;
+  const tokenString = JSON.stringify(token);
+  
+  
+  
   const dispatch = useDispatch();
 
   // Cargar datos iniciales
@@ -39,7 +43,7 @@ useEffect(() => {
 
     // Actualizar en el backend
     dispatch(
-      updateCompany({ _id: company._id, active: updatedCompany.active }, token)
+      updateCompany({ _id: company._id, active: updatedCompany.active }, tokenString)
     );
 
     // Actualizar en el estado local
@@ -56,7 +60,7 @@ useEffect(() => {
     
 
     // Enviar actualización al backend
-    dispatch(updateAuthor({ author: { _id: author._id, active: updatedAuthor.active }, token }));
+    dispatch(updateAuthor({ author: { _id: author._id, active: updatedAuthor.active }, token: tokenString }));
     
     // Actualizar el estado local de forma segura
     setLocalAuthors((prevAuthors) =>
@@ -78,7 +82,8 @@ useEffect(() => {
               Entities
             </h1>
           </div>
-
+      <div className="px-20">
+        
           <section className="grid grid-cols-2 border-solid border-t-2 border-r-2 border-l-2 rounded-t-lg border-gray-300 ">
             <button
               onClick={() => setView("companies")}
@@ -101,16 +106,15 @@ useEffect(() => {
               Authors
             </button>
           </section>
-
           <table className="w-full border-collapse border border-gray-300">
             {view === "companies" ? (
               <tbody>
                 {localCompanies.map((company) => (
-                  <tr key={company._id}>
-                    <td className="border border-gray-300 p-2">
+                  <tr key={company._id} className="bg-[#F9F9FC]">
+                    <td className="border border-gray-300 border-r-transparent p-2">
                       {company.name}
                     </td>
-                    <td className="border border-gray-300 p-2">
+                    <td className="border border-gray-300 border-r-transparent p-2">
                       {company.website}
                     </td>
                     <td className="border border-gray-300 p-2">
@@ -128,7 +132,8 @@ useEffect(() => {
                           checked={company.active}
                           onChange={() => handleToggleActive(company)}
                         />
-                        <div class="group peer bg-gray-200 rounded-full duration-300 w-16 h-8 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-6 after:w-6 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-checked:after:translate-x-8 peer-hover:after:scale-95"></div>
+                        <div class="group peer bg-gray-200 rounded-full duration-300 w-10 h-5 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-4 after:w-4 after:top-[2px] after:left-[2px] after:flex after:justify-center after:items-center peer-checked:after:translate-x-5 peer-hover:after:scale-95"></div>
+
                       </label>
                     </td>
                   </tr>
@@ -137,14 +142,14 @@ useEffect(() => {
             ) : (
               <tbody>
                 {localAuthors.map((auth) => (
-                  <tr key={auth._id}>
-                    <td className="border border-gray-300 p-2">
+                  <tr key={auth._id} className="bg-[#F9F9FC]">
+                    <td className="border border-gray-300 border-r-transparent p-2">
                       {auth.name + " " + auth.lastName}
                     </td>
-                    <td className="border border-gray-300 p-2">{new Date(auth.date).toLocaleDateString()}</td>
-                    <td className="border border-gray-300 p-2">{auth.city}</td>
+                    <td className="border border-gray-300 border-r-transparent p-2">{new Date(auth.date).toLocaleDateString()}</td>
+                    <td className="border border-gray-300 border-r-transparent p-2">{auth.city}</td>
                     <td className="border border-gray-300 p-2">
-                      <img src={auth.photo} alt={auth.name} className="w-8 h-8 rounded-full mx-auto" />
+                      <img src={auth.photo} alt={auth.name} className="w-8 h-8 rounded-full border-r-transparent mx-auto" />
                     </td>
                     <td className="border border-gray-300 p-2">
                     <div className="flex justify-center items-center">
@@ -156,7 +161,8 @@ useEffect(() => {
                           checked={auth.active}
                           onChange={() => handleToggleActiveAuthor(auth)}
                         />
-                        <div class="group peer bg-gray-200 rounded-full duration-300 w-16 h-8 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-6 after:w-6 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-checked:after:translate-x-8 peer-hover:after:scale-95"></div>
+                        <div class="group peer bg-gray-200 rounded-full duration-300 w-10 h-5 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-4 after:w-4 after:top-[2px] after:left-[2px] after:flex after:justify-center after:items-center peer-checked:after:translate-x-5 peer-hover:after:scale-95"></div>
+
                       </label>
                     </div>
                     </td>
@@ -165,6 +171,8 @@ useEffect(() => {
               </tbody>
             )}
           </table>
+      </div>
+
         </div>
       </div>
     </div>

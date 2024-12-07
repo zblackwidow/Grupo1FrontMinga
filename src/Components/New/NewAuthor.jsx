@@ -20,27 +20,24 @@ function NewAuthor() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
+
         try {
-            const response = await axios.post('http://localhost:8080/api/author/create', formData);
-            console.log('Form Data Sent:', response.data);
+            await axios.post('http://localhost:8080/api/author/create', formData);
             setMessage('Author created successfully!');
         } catch (error) {
-            console.error('Error sending form data:', error);
             if (error.response) {
-                console.error('Error details:', error.response.data);
                 setMessage(`Error: ${error.response.data.message}`);
             } else {
                 setMessage('An error occurred. Please try again.');
             }
         }
     };
+    
 
     return (
         <>
-            {/* contenedor principal */}
             <div className="w-full flex justify-center items-center">
-                {/* contenedor de formulario */}
-                <div className="md:w-1/2 my-16 flex justify-center items-center">
+                <div className="md:w-1/2 my-32 md:my-16 flex justify-center items-center">
                     <form onSubmit={handleSubmit} className="flex flex-col w-[90vw] md:w-[40vw] gap-4 p-4">
                         <h1 className="text-2xl text-center font-bold mb-6">New Author</h1>
                         {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
@@ -50,7 +47,7 @@ function NewAuthor() {
                                 name="nombre"
                                 value={formData.nombre}
                                 onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Name"
                             />
                         </div>
@@ -60,7 +57,7 @@ function NewAuthor() {
                                 name="surname"
                                 value={formData.surname}
                                 onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Surname"
                             />
                         </div>
@@ -70,7 +67,7 @@ function NewAuthor() {
                                 name="city"
                                 value={formData.city}
                                 onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="City"
                             />
                         </div>
@@ -80,7 +77,7 @@ function NewAuthor() {
                                 name="birthday"
                                 value={formData.birthday}
                                 onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                             />
                         </div>
                         <div className="mb-6">
@@ -89,7 +86,7 @@ function NewAuthor() {
                                 name="photo"
                                 value={formData.photo}
                                 onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Photo URL"
                             />
                         </div>
@@ -98,7 +95,6 @@ function NewAuthor() {
                         </button>
                     </form>
                 </div>
-                {/* contenedor de imagen */}
                 <div className="md:w-1/2 hidden md:block">
                     <img className='w-full h-[100vh] object-cover' src="https://s3-alpha-sig.figma.com/img/cd7b/cfec/c07083cef0707bd5864b287bac613f2b?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Aa72~qaQ-Re8JBUPxzkxXnEmKnF~Nksubt4JQlzlSyaNzCKI0yOFHb4M3jaIdNjawWVO7VvkTsBWhTN03z4KsmZA8WhV2jMxWVM2PJAnD0piJN30WPlc~QnVykKFP4CwvEbbwihCfqj9VoAAHWocAqPpcZDmnlZvtbifXp5LaI6iv8fUVn5-MuCjlzaYt1mRYVISghahbU3i2vVtbPt5V7gYm5Kq6vJX4et7u36v8lwqsnUviMfvNVJlj3t1c8l6vYcPmsBFDMzEU~6r3HAvc-IIchLyEBooDoJHVTy9IaK2pFeS-Gwe3nW6UApCQiKHRAitgbRjVrp7MqrZqRXw4g__" alt="" />
                 </div>
