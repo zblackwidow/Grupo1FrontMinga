@@ -13,6 +13,7 @@ import NewChapter from './Components/New/Newchapter'
 import NewRole from './Components/New/NewRole'
 import Chapters from './Pages/Chapters'
 import Mangas from './Pages/Mangas'
+import CommentSection from './Components/Manga/Comment'
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
             { path: "/newCompany", element: <NewCompany/> },
             { path: "/newRole", element: <NewRole/> },
             { path: '/chapters', element: <Chapters /> },
+            { path: '/comment', element: <CommentSection /> },
         ],
     },
 ])
