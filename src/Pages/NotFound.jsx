@@ -6,10 +6,7 @@ import { Link } from 'react-router-dom'
 export default function NotFound() {
     return (
         <>
-            <div className="fixed top-0 z-20 w-full ">
-
-            </div>
-            <main className="Body grid h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+            <main className="h-screen flex bg-white justify-center items-center">
                 <div className="text-center">
                     <p className="text-[48px] font-semibold text-indigo-600">404</p>
                     <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
@@ -27,7 +24,6 @@ export default function NotFound() {
                     </div>
                 </div>
             </main>
-
         </>
     )
 }
