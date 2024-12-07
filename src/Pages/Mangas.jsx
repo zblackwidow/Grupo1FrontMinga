@@ -4,11 +4,13 @@ import MangaCards from "../Components/Manga/MangaCards";
 
 export default function Mangas() {
   return (
-    <div className="min-h-[70vh] w-full">
-      <div>
+    <div className="min-h-full w-full">
+    
+    <div className="flex flex-col flex-grow">
         <HeroManga></HeroManga>
-      </div>
+      
       <MangaCards></MangaCards>
+      </div>
     </div>
   );
 }
