@@ -10,8 +10,12 @@ const Panel = () => {
   const { companies } = useSelector((state) => state.company);
   const { authors } = useSelector((state) => state.author);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphdmllcjJAZ21haWwuY29tIiwiaWF0IjoxNzMzNTIxNDMyLCJleHAiOjE3MzM1MjUwMzJ9.NiKGr64k8GYEIhrpOtzB1CbZY1_m0Hs0GF7jpLj9cs8";
+  const tokenData = JSON.parse(localStorage.getItem("userManga"));
+  const token = tokenData.token;
+  const tokenString = JSON.stringify(token);
+  
+  
+  
   const dispatch = useDispatch();
 
   // Cargar datos iniciales
@@ -39,7 +43,7 @@ useEffect(() => {
 
     // Actualizar en el backend
     dispatch(
-      updateCompany({ _id: company._id, active: updatedCompany.active }, token)
+      updateCompany({ _id: company._id, active: updatedCompany.active }, tokenString)
     );
 
     // Actualizar en el estado local
@@ -56,7 +60,7 @@ useEffect(() => {
     
 
     // Enviar actualización al backend
-    dispatch(updateAuthor({ author: { _id: author._id, active: updatedAuthor.active }, token }));
+    dispatch(updateAuthor({ author: { _id: author._id, active: updatedAuthor.active }, token: tokenString }));
     
     // Actualizar el estado local de forma segura
     setLocalAuthors((prevAuthors) =>
