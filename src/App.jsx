@@ -17,6 +17,8 @@ import EditAuthor from './Components/Edit/EditAuthor'
 import EditChapter from './Components/Edit/EditChapter'
 import EditManga from './Components/Edit/EditManga'
 import EditCompany from './Components/Edit/EditCompany'
+import LayoutSinFotter from './Layout/LayoutSinFotter'
+import CommentSection from './Components/Manga/Comment'
 
 const router = createBrowserRouter([
     {
@@ -27,19 +29,27 @@ const router = createBrowserRouter([
             { path: '/mangas', element: <Mangas></Mangas> },
             { path: '/*', element: <NotFound></NotFound> },
             { path: '/*', element: <NotFound></NotFound> },
-            { path: '/register', element: <Register /> },
-            { path: '/login', element: <Login /> },
             { path: "/panel", element: <Panel></Panel> },
-            { path: "/newAuthor", element: <NewAuthor/> },
-            { path: "/newChapter", element: <NewChapter/> },
-            { path: "/newManga", element: <NewManga/> },
-            { path: "/newCompany", element: <NewCompany/> },
-            { path: "/newRole", element: <NewRole/> },
             { path: '/chapters', element: <Chapters /> },
+            { path: '/comment', element: <CommentSection /> },
+        ],
+    },
+    {
+        element: <LayoutSinFotter />,
+        children: [
+
+            { path: '/login', element: <Login /> },
+            { path: '/register', element: <Register /> },
+            { path: "/newAuthor", element: <NewAuthor /> },
+            { path: "/newChapter", element: <NewChapter /> },
+            { path: "/newManga", element: <NewManga /> },
+            { path: "/newCompany", element: <NewCompany /> },
+            { path: "/newRole", element: <NewRole /> },
             { path: '/editAuthor', element: <EditAuthor /> },
             { path: '/editChapter', element: <EditChapter /> },
-            { path: '/editManga', element: <EditManga /> }, 
+            { path: '/editManga', element: <EditManga /> },
             { path: '/editCompany', element: <EditCompany /> },
+
         ],
     },
 ])
@@ -52,4 +62,5 @@ export default function App() {
         </>
     )
 }
+
 
