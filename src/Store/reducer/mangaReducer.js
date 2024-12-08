@@ -1,8 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getMangas, getManga, createManga, updateManga, deleteMangaById } from "../actions/mangaActions";
+import { getMangas, getManga, createManga, updateManga, setSearch, deleteMangaById } from "../actions/mangaActions";
 
 const initialState = {
     mangas: [],
+    search: "",
     manga: [],
     error: null,
     loading: false,
@@ -21,6 +22,9 @@ const mangaReducer = createReducer(initialState, (builder) => {
         .addCase(getMangas.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
+        })
+        .addCase(setSearch, (state, action) => {
+            state.search = action.payload;
         })
         .addCase(getManga.pending, (state) => {
             state.loading = true;
