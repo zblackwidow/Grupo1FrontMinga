@@ -4,7 +4,7 @@ import '../index.css'
 
 
 
-export default function LayoutSinFotter() {
+export default function LayoutExceptFooter() {
     return (
         <>
 
