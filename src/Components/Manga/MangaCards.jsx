@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMangas } from "../../Store/actions/mangaActions";
+import CategoryManga from "./CategoryManga";
 
 const MangaCards = () => {
   const { mangas } = useSelector((state) => state.manga);
@@ -19,6 +20,8 @@ const MangaCards = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="rounded-3xl bg-white w-[95%] min-h-screen flex flex-wrap justify-center gap-5">
+        
+        <CategoryManga></CategoryManga>
         {mangas.map((mg) => {
           // Validar si category_id y su propiedad color existen
           const borderColor = mg.category_id?.color || "gray-300"; // Color predeterminado si no existe.
