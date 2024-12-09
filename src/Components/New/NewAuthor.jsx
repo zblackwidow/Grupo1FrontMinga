@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function NewAuthor() {
     const navigate = useNavigate()
@@ -11,11 +12,12 @@ function NewAuthor() {
 
 
     const [formData, setFormData] = useState({
-        nombre: '',
-        surname: '',
+        name: '',
+        lastName: '',
         city: '',
         birthday: '',
         photo: '',
+        user_id: idUser,
         user_id: idUser,
     });
 
@@ -30,7 +32,7 @@ function NewAuthor() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
-
+    
         try {
             await axios.post('http://localhost:8080/api/author/create', formData);
             setMessage('Author created successfully!');
@@ -65,8 +67,8 @@ function NewAuthor() {
                         <div className="mb-6">
                             <input
                                 type="text"
-                                name="nombre"
-                                value={formData.nombre}
+                                name="name"
+                                value={formData.name}
                                 onChange={handleChange}
                                 className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Name"
@@ -75,11 +77,11 @@ function NewAuthor() {
                         <div className="mb-6">
                             <input
                                 type="text"
-                                name="surname"
-                                value={formData.surname}
+                                name="lastName"
+                                value={formData.lastName}
                                 onChange={handleChange}
                                 className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                placeholder="Surname"
+                                placeholder="Last Name"
                             />
                         </div>
                         <div className="mb-6">
