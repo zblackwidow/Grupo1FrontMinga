@@ -34,7 +34,7 @@ function NewCompany() {
             // Almacenar el nuevo rol en el localStorage
             const updatedUser = { ...dataUser.user, role: 2 }; // Actualizamos el rol
             localStorage.setItem('userManga', JSON.stringify({
-                token: dataUser.token,
+                token: token,
                 user: updatedUser,
             }));
     
