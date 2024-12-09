@@ -21,6 +21,7 @@ import PrivateRouterAuthorCompany from './Components/Basic/PrivateRouterAuthorCo
 import PrivateRouterAdmin from './Components/Basic/PrivateRouterAdmin'
 import MangaChapterPage from './Pages/MangaChapterPage'
 
+
 const router = createBrowserRouter([
     {
         element: <StandarLayout />,
