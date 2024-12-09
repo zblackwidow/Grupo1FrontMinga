@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 export default function Banner() {
     const auth = useSelector((state) => state.auth)
 
-
     return (
         <>
             <div className="w-full h-full">
@@ -16,7 +15,7 @@ export default function Banner() {
                 <div className="text-center lg:text-start absolute sm:hidden md:block top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] lg:left-[10%] lg:translate-x-[-00%]">
                     <div className="py-2 ">
                         <h1 className="text-[40px] lg:text-[64px] font-bold 	leading-[60.92px]	 font-poppins text-white">
-                            {auth.user._id ? 'For the love of manga' : 'Welcome'}
+                            For the love of manga
                         </h1>
                     </div>
                     <div className="py-2">
@@ -31,8 +30,11 @@ export default function Banner() {
                     </div>
                     <div className="py-2 ">
                         <button className="bg-[#ffffff] text-[#ff5722] rounded-md w-[240px] h-[55px] text-[24px] font-medium  font-poppins">
-                            {auth.user._id ? <NavLink to={'/mangas'}>Get Started</NavLink> : <NavLink to={'/login'}>Sign In!</NavLink>}
-                            
+                            {auth.user._id ? (
+                                <NavLink to={'/mangas'}>Get Started</NavLink>
+                            ) : (
+                                <NavLink to={'/login'}>Sign In!</NavLink>
+                            )}
                         </button>
                     </div>
                 </div>
