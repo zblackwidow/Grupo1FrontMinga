@@ -26,7 +26,7 @@ const navigate = useNavigate();
     return matchesCategory && matchesTitle;
   });
   let dataUser = JSON.parse(localStorage.getItem("userManga"))
-  let role = dataUser.user.role || dataUser.user.payload.user.role
+  let role = dataUser.user.role
 
   const handleViewMore = (mg) => {
 
