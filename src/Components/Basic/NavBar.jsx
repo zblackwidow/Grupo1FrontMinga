@@ -24,7 +24,7 @@ const Navbar = () => {
           setDataUser(response); // Actualizar el estado local
           localStorage.setItem(
             "userManga",
-            JSON.stringify({ user: response, token: userToken })
+            JSON.stringify({ user: response.payload.user, token: userToken })
           );
           setUserLogeado(true);
           navigate("/"); // Redirigir al home
