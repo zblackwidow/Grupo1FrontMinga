@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 function EditAuthor() {
     const [formData, setFormData] = useState({
@@ -14,10 +15,15 @@ function EditAuthor() {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Aquí puedes manejar el envío del formulario
-        console.log('Form Data Submitted:', formData);
+    const handleSubmit = async (e) => {
+        e.preventDefault(); 
+        try {
+            const response = await axios.put('http://localhost:8080/api/author/update', formData);
+            
+            console.log('Respuesta del servidor:', response.data); 
+        } catch (error) {
+            console.error('Error al realizar la solicitud:', error); 
+        }
     };
 
     return (
@@ -25,7 +31,7 @@ function EditAuthor() {
         {/* Contenedor principal */}
         <div className="w-full flex items-center justify-center">
             {/* contenedor de formulario */}
-            <div className=" md:w-1/2 my-32 md:my-16 flex flex-col items-center justify-center"> 
+            <div className="md:w-1/2 my-32 md:my-16 flex flex-col items-center justify-center"> 
                 <h1 className="text-2xl text-center font-bold mb-6">Edit Author</h1>
                 <form onSubmit={handleSubmit} className="w-[90vw] md:w-[60vw] lg:w-[40vw] mx-6 flex flex-col gap-4">
                     <input
