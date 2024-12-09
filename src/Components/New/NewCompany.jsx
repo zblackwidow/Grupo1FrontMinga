@@ -9,6 +9,7 @@ function NewCompany() {
     let token = dataUser.token
     let idUser = dataUser.user._id
 
+    console.log(idUser)
     const [formData, setFormData] = useState({
         name: '',
         website: '',
@@ -25,31 +26,33 @@ function NewCompany() {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        setMessage('')
+        e.preventDefault();
+        setMessage('');
+    
         try {
-            await axios.post('http://localhost:8080/api/company/create', formData)
-            setMessage('Author created successfully!')
-
-            const user = await axios.get(`http://localhost:8080/api/user/id/${idUser}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            console.log(user)
-
+            const response = await axios.post('http://localhost:8080/api/company/create', formData);
+    
+            // Almacenar el nuevo rol en el localStorage
+            const updatedUser = { ...dataUser.user, role: 2 }; // Actualizamos el rol
+            localStorage.setItem('userManga', JSON.stringify({
+                token: dataUser.token,
+                user: updatedUser,
+            }));
+    
+            setMessage('Author created successfully!');
+    
             setTimeout(() => {
-                return navigate('/mangas')
-            }, 1000)
+                return navigate('/mangas');
+            }, 1000);
+    
         } catch (error) {
             if (error.response) {
-                setMessage(`Error: ${error.response.data.message}`)
+                setMessage(`Error: ${error.response.data.message}`);
             } else {
-                setMessage('An error occurred. Please try again.')
+                setMessage('An error occurred. Please try again.');
             }
         }
-    }
-
+    };
     return (
         <>
             {/* contenedor principal */}

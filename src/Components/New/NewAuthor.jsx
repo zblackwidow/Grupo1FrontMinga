@@ -1,13 +1,20 @@
 import { useState } from "react";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 function NewAuthor() {
+    const navigate = useNavigate()
+   
+    let dataUser = JSON.parse(localStorage.getItem('userManga'))
+    let token = dataUser.token
+    let idUser = dataUser.user._id
     const [formData, setFormData] = useState({
-        nombre: '',
-        surname: '',
+        name: '',
+        lastName: '',
         city: '',
         birthday: '',
         photo: '',
+        user_id: idUser,
     });
 
     const [message, setMessage] = useState('');
@@ -20,10 +27,23 @@ function NewAuthor() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
-
+    
         try {
-            await axios.post('http://localhost:8080/api/author/create', formData);
+            const response = await axios.post('http://localhost:8080/api/author/create', formData);
+    
+            // Almacenar el nuevo rol en el localStorage
+            const updatedUser = { ...dataUser.user, role: 1 }; // Actualizamos el rol
+            localStorage.setItem('userManga', JSON.stringify({
+                token: dataUser.token,
+                user: updatedUser,
+            }));
+    
             setMessage('Author created successfully!');
+    
+            setTimeout(() => {
+                return navigate('/mangas');
+            }, 1000);
+    
         } catch (error) {
             if (error.response) {
                 setMessage(`Error: ${error.response.data.message}`);
@@ -44,8 +64,8 @@ function NewAuthor() {
                         <div className="mb-6">
                             <input
                                 type="text"
-                                name="nombre"
-                                value={formData.nombre}
+                                name="name"
+                                value={formData.name}
                                 onChange={handleChange}
                                 className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Name"
@@ -54,11 +74,11 @@ function NewAuthor() {
                         <div className="mb-6">
                             <input
                                 type="text"
-                                name="surname"
-                                value={formData.surname}
+                                name="lastName"
+                                value={formData.lastName}
                                 onChange={handleChange}
                                 className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                placeholder="Surname"
+                                placeholder="Last Name"
                             />
                         </div>
                         <div className="mb-6">
