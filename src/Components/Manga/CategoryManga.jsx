@@ -19,9 +19,9 @@ export default function CategoryManga({ onCategorySelect }) {
   };
 
   return (
-    <div className="flex flex-wrap justify-center items-center gap-2 m-4 p-4">
+    <div className="flex flex-wrap justify-center items-center gap-5 m-4 p-4">
     <button
-      className="mt-2 bg-gray-300 text-black rounded-3xl hover:bg-gray-400 px-2 sm:px-4 py-1 sm:py-2 font-bold text-xs sm:text-sm md:text-base"
+      className="mt-2 bg-gray-300 text-black rounded-3xl hover:bg-gray-400 active:scale-x-110 hover:shadow-lg px-2 sm:px-4 py-1 sm:py-2 font-bold text-xs sm:text-sm md:text-base transition-all duration-300 hover:opacity-80 hover:text-opacity-100 text-opacity-80"
       onClick={handleViewAll}
     >
       All
@@ -29,17 +29,18 @@ export default function CategoryManga({ onCategorySelect }) {
     {categories.map((cat, index) => (
       <button
         key={index}
-        className="rounded-3xl px-2 sm:px-4 py-1 sm:py-2 font-bold transition-opacity duration-300 hover:opacity-100 text-xs sm:text-sm md:text-base"
+        className="rounded-3xl px-2 sm:px-4 py-1 sm:py-2 font-bold text-xs sm:text-sm md:text-base transition-all duration-300 transform hover:scale-x-110 active:scale-95 hover:shadow-2xl hover:opacity-100 hover:text-opacity- text-opacity-100"
         style={{
-          backgroundColor: cat.color || "#cccccc",
-          color: cat.hover || "#000000",
+          backgroundColor: cat.hover || "#cccccc",
+          color: cat.color || "#000000",
         }}
         onClick={() => handleViewMore(cat)}
       >
-        {cat.name}
+        {cat.name.charAt(0).toUpperCase()+cat.name.slice(1)}
       </button>
     ))}
   </div>
+  
   
   
   );
