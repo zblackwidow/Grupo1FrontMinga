@@ -16,11 +16,14 @@ const MangaChapterPage = () => {
   
     // Recuperar el token del localStorage
     useEffect(() => {
-      const savedToken = localStorage.getItem("yourAuthToken");
-      setToken(savedToken); // Establecer el token en el estado local
-      console.log("Token recuperado:", savedToken); // Verifica si el token se recupera correctamente
-    }, []); // Solo ejecutarse una vez cuando el componente se monta
-  
+        const savedUser = localStorage.getItem("userManga");
+        if (savedUser) {
+          const userObject = JSON.parse(savedUser);  // Convierte el objeto guardado a un objeto JavaScript
+          const token = userObject.token;  // Accede solo al token
+          setToken(token);  // Establece el token en el estado local
+          console.log("Token recuperado:", token);  // Verifica si el token se recupera correctamente
+        }
+      }, []); // Solo se ejecuta cuando el componente se monta
     useEffect(() => {
       if (id && token) {
         console.log("Despatching action to get chapter:", id);

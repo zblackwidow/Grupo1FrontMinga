@@ -32,7 +32,7 @@ const navigate = useNavigate();
 
     if (role > 0) {
       
-      navigate(`/chapters`, { state: mg._id });
+      navigate(`/chapters/${mg}`);
     }else{
       navigate(`/newRole`, { state: mg._id });
     }
