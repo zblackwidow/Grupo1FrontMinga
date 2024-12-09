@@ -7,7 +7,7 @@ function NewCompany() {
 
     let dataUser = JSON.parse(localStorage.getItem('userManga'))
     let token = dataUser.token
-    let idUser = dataUser.user._id
+    let idUser = dataUser.user.id ?? dataUser.user._id
 
     const [formData, setFormData] = useState({
         name: '',
