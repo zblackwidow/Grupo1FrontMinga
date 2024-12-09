@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { validateToken } from '../../Store/actions/authActions'
 import { Navigate } from 'react-router-dom'
+import { logout } from '../../Store/actions/authActions';
+
 
 const Navbar = () => {
     // Estados para mostrar/ocultar los menús
@@ -58,6 +60,9 @@ const Navbar = () => {
     const logout = () => {
         localStorage.removeItem('userManga')
         setUserLogeado(false)
+
+        dispatch(logout())
+
         return <Navigate to="/" />
     }
 
