@@ -32,7 +32,7 @@ function Register() {
             });
 
             if (response.data.success) {
-                Navigate('/');
+                navigate('/');
                 console.log("Usuario registrado exitosamente", response.data);
             } else {
                 setError('Hubo un problema al registrar al usuario.');
@@ -54,7 +54,7 @@ function Register() {
         <div className="w-full flex justify-center items-center font-poppins">
             <div className="w-full my-16 md:w-[50%] flex justify-center">
                 <div className="md:w-[30vw] w-[90vw]">
-                    <div className='flex flex-col items-center'>
+                    <div className='flex flex-col items-center mt-36'>
                         <img src={logo} alt="logo" className="object-contain w-[127px]" />
                         <h1 className="text-2xl text-gray-900 font-bold mb-6">Welcome!</h1>
                         <p className='text-gray-500 font-semibold text-center'>

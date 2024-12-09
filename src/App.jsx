@@ -9,9 +9,13 @@ import Panel from '../src/Pages/Panel'
 import NewAuthor from './Components/New/NewAuthor'
 import NewManga from './Components/New/NewManga'
 import NewCompany from './Components/New/NewCompany'
-import NewChapter from './Components/New/Newchapter'
+import NewChapter from './Components/New/NewChapter'
 import NewRole from './Components/New/NewRole'
 import Mangas from './Pages/Mangas'
+import EditAuthor from './Components/Edit/EditAuthor'
+import EditChapter from './Components/Edit/EditChapter'
+import EditManga from './Components/Edit/EditManga'
+import EditCompany from './Components/Edit/EditCompany'
 import LayoutExceptFooter from './Layout/LayoutExceptFooter'
 import CommentSection from './Components/Manga/Comment'
 import Profile from './Pages/Profile'
@@ -42,12 +46,17 @@ const router = createBrowserRouter([
         children: [
             { path: '/login', element: <Login /> },
             { path: '/register', element: <Register /> },
-            { path: '/newAuthor', element: <PrivateRouteUser><NewAuthor /></PrivateRouteUser> },
-            { path: '/newChapter', element: <PrivateRouterAuthorCompany><NewChapter /></PrivateRouterAuthorCompany> },
-            { path: '/newManga', element: <PrivateRouterAuthorCompany><NewManga /></PrivateRouterAuthorCompany> },
-            { path: '/newCompany', element: <PrivateRouteUser><NewCompany /></PrivateRouteUser> },
-            { path: '/newRole', element: <PrivateRouteUser><NewRole /></PrivateRouteUser> },
-            { path: '/*', element: <NotFound></NotFound> },
+            { path: "/newAuthor", element: <NewAuthor /> },
+            { path: "/newChapter", element: <NewChapter /> },
+            { path: "/newManga", element: <NewManga /> },
+            { path: "/newCompany", element: <NewCompany /> },
+            { path: "/newRole", element: <NewRole /> },
+            { path: '/editAuthor', element: <EditAuthor /> },
+            { path: '/editChapter', element: <EditChapter /> },
+            { path: '/editManga', element: <EditManga /> },
+            { path: '/editCompany', element: <EditCompany /> },
+            { path: '/*', element: <NotFound /> },
+
         ],
     },
 ])
