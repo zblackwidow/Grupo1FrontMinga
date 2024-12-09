@@ -9,7 +9,6 @@ function NewCompany() {
     let token = dataUser.token
     let idUser = dataUser.user._id
 
-    console.log(idUser)
     const [formData, setFormData] = useState({
         name: '',
         website: '',
