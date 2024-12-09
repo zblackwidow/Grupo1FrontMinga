@@ -25,10 +25,19 @@ const navigate = useNavigate();
 
     return matchesCategory && matchesTitle;
   });
-
+  let dataUser = JSON.parse(localStorage.getItem("userManga"))
+  let role = dataUser.user.role || dataUser.user.payload.user.role
 
   const handleViewMore = (mg) => {
-    navigate(`/chapters`, { state: mg._id });
+
+    if (role > 0) {
+      
+      navigate(`/chapters`, { state: mg._id });
+    }else{
+      navigate(`/newRole`, { state: mg._id });
+    }
+
+
   };
 
   
@@ -49,7 +58,7 @@ const navigate = useNavigate();
               }}
             >
               <div className="flex flex-col justify-center p-2 w-[70%] h-[70%]">
-                <div className="flex flex-col h-full items-start justify-center w-full">
+                <div className="flex flex-col h-full items-start justify-center w-full font-ro">
                   <p className="text-black font-bold text-center">{mg.title}</p>
                   <p
                   className="text-sm font-medium text-center"
