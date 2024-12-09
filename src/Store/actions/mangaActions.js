@@ -35,12 +35,12 @@ export const getMangasByAuthor = createAsyncThunk(
     async ({ author_id, token }, thunkAPI) => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/manga/mangasByAuthor`,
+          `http://localhost:8080/api/manga/mangasByAuthor?author=${author_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            params: { author_id }, // Pasar `author_id` como parámetro
+         
           }
         );
         return response.data.response;

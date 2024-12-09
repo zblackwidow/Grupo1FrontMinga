@@ -17,7 +17,7 @@ export default function Companies() {
 
   const dispatch = useDispatch();
   const { mangas } = useSelector((state) => state.manga);
-  const { categories } = useSelector((state) => state.category);
+  const { categories, loading } = useSelector((state) => state.category);
   const [mangaByAuthor, setMangaByAuthor] = useState([]);
 
   useEffect(() => {
