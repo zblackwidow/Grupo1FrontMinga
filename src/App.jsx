@@ -11,7 +11,6 @@ import NewManga from './Components/New/NewManga'
 import NewCompany from './Components/New/NewCompany'
 import NewChapter from './Components/New/Newchapter'
 import NewRole from './Components/New/NewRole'
-import Chapters from './Pages/Chapters'
 import Mangas from './Pages/Mangas'
 import LayoutExceptFooter from './Layout/LayoutExceptFooter'
 import CommentSection from './Components/Manga/Comment'
@@ -20,6 +19,8 @@ import Companies from './Pages/Companies'
 import PrivateRouteUser from './Components/Basic/PrivateRouteUser'
 import PrivateRouterAuthorCompany from './Components/Basic/PrivateRouterAuthorCompany'
 import PrivateRouterAdmin from './Components/Basic/PrivateRouterAdmin'
+import MangaChapterPage from './Pages/MangaChapterPage'
+
 
 const router = createBrowserRouter([
     {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
             { path: '/mangas', element: <PrivateRouteUser><Mangas></Mangas></PrivateRouteUser>  },
             { path: '/*', element: <NotFound></NotFound> },
             { path: '/panel', element: <PrivateRouterAdmin><Panel></Panel></PrivateRouterAdmin> },
-            { path: '/chapters', element: <PrivateRouterAuthorCompany><Chapters /></PrivateRouterAuthorCompany> },
+            { path: '/chapters/:id', element: <PrivateRouterAuthorCompany><MangaChapterPage /></PrivateRouterAuthorCompany> },
             { path: '/comment', element: <PrivateRouterAuthorCompany><CommentSection /></PrivateRouterAuthorCompany> },
             { path: '/profile', element: <PrivateRouterAuthorCompany><Profile /></PrivateRouterAuthorCompany> },
             { path: '/companies', element: <PrivateRouterAuthorCompany><Companies /></PrivateRouterAuthorCompany> },

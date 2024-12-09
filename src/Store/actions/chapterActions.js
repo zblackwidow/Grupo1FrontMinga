@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const getChapters = createAsyncThunk("GET_CHAPTERS", async (token) => {
+// Obtener todos los capítulos
+const getChapters = createAsyncThunk("GET_CHAPTERS", async ({ token }, thunkAPI) => { // Cambiado para recibir un objeto
     try {
         const response = await axios.get(
             "http://localhost:8080/api/chapter/all", {
@@ -9,15 +10,15 @@ const getChapters = createAsyncThunk("GET_CHAPTERS", async (token) => {
                     Authorization: `Bearer ${token}`,
                 },
             }
-        ) 
-        return response.data
+        );
+        return response.data;
     } catch (error) {
-        return error.response?.data?.message || "Token validation failed"
-        
+        return thunkAPI.rejectWithValue(error.response?.data?.message || "Token validation failed");
     }
-})
+});
 
-const getChapterById = createAsyncThunk("GET_CHAPTER_BY_ID", async (id, token) => {
+// Obtener un capítulo por ID
+const getChapterById = createAsyncThunk("GET_CHAPTER_BY_ID", async ({ id, token }, thunkAPI) => { // Cambiado para recibir un objeto
     try {
         const response = await axios.get(
             `http://localhost:8080/api/chapter/id/${id}`, {
@@ -25,15 +26,34 @@ const getChapterById = createAsyncThunk("GET_CHAPTER_BY_ID", async (id, token) =
                     Authorization: `Bearer ${token}`,
                 },
             }
-        )
-        return response.data
+        );
+        console.log("Respuesta del servidor:", response.data);  // Verifica qué datos te está devolviendo el servidor
+        return response.data;
     } catch (error) {
-        return error.response?.data?.message || "Token validation failed"
-        
+        return thunkAPI.rejectWithValue(error.response?.data?.message || "Token validation failed");
     }
-})
+});
 
-const createChapter = createAsyncThunk("CREATE_CHAPTER", async (chapter, token) => {
+
+// Obtener un capítulo por IDManga
+const getChapterByMangaId = createAsyncThunk("GET_CHAPTER_BY_ID", async ({ id, token }, thunkAPI) => { // Cambiado para recibir un objeto
+    try {
+        const response = await axios.get(
+            `http://localhost:8080/api/chapter/idManga/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        console.log("Respuesta del servidor:", response.data);  // Verifica qué datos te está devolviendo el servidor
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response?.data?.message || "Token validation failed");
+    }
+});
+
+// Crear un capítulo
+const createChapter = createAsyncThunk("CREATE_CHAPTER", async ({ chapter, token }, thunkAPI) => { // Cambiado para recibir un objeto
     try {
         const response = await axios.post(
             "http://localhost:8080/api/chapter", chapter, {
@@ -41,15 +61,15 @@ const createChapter = createAsyncThunk("CREATE_CHAPTER", async (chapter, token) 
                     Authorization: `Bearer ${token}`,
                 },
             }
-        )
-        return response.data
+        );
+        return response.data;
     } catch (error) {
-        return error.response?.data?.message || "Token validation failed"
-        
+        return thunkAPI.rejectWithValue(error.response?.data?.message || "Token validation failed");
     }
-})
+});
 
-const updateChapter = createAsyncThunk("UPDATE_CHAPTER", async (chapter, token) => {
+// Actualizar un capítulo
+const updateChapter = createAsyncThunk("UPDATE_CHAPTER", async ({ chapter, token }, thunkAPI) => { // Cambiado para recibir un objeto
     try {
         const response = await axios.put(
             "http://localhost:8080/api/chapter/update", chapter, {
@@ -57,29 +77,27 @@ const updateChapter = createAsyncThunk("UPDATE_CHAPTER", async (chapter, token) 
                     Authorization: `Bearer ${token}`,
                 },
             }
-        )
-        return response.data
+        );
+        return response.data;
     } catch (error) {
-        return error.response?.data?.message || "Token validation failed"
-        
+        return thunkAPI.rejectWithValue(error.response?.data?.message || "Token validation failed");
     }
-})
+});
 
-const deleteChapter = createAsyncThunk("DELETE_CHAPTER", async (id, token) => {
+// Eliminar un capítulo
+const deleteChapter = createAsyncThunk("DELETE_CHAPTER", async ({ id, token }, thunkAPI) => { // Cambiado para recibir un objeto
     try {
         const response = await axios.delete(
-            `http://localhost:8080/api/chapter/delete`, id, {
+            `http://localhost:8080/api/chapter/delete`, { data: { id } }, { // Cambié la forma en que envías el id
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             }
-        )
-        return response.data
+        );
+        return response.data;
     } catch (error) {
-        return error.response?.data?.message || "Token validation failed"
-        
+        return thunkAPI.rejectWithValue(error.response?.data?.message || "Token validation failed");
     }
-})
+});
 
-
-export { getChapters, getChapterById, createChapter, updateChapter, deleteChapter }
+export { getChapters, getChapterById, getChapterByMangaId, createChapter, updateChapter, deleteChapter };
