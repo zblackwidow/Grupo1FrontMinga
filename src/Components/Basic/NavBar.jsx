@@ -2,30 +2,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { validateToken } from "../../Store/actions/authActions";
-// import axios from "axios";
-// const loginWithToken = async (token) => {
-//   try {
-//     const response = await axios.get(
-//       "http://localhost:8080/api/auth/validateToken",
-//       {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       }
-//     );
-
-//     return response.data.user;
-//   } catch (error) {
-//     console.error("Error validando el token:", error);
-//     return null;
-//   }
-// };
 
 const Navbar = () => {
   // Estados para mostrar/ocultar los menús
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [dataUser, setDataUser] = useState(null); // Estado local para manejar el usuario
-  const [userPhoto, setUserPhoto] = useState(null);
+  const [dataUser, setDataUser] = useState(null);
+  const [UserLogeado, setUserLogeado] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -44,6 +26,7 @@ const Navbar = () => {
             "userManga",
             JSON.stringify({ user: response, token: userToken })
           );
+          setUserLogeado(true);
           navigate("/"); // Redirigir al home
         } else {
           console.error("Invalid Token");
@@ -59,6 +42,7 @@ const Navbar = () => {
         dispatch(validateToken(storedUser.token)).then((response) => {
           if (response) {
             setDataUser(response); // Actualizar el usuario válido
+            setUserLogeado(true);
           } else {
             setDataUser(null); // Invalidar el usuario
             console.error("Invalid Token");
@@ -69,6 +53,17 @@ const Navbar = () => {
       }
     }
   }, [dispatch, navigate]);
+  const logout = () => {
+    localStorage.removeItem("userManga");
+    setUserLogeado(false); 
+  };
+
+  useEffect(() => {
+   if (!UserLogeado) {
+    setDataUser(false)
+   }
+  }, [UserLogeado]);
+
 
 
   return (
@@ -191,34 +186,68 @@ const Navbar = () => {
                 </div>
               </li>
             )}
-            <li className="w-full">
+          {!UserLogeado && (
+            <>
+              <li className="w-full">
+                <NavLink
+                  to="/home"
+                  className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                  href="/home"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li className="w-full">
+                <NavLink
+                  to="/register"
+                  className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  Register
+                </NavLink>
+              </li>
+              <li className="w-full">
+                <NavLink
+                  to="/login"
+                  className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  Sign In
+                </NavLink>
+              </li>
+            </>
+          )}
+            {UserLogeado && (
+              <>
+              <li className="w-full">
+                <NavLink
+                  to="/home"
+                  className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                  href="/home"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  Home
+                </NavLink>
+              </li> 
+              <li className="w-full">
               <NavLink
-                to="/home"
+                to="/mangas"
                 className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
-                href="/home"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                Home
+                Mangas
               </NavLink>
             </li>
-            <li className="w-full">
-              <NavLink
-                to="/register"
+            <li className="w-full flex justify-center">
+            <button
+                onClick={logout}
                 className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                Register
-              </NavLink>
+                Logout
+              </button>
             </li>
-            <li className="w-full">
-              <NavLink
-                to="/login"
-                className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                Sign In
-              </NavLink>
-            </li>
+            </>)}
           </ul>
         </div>
       )}
