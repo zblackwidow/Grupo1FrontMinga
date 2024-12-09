@@ -25,10 +25,19 @@ const navigate = useNavigate();
 
     return matchesCategory && matchesTitle;
   });
+  let dataUser = JSON.parse(localStorage.getItem("userManga"))
+  let role = dataUser.user.role || dataUser.user.payload.user.role
+
+  const handleViewMore = (mg) => {
+
+    if (role > 0) {
+      
+      navigate(`/chapters`, { state: mg._id });
+    }else{
+      navigate(`/newRole`, { state: mg._id });
+    }
 
 
-  const handleViewMore = (mangaId) => {
-    navigate(`/chapters/${mangaId}`); // Pasamos el ID del manga directamente en la URL
   };
 
   
@@ -43,14 +52,22 @@ const navigate = useNavigate();
             className="flex flex-row w-full sm:w-1/2 lg:w-1/3 m-2 transform transition duration-500 hover:scale-105"
           >
             <div
-              className={`flex items-center rounded-2xl w-full sm:w-[80%] m-4 lg:w-[70%] overflow-hidden shadow-lg border-l-[10px]`}
+              className={`flex items-center rounded-2xl w-full  m-4  overflow-hidden shadow-lg border-l-[10px]`}
               style={{
                 borderLeftColor: mg.category_id?.color || "gray-300",
               }}
             >
               <div className="flex flex-col justify-center p-2 w-[70%] h-[70%]">
-                <div className="flex h-full items-center justify-center w-full">
-                  <p className="text-black text-center">{mg.title}</p>
+                <div className="flex flex-col h-full items-start justify-center w-full font-ro">
+                  <p className="text-black font-bold text-center">{mg.title}</p>
+                  <p
+                  className="text-sm font-medium text-center"
+                  style={{
+                    color: mg.category_id?.color || "#000", // Pintar las letras del color de la categoría
+                  }}
+                >
+                  {mg.category_id?.name.charAt(0).toUpperCase()+mg.category_id.name.slice(1)  || "Unknown"} {/* Mostrar el nombre de la categoría */}
+                </p>
                 </div>
                 <div className="flex items-end justify-self-start h-full w-full">
                  <button

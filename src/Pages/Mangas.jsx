@@ -13,9 +13,13 @@ export default function Mangas() {
   return (
 <>
   <HeroManga />
-  <div className="flex flex-col justify-center items-center mx-auto -mt-20 w-[95%] sm:w-[90%] lg:w-[80%] p-4 bg-white rounded-t-3xl shadow-lg">
-    <CategoryManga onCategorySelect={handleCategorySelection} />
-    <MangaCards selectedCategory={selectedCategory} />
+  <div className="flex flex-col items-start mx-auto -mt-20 w-full  lg:w-[95%] p-2 bg-white sm:rounded-t-3xl rounded-t-[60px]">
+    <div className="flex lg:ml-52 ">
+      <CategoryManga onCategorySelect={handleCategorySelection} />
+    </div>
+    <div className="w-full">
+      <MangaCards selectedCategory={selectedCategory} />
+    </div>
   </div>
 </>
 
