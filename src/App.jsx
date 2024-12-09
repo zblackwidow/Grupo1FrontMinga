@@ -17,6 +17,9 @@ import LayoutExceptFooter from './Layout/LayoutExceptFooter'
 import CommentSection from './Components/Manga/Comment'
 import Profile from './Pages/Profile'
 import Companies from './Pages/Companies'
+import PrivateRouteUser from './Components/Basic/PrivateRouteUser'
+import PrivateRouterAuthorCompany from './Components/Basic/PrivateRouterAuthorCompany'
+import PrivateRouterAdmin from './Components/Basic/PrivateRouterAdmin'
 
 const router = createBrowserRouter([
     {
@@ -24,13 +27,13 @@ const router = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/home', element: <Home /> },
-            { path: '/mangas', element: <Mangas></Mangas> },
+            { path: '/mangas', element: <PrivateRouteUser><Mangas></Mangas></PrivateRouteUser>  },
             { path: '/*', element: <NotFound></NotFound> },
-            { path: '/panel', element: <Panel></Panel> },
-            { path: '/chapters', element: <Chapters /> },
-            { path: '/comment', element: <CommentSection /> },
-            { path: '/profile', element: <Profile /> },
-            { path: '/companies', element: <Companies /> },
+            { path: '/panel', element: <PrivateRouterAdmin><Panel></Panel></PrivateRouterAdmin> },
+            { path: '/chapters', element: <PrivateRouterAuthorCompany><Chapters /></PrivateRouterAuthorCompany> },
+            { path: '/comment', element: <PrivateRouterAuthorCompany><CommentSection /></PrivateRouterAuthorCompany> },
+            { path: '/profile', element: <PrivateRouterAuthorCompany><Profile /></PrivateRouterAuthorCompany> },
+            { path: '/companies', element: <PrivateRouterAuthorCompany><Companies /></PrivateRouterAuthorCompany> },
         ],
     },
     {
@@ -38,11 +41,11 @@ const router = createBrowserRouter([
         children: [
             { path: '/login', element: <Login /> },
             { path: '/register', element: <Register /> },
-            { path: '/newAuthor', element: <NewAuthor /> },
-            { path: '/newChapter', element: <NewChapter /> },
-            { path: '/newManga', element: <NewManga /> },
-            { path: '/newCompany', element: <NewCompany /> },
-            { path: '/newRole', element: <NewRole /> },
+            { path: '/newAuthor', element: <PrivateRouteUser><NewAuthor /></PrivateRouteUser> },
+            { path: '/newChapter', element: <PrivateRouterAuthorCompany><NewChapter /></PrivateRouterAuthorCompany> },
+            { path: '/newManga', element: <PrivateRouterAuthorCompany><NewManga /></PrivateRouterAuthorCompany> },
+            { path: '/newCompany', element: <PrivateRouteUser><NewCompany /></PrivateRouteUser> },
+            { path: '/newRole', element: <PrivateRouteUser><NewRole /></PrivateRouteUser> },
             { path: '/*', element: <NotFound></NotFound> },
         ],
     },

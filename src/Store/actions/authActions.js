@@ -30,8 +30,10 @@ const validateToken = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      if (error.response?.status === 401) {
-        localStorage.removeItem("UserManga");
+      console.log(error);
+      
+      if (error.status === 401) {
+        localStorage.removeItem("userManga");
       }
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Token validation failed"
