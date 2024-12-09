@@ -1,15 +1,14 @@
 import { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
-function NewManga() {
+function EditManga() {
     const [formData, setFormData] = useState({
-        title: '',
-        category: '',
+        name: '',
+        surname: '',
+        city: '',
+        birthday: '',
         photo: '',
-        description: ''
     });
-
-    const [message, setMessage] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,30 +16,25 @@ function NewManga() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setMessage('');
+        e.preventDefault(); 
         try {
-            await axios.post('http://localhost:8080/api/manga/create', formData);
-            setMessage('Author created successfully!');
+            const response = await axios.put('http://localhost:8080/api/manga/update', formData);
+            
+            console.log('Respuesta del servidor:', response.data); 
         } catch (error) {
-            if (error.response) {
-                setMessage(`Error: ${error.response.data.message}`);
-            } else {
-                setMessage('An error occurred. Please try again.');
-            }
+            console.error('Error al realizar la solicitud:', error); 
         }
     };
 
     return (
-        <>
-            {/* contenedor principal */}
-            <div className="w-full h-[100vh] flex items-center justify-center">
-                {/* contenedor de formulario */}
-                <div className="md:w-1/2 my-32 md:my-16 flex justify-center items-center">
-                    <form onSubmit={handleSubmit} className="flex flex-col w-[80vw] md:w-[40vw] gap-4 p-4">
-                        <h1 className="text-2xl text-center font-bold mb-6">New Manga</h1>
-                        {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
-                        <div className="mb-6">
+        <>  
+        {/* Contenedor principal */}
+        <div className="w-full flex items-center justify-center">
+            {/* contenedor de formulario */}
+            <div className="md:w-1/2 my-32 md:my-16 flex flex-col items-center justify-center"> 
+                <h1 className="text-2xl text-center font-bold mb-6">Edit Manga</h1>
+                <form onSubmit={handleSubmit} className="w-[90vw] md:w-[60vw] lg:w-[40vw] mx-6 flex flex-col gap-4">
+                <div className="mb-6">
                             <input
                                 type="text"
                                 name="title"
@@ -80,18 +74,18 @@ function NewManga() {
                                 placeholder="Description"
                             />
                         </div>
-                        <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700">
-                            Send
-                        </button>
-                    </form>
-                </div>
-                {/* contenedor de imagen */}
-                <div className="md:w-1/2 hidden md:block ">
-                    <img className="w-full h-[100vh] object-cover" src="https://s3-alpha-sig.figma.com/img/b8b4/c1ca/d91c01d1ff2a1a1341ce3c24609e0349?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gqOlUaZrihLOcb8a3YFZ7Ab9cCdJgSozuary8Lfwzg~Qm2qbvbDU7onI-m8Wdue-ZUDzDAUmJ9BbtX6RUVGlUJLA-AZz~32HVTU7TcptrojKmmyc~IA~TEPcBiJP8gUvBfi1bctlKNkVBGklXo4n0gmdvoQwdmOARzm52LnXUUZQ0aXouvrCPWcePVswxYiZGXb36tHY0HccbIPF~SyUNto3ev7kZ1I2SZ4PtmrV2wvPGljVAdz-oGf4F-v0Stw68W2D9j2ycWUCLrwR06bmfID5lbvsWHvMYp7BULmbAqHLjBigaQdqyjOE-TRopZYkpOCjB0bYBsgHHqGxlaA1cg__" alt="" />
-                </div>
+                    <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700">
+                        Save
+                    </button>
+                </form>
             </div>
+            {/* Contenedor de imagen */}
+            <div className="md:w-1/2 hidden md:block">
+                <img className='w-full h-screen object-cover' src="https://s3-alpha-sig.figma.com/img/cd7b/cfec/c07083cef0707bd5864b287bac613f2b?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Aa72~qaQ-Re8JBUPxzkxXnEmKnF~Nksubt4JQlzlSyaNzCKI0yOFHb4M3jaIdNjawWVO7VvkTsBWhTN03z4KsmZA8WhV2jMxWVM2PJAnD0piJN30WPlc~QnVykKFP4CwvEbbwihCfqj9VoAAHWocAqPpcZDmnlZvtbifXp5LaI6iv8fUVn5-MuCjlzaYt1mRYVISghahbU3i2vVtbPt5V7gYm5Kq6vJX4et7u36v8lwqsnUviMfvNVJlj3t1c8l6vYcPmsBFDMzEU~6r3HAvc-IIchLyEBooDoJHVTy9IaK2pFeS-Gwe3nW6UApCQiKHRAitgbRjVrp7MqrZqRXw4g__" alt="Author background" />
+            </div>
+        </div>
         </>
     );
-}
+}  
 
-export default NewManga;
+export default EditManga;
