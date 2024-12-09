@@ -29,7 +29,7 @@ function NewCompany() {
         setMessage('');
     
         try {
-            const response = await axios.post('http://localhost:8080/api/company/create', formData);
+            await axios.post('http://localhost:8080/api/company/create', formData);
     
             // Almacenar el nuevo rol en el localStorage
             const updatedUser = { ...dataUser.user, role: 2 }; // Actualizamos el rol

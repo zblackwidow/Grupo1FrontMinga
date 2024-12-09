@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
 
 function NewAuthor() {
     const navigate = useNavigate()
@@ -17,7 +16,6 @@ function NewAuthor() {
         city: '',
         birthday: '',
         photo: '',
-        user_id: idUser,
         user_id: idUser,
     });
 
