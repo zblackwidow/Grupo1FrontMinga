@@ -34,6 +34,24 @@ const getChapterById = createAsyncThunk("GET_CHAPTER_BY_ID", async ({ id, token 
     }
 });
 
+
+// Obtener un capítulo por IDManga
+const getChapterByMangaId = createAsyncThunk("GET_CHAPTER_BY_ID", async ({ id, token }, thunkAPI) => { // Cambiado para recibir un objeto
+    try {
+        const response = await axios.get(
+            `http://localhost:8080/api/chapter/idManga/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        console.log("Respuesta del servidor:", response.data);  // Verifica qué datos te está devolviendo el servidor
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response?.data?.message || "Token validation failed");
+    }
+});
+
 // Crear un capítulo
 const createChapter = createAsyncThunk("CREATE_CHAPTER", async ({ chapter, token }, thunkAPI) => { // Cambiado para recibir un objeto
     try {
@@ -82,4 +100,4 @@ const deleteChapter = createAsyncThunk("DELETE_CHAPTER", async ({ id, token }, t
     }
 });
 
-export { getChapters, getChapterById, createChapter, updateChapter, deleteChapter };
+export { getChapters, getChapterById, getChapterByMangaId, createChapter, updateChapter, deleteChapter };
