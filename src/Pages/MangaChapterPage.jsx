@@ -7,11 +7,14 @@ import MangaChapter from "../Components/Manga/MangaChapter"; // El componente do
 const MangaChapterPage = () => {
     const { id } = useParams(); // Obtener el ID del capítulo desde la URL
     const dispatch = useDispatch();
+    
   
     const chapter = useSelector((state) => state.chapter.chapter); // Acceder al capítulo desde el estado
     const loading = useSelector((state) => state.chapter.loading);
     const error = useSelector((state) => state.chapter.error);
   
+    console.log("Chapter:", chapter);
+    
     const [token, setToken] = useState(null); // Inicializar con null
   
     // Recuperar el token del localStorage
