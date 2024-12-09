@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getChapterById } from "../Store/actions/chapterActions"; // Acción para obtener el capítulo
+import { getChapterByMangaId } from "../Store/actions/chapterActions"; // Acción para obtener el capítulo
 import MangaChapter from "../Components/Manga/MangaChapter"; // El componente donde muestras las imágenes
 
 const MangaChapterPage = () => {
@@ -27,7 +27,7 @@ const MangaChapterPage = () => {
     useEffect(() => {
       if (id && token) {
         console.log("Despatching action to get chapter:", id);
-        dispatch(getChapterById({ id, token }));
+        dispatch(getChapterByMangaId({ id, token }));
       }
     }, [dispatch, id, token]); // Asegúrate de que estos valores sean los correctos
   
