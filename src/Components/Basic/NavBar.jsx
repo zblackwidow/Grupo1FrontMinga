@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
-import { validateToken } from "../../Store/actions/authActions";
-import { Navigate } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { validateToken } from '../../Store/actions/authActions'
+import { Navigate } from 'react-router-dom'
+import { logout } from '../../Store/actions/authActions';
+
 
 const Navbar = () => {
   // Estados para mostrar/ocultar los menús
@@ -57,11 +59,14 @@ const Navbar = () => {
     }
   }, [dispatch, navigate]);
 
-  const logout = () => {
-    localStorage.removeItem("userManga");
-    setUserLogeado(false);
-    return <Navigate to="/" />;
-  };
+    const logout = () => {
+        localStorage.removeItem('userManga')
+        setUserLogeado(false)
+
+        dispatch(logout())
+
+        return <Navigate to="/" />
+    }
 
   useEffect(() => {
     if (!UserLogeado) {
