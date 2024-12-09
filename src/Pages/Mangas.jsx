@@ -11,12 +11,13 @@ export default function Mangas() {
   };
 
   return (
-    <>
-      <HeroManga />
-      <div className=" flex flex-col justify-center items-center mx-auto -mt-[80px]  w-[90%] p-4 bg-white rounded-t-3xl">
-      <CategoryManga onCategorySelect={handleCategorySelection} /> {/* Pasar la función de selección */}
-        <MangaCards selectedCategory={selectedCategory} /> {/* Pasar la categoría seleccionada */}
-      </div>
-    </>
+<>
+  <HeroManga />
+  <div className="flex flex-col justify-center items-center mx-auto -mt-20 w-[95%] sm:w-[90%] lg:w-[80%] p-4 bg-white rounded-t-3xl shadow-lg">
+    <CategoryManga onCategorySelect={handleCategorySelection} />
+    <MangaCards selectedCategory={selectedCategory} />
+  </div>
+</>
+
   );
 }
