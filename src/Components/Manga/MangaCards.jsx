@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const MangaCards = ({ selectedCategory }) => {
   const { mangas } = useSelector((state) => state.manga);
+  const { search } = useSelector((state) => state.manga);
   const dispatch = useDispatch();
 const navigate = useNavigate();
 
@@ -12,10 +13,19 @@ const navigate = useNavigate();
     dispatch(getMangas({}));
   }, [dispatch]);
 
-  // Filtrar mangas según la categoría seleccionada
-  const filteredMangas = selectedCategory
-    ? mangas.filter((mg) => mg.category_id._id === selectedCategory)
-    : mangas;
+  // Filtrar mangas según categoría y título
+  const filteredMangas = mangas.filter((manga) => {
+    const matchesCategory = selectedCategory
+      ? manga.category_id._id === selectedCategory
+      : true; // Si no hay categoría seleccionada, no se filtra por categoría
+
+    const matchesTitle = search
+      ? manga.title.toLowerCase().includes(search.toLowerCase())
+      : true; // Si no hay título, no se filtra por título
+
+    return matchesCategory && matchesTitle;
+  });
+
 
   const handleViewMore = (mg) => {
     navigate(`/chapters`, { state: mg._id });
