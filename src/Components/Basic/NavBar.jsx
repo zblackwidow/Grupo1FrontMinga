@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { validateToken } from '../../Store/actions/authActions'
-import { Navigate } from 'react-router-dom'
-import { logout } from '../../Store/actions/authActions';
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { validateToken } from "../../Store/actions/authActions";
+import { Navigate } from "react-router-dom";
+import { logout } from "../../Store/actions/authActions";
 
 const Navbar = () => {
   // Estados para mostrar/ocultar los menús
@@ -59,14 +58,14 @@ const Navbar = () => {
     }
   }, [dispatch, navigate]);
 
-    const logout = () => {
-        localStorage.removeItem('userManga')
-        setUserLogeado(false)
+  const logout = () => {
+    localStorage.removeItem("userManga");
+    setUserLogeado(false);
 
-        dispatch(logout())
+    dispatch(logout());
 
-        return <Navigate to="/" />
-    }
+    return <Navigate to="/" />;
+  };
 
   useEffect(() => {
     if (!UserLogeado) {
@@ -253,6 +252,17 @@ const Navbar = () => {
                       className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
                     >
                       Chooise: Author or Company
+                    </NavLink>
+                  </li>
+                )}
+
+                {role === 3 && (
+                  <li className="w-full">
+                    <NavLink
+                      to="/panel"
+                      className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                    >
+                      Panel
                     </NavLink>
                   </li>
                 )}
