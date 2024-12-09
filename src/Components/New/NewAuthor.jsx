@@ -7,7 +7,9 @@ function NewAuthor() {
    
     let dataUser = JSON.parse(localStorage.getItem('userManga'))
     let token = dataUser.token
-    let idUser = dataUser.user._id
+    let idUser = dataUser.user.id
+    console.log(idUser)
+
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
