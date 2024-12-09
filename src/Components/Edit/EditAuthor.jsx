@@ -7,7 +7,7 @@ function EditAuthor() {
         surname: '',
         city: '',
         birthday: '',
-        photo: '',
+        photo: '', 
     });
 
     const handleChange = (e) => {
@@ -34,45 +34,55 @@ function EditAuthor() {
             <div className="md:w-1/2 my-32 md:my-16 flex flex-col items-center justify-center"> 
                 <h1 className="text-2xl text-center font-bold mb-6">Edit Author</h1>
                 <form onSubmit={handleSubmit} className="w-[90vw] md:w-[60vw] lg:w-[40vw] mx-6 flex flex-col gap-4">
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                        placeholder="Name"
-                    />
-                    <input
-                        type="text"
-                        name="surname"
-                        value={formData.surname}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                        placeholder="Surname"
-                    />
-                    <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                        placeholder="City"
-                    />
-                    <input
-                        type="date"
-                        name="birthday"
-                        value={formData.birthday}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                    />
-                    <input
-                        type="url"
-                        name="photo"
-                        value={formData.photo}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                        placeholder="Profile Image URL"
-                    />
+                <div className="mb-6">
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                placeholder="Name"
+                            />
+                        </div>
+                        <div className="mb-6">
+                            <input
+                                type="text"
+                                name="lastName"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                placeholder="Last Name"
+                            />
+                        </div>
+                        <div className="mb-6">
+                            <input
+                                type="text"
+                                name="city"
+                                value={formData.city}
+                                onChange={handleChange}
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                placeholder="City"
+                            />
+                        </div>
+                        <div className="mb-6">
+                            <input
+                                type="date"
+                                name="birthday"
+                                value={formData.birthday}
+                                onChange={handleChange}
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                            />
+                        </div>
+                        <div className="mb-6">
+                            <input
+                                type="url"
+                                name="photo"
+                                value={formData.photo}
+                                onChange={handleChange}
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                placeholder="Photo URL"
+                            />
+                        </div>
                     <button type="submit" className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700">
                         Save
                     </button>
