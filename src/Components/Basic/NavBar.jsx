@@ -2,75 +2,74 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { validateToken } from "../../Store/actions/authActions";
-import axios from "axios";
-const loginWithToken = async (token) => {
-  try {
-    const response = await axios.get(
-      "http://localhost:8080/api/auth/validateToken",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+// import axios from "axios";
+// const loginWithToken = async (token) => {
+//   try {
+//     const response = await axios.get(
+//       "http://localhost:8080/api/auth/validateToken",
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
 
-    return response.data.user;
-  } catch (error) {
-    console.error("Error validando el token:", error);
-    return null;
-  }
-};
+//     return response.data.user;
+//   } catch (error) {
+//     console.error("Error validando el token:", error);
+//     return null;
+//   }
+// };
 
 const Navbar = () => {
   // Estados para mostrar/ocultar los menús
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [dataUser, setDataUser] = useState(null);
-  const { user } = useSelector((state) => state.auth);
-
-  const navegate = useNavigate();
-  const closeMenu = () => setIsMenuOpen(false);
+  const [dataUser, setDataUser] = useState(null); // Estado local para manejar el usuario
+  const [userPhoto, setUserPhoto] = useState(null);
   const dispatch = useDispatch();
-  const storedUser = JSON.parse(localStorage.getItem("userManga"));
+  const navigate = useNavigate();
+
+  const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const userToken = params.get("token");
+    const userToken = params.get("token"); // Obtener el token desde la URL
 
     if (userToken) {
-      loginWithToken(userToken).then((user) => {
-        if (user) {
-          setDataUser(user);
+      // Validar el token con Redux
+      dispatch(validateToken(userToken)).then((response) => {
+        if (response) {
+          setDataUser(response); // Actualizar el estado local
           localStorage.setItem(
             "userManga",
-            JSON.stringify({ user: user, token: userToken })
+            JSON.stringify({ user: response, token: userToken })
           );
-          navegate("/");
+          navigate("/"); // Redirigir al home
         } else {
-          setDataUser(null);
           console.error("Invalid Token");
           localStorage.removeItem("userManga");
           window.location.reload();
         }
       });
     } else {
+      // Si no hay token en la URL, verificar si hay datos en localStorage
+      const storedUser = JSON.parse(localStorage.getItem("userManga"));
       if (storedUser) {
-        setDataUser(storedUser);
-        if (storedUser.token) {
-          const response = dispatch(validateToken(storedUser.token));
-          console.log(user);
-
+        setDataUser(storedUser); // Establecer datos del usuario
+        dispatch(validateToken(storedUser.token)).then((response) => {
           if (response) {
-            setDataUser(user);
+            setDataUser(response); // Actualizar el usuario válido
           } else {
-            setDataUser(null);
+            setDataUser(null); // Invalidar el usuario
             console.error("Invalid Token");
             localStorage.removeItem("userManga");
             window.location.reload();
           }
-        }
+        });
       }
     }
-  }, [dispatch]);
+  }, [dispatch, navigate]);
+
 
   return (
     
@@ -173,19 +172,20 @@ const Navbar = () => {
           </button>
 
           <ul className="mt-4 w-full">
-            {storedUser && (
+            {dataUser && (
               <li className="text-center">
                 <div className="cursor-pointer flex justify-center items-center gap-3 mb-2">
                   {
                     <img
-                      src={storedUser.user.photo}
+                      src={dataUser?.payload?.user?.photo}
                       alt="user"
                       className="w-10 h-10 rounded-full"
                     />
                   }
                   {
                     <p className="text-sm text-white">
-                      {storedUser.user.email}
+                      {dataUser?.payload?.user.email}
+                      
                     </p>
                   }
                 </div>
