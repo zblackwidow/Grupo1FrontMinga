@@ -1,14 +1,24 @@
 import { useState } from "react";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 function NewAuthor() {
+    const navigate = useNavigate()
+
+    let dataUser = JSON.parse(localStorage.getItem('userManga'))
+    let token = dataUser.token
+    let idUser = dataUser.user._id
+
+
     const [formData, setFormData] = useState({
         nombre: '',
         surname: '',
         city: '',
         birthday: '',
         photo: '',
+        user_id: idUser,
     });
+   
 
     const [message, setMessage] = useState('');
 
@@ -24,6 +34,16 @@ function NewAuthor() {
         try {
             await axios.post('http://localhost:8080/api/author/create', formData);
             setMessage('Author created successfully!');
+            const user = await axios.get(`http://localhost:8080/api/user/id/${idUser}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            console.log(user)
+
+            setTimeout(() => {
+                return navigate('/mangas')
+            }, 1000)
         } catch (error) {
             if (error.response) {
                 setMessage(`Error: ${error.response.data.message}`);
