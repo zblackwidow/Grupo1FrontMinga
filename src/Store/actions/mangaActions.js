@@ -30,6 +30,47 @@ export const getManga = createAsyncThunk("GET_MANGA", async (id, token, thunkAPI
     }
 })
 
+export const getMangasByAuthor = createAsyncThunk(
+    "GET_MANGAS_BY_AUTHOR",
+    async ({ author_id, token }, thunkAPI) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/manga/mangasByAuthor`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: { author_id }, // Pasar `author_id` como parámetro
+          }
+        );
+        return response.data.response;
+      } catch (error) {
+        console.error(error);
+        return thunkAPI.rejectWithValue(
+          error.response?.data?.message || "No mangas found"
+        );
+      }
+    }
+  );
+  
+
+export const getMangasByCategory = createAsyncThunk("GET_MANGAS_BY_CATEGORY", async (id, token, thunkAPI) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:8080/api/manga/mangasByCategory`, id, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        )
+        return response.data.response
+    } catch (error) {
+       console.log(error);
+       
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "No mangas found")
+    }
+})
+
 export const createManga = createAsyncThunk("CREATE_MANGA", async (manga, token, thunkAPI) => {
     try {
         const response = await axios.post(
