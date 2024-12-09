@@ -11,7 +11,6 @@ import NewManga from './Components/New/NewManga'
 import NewCompany from './Components/New/NewCompany'
 import NewChapter from './Components/New/NewChapter'
 import NewRole from './Components/New/NewRole'
-import Chapters from './Pages/Chapters'
 import Mangas from './Pages/Mangas'
 import EditAuthor from './Components/Edit/EditAuthor'
 import EditChapter from './Components/Edit/EditChapter'
@@ -21,6 +20,10 @@ import LayoutExceptFooter from './Layout/LayoutExceptFooter'
 import CommentSection from './Components/Manga/Comment'
 import Profile from './Pages/Profile'
 import Companies from './Pages/Companies'
+import PrivateRouteUser from './Components/Basic/PrivateRouteUser'
+import PrivateRouterAuthorCompany from './Components/Basic/PrivateRouterAuthorCompany'
+import PrivateRouterAdmin from './Components/Basic/PrivateRouterAdmin'
+import MangaChapterPage from './Pages/MangaChapterPage'
 
 const router = createBrowserRouter([
     {
@@ -28,13 +31,13 @@ const router = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/home', element: <Home /> },
-            { path: '/mangas', element: <Mangas></Mangas> },
+            { path: '/mangas', element: <PrivateRouteUser><Mangas></Mangas></PrivateRouteUser>  },
             { path: '/*', element: <NotFound></NotFound> },
-            { path: '/panel', element: <Panel></Panel> },
-            { path: '/chapters', element: <Chapters /> },
-            { path: '/comment', element: <CommentSection /> },
-            { path: '/profile', element: <Profile /> },
-            { path: '/companies', element: <Companies /> },
+            { path: '/panel', element: <PrivateRouterAdmin><Panel></Panel></PrivateRouterAdmin> },
+            { path: '/chapters/:id', element: <PrivateRouterAuthorCompany><MangaChapterPage /></PrivateRouterAuthorCompany> },
+            { path: '/comment', element: <PrivateRouterAuthorCompany><CommentSection /></PrivateRouterAuthorCompany> },
+            { path: '/profile', element: <PrivateRouterAuthorCompany><Profile /></PrivateRouterAuthorCompany> },
+            { path: '/companies', element: <PrivateRouterAuthorCompany><Companies /></PrivateRouterAuthorCompany> },
         ],
     },
     {
@@ -52,6 +55,7 @@ const router = createBrowserRouter([
             { path: '/editManga', element: <EditManga /> },
             { path: '/editCompany', element: <EditCompany /> },
             { path: '/*', element: <NotFound /> },
+
         ],
     },
 ])

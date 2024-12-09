@@ -2,75 +2,69 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { validateToken } from "../../Store/actions/authActions";
-import axios from "axios";
-const loginWithToken = async (token) => {
-  try {
-    const response = await axios.get(
-      "http://localhost:8080/api/auth/validateToken",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return response.data.user;
-  } catch (error) {
-    console.error("Error validando el token:", error);
-    return null;
-  }
-};
 
 const Navbar = () => {
   // Estados para mostrar/ocultar los menús
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [dataUser, setDataUser] = useState(null);
-  const { user } = useSelector((state) => state.auth);
-
-  const navegate = useNavigate();
-  const closeMenu = () => setIsMenuOpen(false);
+  const [UserLogeado, setUserLogeado] = useState(false);
   const dispatch = useDispatch();
-  const storedUser = JSON.parse(localStorage.getItem("userManga"));
+  const navigate = useNavigate();
+
+  const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const userToken = params.get("token");
+    const userToken = params.get("token"); // Obtener el token desde la URL
 
     if (userToken) {
-      loginWithToken(userToken).then((user) => {
-        if (user) {
-          setDataUser(user);
+      // Validar el token con Redux
+      dispatch(validateToken(userToken)).then((response) => {
+        if (response) {
+          setDataUser(response); // Actualizar el estado local
           localStorage.setItem(
             "userManga",
-            JSON.stringify({ user: user, token: userToken })
+            JSON.stringify({ user: response.payload.user, token: userToken })
           );
-          navegate("/");
+          setUserLogeado(true);
+          navigate("/"); // Redirigir al home
         } else {
-          setDataUser(null);
           console.error("Invalid Token");
           localStorage.removeItem("userManga");
           window.location.reload();
         }
       });
     } else {
+      // Si no hay token en la URL, verificar si hay datos en localStorage
+      const storedUser = JSON.parse(localStorage.getItem("userManga"));
       if (storedUser) {
-        setDataUser(storedUser);
-        if (storedUser.token) {
-          const response = dispatch(validateToken(storedUser.token));
-          console.log(user);
-
+        setDataUser(storedUser); // Establecer datos del usuario
+        dispatch(validateToken(storedUser.token)).then((response) => {
           if (response) {
-            setDataUser(user);
+            setDataUser(response); // Actualizar el usuario válido
+            setUserLogeado(true);
           } else {
-            setDataUser(null);
+            setDataUser(null); // Invalidar el usuario
             console.error("Invalid Token");
             localStorage.removeItem("userManga");
             window.location.reload();
           }
-        }
+        });
       }
     }
-  }, [dispatch]);
+  }, [dispatch, navigate]);
+  const logout = () => {
+    localStorage.removeItem("userManga");
+    setUserLogeado(false); 
+  };
+
+  useEffect(() => {
+   if (!UserLogeado) {
+    setDataUser(false)
+   }
+  }, [UserLogeado]);
+
+
 
   return (
     
@@ -173,52 +167,87 @@ const Navbar = () => {
           </button>
 
           <ul className="mt-4 w-full">
-            {storedUser && (
+            {dataUser && (
               <li className="text-center">
                 <div className="cursor-pointer flex justify-center items-center gap-3 mb-2">
                   {
                     <img
-                      src={storedUser.user.photo}
+                      src={dataUser?.payload?.user?.photo}
                       alt="user"
                       className="w-10 h-10 rounded-full"
                     />
                   }
                   {
                     <p className="text-sm text-white">
-                      {storedUser.user.email}
+                      {dataUser?.payload?.user.email}
+                      
                     </p>
                   }
                 </div>
               </li>
             )}
-            <li className="w-full">
+          {!UserLogeado && (
+            <>
+              <li className="w-full">
+                <NavLink
+                  to="/home"
+                  className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                  href="/home"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li className="w-full">
+                <NavLink
+                  to="/register"
+                  className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  Register
+                </NavLink>
+              </li>
+              <li className="w-full">
+                <NavLink
+                  to="/login"
+                  className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  Sign In
+                </NavLink>
+              </li>
+            </>
+          )}
+            {UserLogeado && (
+              <>
+              <li className="w-full">
+                <NavLink
+                  to="/home"
+                  className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                  href="/home"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  Home
+                </NavLink>
+              </li> 
+              <li className="w-full">
               <NavLink
-                to="/home"
+                to="/mangas"
                 className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
-                href="/home"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                Home
+                Mangas
               </NavLink>
             </li>
-            <li className="w-full">
-              <NavLink
-                to="/register"
+            <li className="w-full flex justify-center">
+            <button
+                onClick={logout}
                 className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                Register
-              </NavLink>
+                Logout
+              </button>
             </li>
-            <li className="w-full">
-              <NavLink
-                to="/login"
-                className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                Sign In
-              </NavLink>
-            </li>
+            </>)}
           </ul>
         </div>
       )}

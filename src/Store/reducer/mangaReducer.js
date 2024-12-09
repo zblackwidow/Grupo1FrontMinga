@@ -1,8 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getMangas, getManga, createManga, updateManga, deleteMangaById } from "../actions/mangaActions";
+import { getMangas, getManga, createManga, updateManga, setSearch, deleteMangaById, getMangasByAuthor, getMangasByCategory } from "../actions/mangaActions";
 
 const initialState = {
     mangas: [],
+    search: "",
     manga: [],
     error: null,
     loading: false,
@@ -19,6 +20,33 @@ const mangaReducer = createReducer(initialState, (builder) => {
             state.mangas = action.payload;
         })
         .addCase(getMangas.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        })
+        .addCase(setSearch, (state, action) => {
+            state.search = action.payload;
+        })
+        .addCase(getMangasByAuthor.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(getMangasByAuthor.fulfilled, (state, action) => {
+            state.loading = false;
+            state.mangas = action.payload;
+        })
+        .addCase(getMangasByAuthor.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        })
+        .addCase(getMangasByCategory.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(getMangasByCategory.fulfilled, (state, action) => {
+            state.loading = false;
+            state.mangas = action.payload;
+        })
+        .addCase(getMangasByCategory.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         })
