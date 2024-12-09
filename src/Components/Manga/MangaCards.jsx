@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMangas } from "../../Store/actions/mangaActions";
+import { useNavigate } from "react-router-dom";
 
 const MangaCards = ({ selectedCategory }) => {
   const { mangas } = useSelector((state) => state.manga);
   const dispatch = useDispatch();
+const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getMangas({}));
@@ -14,6 +16,12 @@ const MangaCards = ({ selectedCategory }) => {
   const filteredMangas = selectedCategory
     ? mangas.filter((mg) => mg.category_id._id === selectedCategory)
     : mangas;
+
+  const handleViewMore = (mg) => {
+    navigate(`/chapters`, { state: mg._id });
+  };
+
+  
 
   return (
    
@@ -35,9 +43,12 @@ const MangaCards = ({ selectedCategory }) => {
                   <p className="text-black text-center">{mg.title}</p>
                 </div>
                 <div className="flex items-end justify-self-start h-full w-full">
-                  <button className="mt-2 bg-emerald-300 text-white rounded-3xl hover:bg-slate-500 h-[45%] w-[35%]">
-                    Read
-                  </button>
+                 <button
+                      className="mt-2 bg-emerald-300 text-white rounded-3xl hover:bg-slate-500 h-[45%] w-[35%]"
+                      onClick={() => handleViewMore(mg._id)}
+                    >
+                      Read
+                    </button>
                 </div>
               </div>
 
@@ -55,3 +66,4 @@ const MangaCards = ({ selectedCategory }) => {
 };
 
 export default MangaCards;
+
