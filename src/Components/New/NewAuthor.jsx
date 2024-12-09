@@ -1,14 +1,13 @@
 import { useState } from "react";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 function NewAuthor() {
-    const navigate = useNavigate()
-   
-    let dataUser = JSON.parse(localStorage.getItem('userManga'))
-    let token = dataUser.token
-    let idUser = dataUser.user.id
-    console.log(idUser)
+    const navigate = useNavigate();
+
+    let dataUser = JSON.parse(localStorage.getItem('userManga'));
+    let token = dataUser.token;
+    let idUser = dataUser.user.id;
 
     const [formData, setFormData] = useState({
         name: '',
@@ -29,23 +28,32 @@ function NewAuthor() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
-    
+
         try {
-            const response = await axios.post('http://localhost:8080/api/author/create', formData);
-    
+            const response = await axios.post('http://localhost:8080/api/author/create', formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setMessage('Author created successfully!');
+            
             // Almacenar el nuevo rol en el localStorage
-            const updatedUser = { ...dataUser.user, role: 1 }; // Actualizamos el rol
+            const updatedUser = { ...dataUser.user, role: 2 }; // Actualizamos el rol
             localStorage.setItem('userManga', JSON.stringify({
-                token: dataUser.token,
+                token: token,
                 user: updatedUser,
             }));
     
-            setMessage('Author created successfully!');
-    
+            const user = await axios.get(`http://localhost:8080/api/user/id/${idUser}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(user);
+
             setTimeout(() => {
                 return navigate('/mangas');
             }, 1000);
-    
         } catch (error) {
             if (error.response) {
                 setMessage(`Error: ${error.response.data.message}`);
@@ -54,7 +62,6 @@ function NewAuthor() {
             }
         }
     };
-    
 
     return (
         <>
