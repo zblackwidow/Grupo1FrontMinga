@@ -26,7 +26,7 @@ export default function Banner() {
                             #MingaLove<strong className="text-[#ff5722]">❤</strong>{' '}
                         </h1>
                     </div>
-                    <div className="py-2">
+                    <div className="py-2 ">
                         <button className="bg-[#ffffff] text-[#ff5722] rounded-md w-[240px] h-[55px] text-[24px] font-medium  font-poppins">
                             <NavLink to={'/login'}>
                             Sign In!
