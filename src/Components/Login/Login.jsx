@@ -20,24 +20,6 @@ function Login() {
         
         dispatch(login({ email, password }))
         
-        
-        /*setError('');
-        try {
-            const response = await axios.post('http://localhost:8080/api/auth/signIn', {
-                email,
-                password,
-            });
-
-            if (response.data.success) {
-                localStorage.setItem('userManga', JSON.stringify(response.data));
-
-                navigate('/');
-            }
-        } catch (error) {
-            if (error.response) {
-                setError(error.response.data.message);
-            }
-        }*/
     };
 
     const handleGoogleSignIn = () => {
