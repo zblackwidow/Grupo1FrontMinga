@@ -1,19 +1,37 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMangas } from "../../Store/actions/mangaActions";
+import { useNavigate } from "react-router-dom";
 
 const MangaCards = ({ selectedCategory }) => {
   const { mangas } = useSelector((state) => state.manga);
+  const { search } = useSelector((state) => state.manga);
   const dispatch = useDispatch();
+const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getMangas({}));
   }, [dispatch]);
 
-  // Filtrar mangas según la categoría seleccionada
-  const filteredMangas = selectedCategory
-    ? mangas.filter((mg) => mg.category_id._id === selectedCategory)
-    : mangas;
+  // Filtrar mangas según categoría y título
+  const filteredMangas = mangas.filter((manga) => {
+    const matchesCategory = selectedCategory
+      ? manga.category_id._id === selectedCategory
+      : true; // Si no hay categoría seleccionada, no se filtra por categoría
+
+    const matchesTitle = search
+      ? manga.title.toLowerCase().includes(search.toLowerCase())
+      : true; // Si no hay título, no se filtra por título
+
+    return matchesCategory && matchesTitle;
+  });
+
+
+  const handleViewMore = (mg) => {
+    navigate(`/chapters`, { state: mg._id });
+  };
+
+  
 
   return (
    
@@ -35,9 +53,12 @@ const MangaCards = ({ selectedCategory }) => {
                   <p className="text-black text-center">{mg.title}</p>
                 </div>
                 <div className="flex items-end justify-self-start h-full w-full">
-                  <button className="mt-2 bg-emerald-300 text-white rounded-3xl hover:bg-slate-500 h-[45%] w-[35%]">
-                    Read
-                  </button>
+                 <button
+                      className="mt-2 bg-emerald-300 text-white rounded-3xl hover:bg-slate-500 h-[45%] w-[35%]"
+                      onClick={() => handleViewMore(mg._id)}
+                    >
+                      Read
+                    </button>
                 </div>
               </div>
 
@@ -55,3 +76,4 @@ const MangaCards = ({ selectedCategory }) => {
 };
 
 export default MangaCards;
+
