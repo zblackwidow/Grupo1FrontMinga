@@ -27,8 +27,8 @@ const navigate = useNavigate();
   });
 
 
-  const handleViewMore = (mg) => {
-    navigate(`/chapters`, { state: mg._id });
+  const handleViewMore = (mangaId) => {
+    navigate(`/chapters/${mangaId}`); // Pasamos el ID del manga directamente en la URL
   };
 
   

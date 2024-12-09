@@ -11,12 +11,17 @@ import NewManga from './Components/New/NewManga'
 import NewCompany from './Components/New/NewCompany'
 import NewChapter from './Components/New/Newchapter'
 import NewRole from './Components/New/NewRole'
-import Chapters from './Pages/Chapters'
 import Mangas from './Pages/Mangas'
 import LayoutExceptFooter from './Layout/LayoutExceptFooter'
 import CommentSection from './Components/Manga/Comment'
 import Profile from './Pages/Profile'
 import Companies from './Pages/Companies'
+import MangaChapterPage from './Pages/MangaChapterPage'
+
+
+  
+
+
 
 const router = createBrowserRouter([
     {
@@ -27,7 +32,7 @@ const router = createBrowserRouter([
             { path: '/mangas', element: <Mangas></Mangas> },
             { path: '/*', element: <NotFound></NotFound> },
             { path: '/panel', element: <Panel></Panel> },
-            { path: '/chapters', element: <Chapters /> },
+            { path: '/chapters/:id', element: <MangaChapterPage /> },
             { path: '/comment', element: <CommentSection /> },
             { path: '/profile', element: <Profile /> },
             { path: '/companies', element: <Companies /> },
