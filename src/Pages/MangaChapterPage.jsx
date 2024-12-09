@@ -9,24 +9,16 @@ const MangaChapterPage = () => {
     const dispatch = useDispatch();
     
   
-    const chapter = useSelector((state) => state.chapter.chapter); // Acceder al capítulo desde el estado
-    const loading = useSelector((state) => state.chapter.loading);
-    const error = useSelector((state) => state.chapter.error);
+    const { chapter, loading, error } = useSelector((state) => state.chapter); 
   
     console.log("Chapter:", chapter);
     
-    const [token, setToken] = useState(null); // Inicializar con null
+ 
   
-    // Recuperar el token del localStorage
-    useEffect(() => {
-        const savedUser = localStorage.getItem("userManga");
-        if (savedUser) {
-          const userObject = JSON.parse(savedUser);  // Convierte el objeto guardado a un objeto JavaScript
-          const token = userObject.token;  // Accede solo al token
-          setToken(token);  // Establece el token en el estado local
-          console.log("Token recuperado:", token);  // Verifica si el token se recupera correctamente
-        }
-      }, []); // Solo se ejecuta cuando el componente se monta
+    
+   const dataUser = JSON.parse(localStorage.getItem("userManga"));
+   const token = dataUser.token;
+    console.log(token)
     useEffect(() => {
       if (id && token) {
         console.log("Despatching action to get chapter:", id);
@@ -35,17 +27,14 @@ const MangaChapterPage = () => {
     }, [dispatch, id, token]); // Asegúrate de que estos valores sean los correctos
   
     if (loading) {
-      return <div className="text-white">Cargando capítulo...</div>;
+      return <div className="text-xl">Cargando capítulo...</div>;
     }
   
     if (error) {
       return <div className="text-red-500">Error: {error}</div>;
     }
   
-    if (!chapter || !chapter.pages || chapter.pages.length === 0) {
-      return <div className="text-white">Este capítulo no tiene páginas disponibles.</div>;
-    }
-  
+   
     return (
       <MangaChapter
         images={chapter.pages}
