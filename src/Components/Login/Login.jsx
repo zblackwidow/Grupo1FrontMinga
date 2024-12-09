@@ -1,17 +1,27 @@
 import { useState } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
-import axios from 'axios';
+import {  NavLink } from 'react-router-dom';
+import { login } from '../../Store/actions/authActions';
+import { useDispatch } from 'react-redux';
+
+//import axios from 'axios';
 import logo from '../../../public/logo.png'; // Ajusta la ruta según tu estructura de archivos
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+
+
+    const dispatch = useDispatch()
+//    const auth = useSelector((state) => state.auth)
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setError('');
+        
+        dispatch(login({ email, password }))
+        
+        
+        /*setError('');
         try {
             const response = await axios.post('http://localhost:8080/api/auth/signIn', {
                 email,
@@ -20,13 +30,14 @@ function Login() {
 
             if (response.data.success) {
                 localStorage.setItem('userManga', JSON.stringify(response.data));
+
                 navigate('/');
             }
         } catch (error) {
             if (error.response) {
                 setError(error.response.data.message);
             }
-        }
+        }*/
     };
 
     const handleGoogleSignIn = () => {
