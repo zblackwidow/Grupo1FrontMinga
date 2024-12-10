@@ -15,19 +15,19 @@ const Carousel = () => {
     ];
 
     const nextSlide = () => {
-        setActiveIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1)); // Avanza 1 slide
+        setActiveIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1));
     };
 
     const prevSlide = () => {
-        setActiveIndex((prevIndex) => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1)); // Retrocede 1 slide
+        setActiveIndex((prevIndex) => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1));
     };
 
     useEffect(() => {
         const interval = setInterval(() => {
             nextSlide();
-        }, 5000); // Cambia el intervalo según tus necesidades
+        }, 5000);
 
-        return () => clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+        return () => clearInterval(interval);
     }, [slides]);
 
     return (
@@ -53,7 +53,7 @@ const Carousel = () => {
                     <div className="z-2 flex justify-evenly w-full">
                         <div className="h-[400px] z-3 flex space-x-36 justify-center">
                             <img className="h-[350px] object-cover " src={slides[activeIndex].image1} alt="Slide 1" />
-                           <NavLink to="/mangas"> <img className="h-[300px] object-cover " src={slides[activeIndex].image2} alt="Slide 2" /></NavLink>
+                            <NavLink to="/mangas"> <img className="h-[300px] object-cover " src={slides[activeIndex].image2} alt="Slide 2" /></NavLink>
                         </div>
                         <div className="w-[400px]  z-3 flex justify-start items-center">
                             <div>
