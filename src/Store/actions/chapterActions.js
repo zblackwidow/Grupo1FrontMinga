@@ -36,7 +36,7 @@ const getChapterById = createAsyncThunk("GET_CHAPTER_BY_ID", async ({ id, token 
 
 
 // Obtener un capítulo por IDManga
-const getChapterByMangaId = createAsyncThunk("GET_CHAPTER_BY_ID", async ({ id, token }, thunkAPI) => { // Cambiado para recibir un objeto
+const getChapterByMangaId = createAsyncThunk("GET_CHAPTER_BY_MANGA_ID", async ({ id, token }, thunkAPI) => { // Cambiado para recibir un objeto
     try {
         const response = await axios.get(
             `http://localhost:8080/api/chapter/idManga/${id}`, {
