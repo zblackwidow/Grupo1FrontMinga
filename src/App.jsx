@@ -19,7 +19,7 @@ import EditCompany from './Components/Edit/EditCompany'
 import LayoutExceptFooter from './Layout/LayoutExceptFooter'
 import CommentSection from './Components/Manga/Comment'
 import Profile from './Pages/Profile'
-import Companies from './Pages/Companies'
+import Company from './Pages/Company'
 import PrivateRouteUser from './Components/Basic/PrivateRouteUser'
 import PrivateRouterAuthorCompany from './Components/Basic/PrivateRouterAuthorCompany'
 import PrivateRouterAdmin from './Components/Basic/PrivateRouterAdmin'
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             { path: '/chapters/:id', element: <MangaChapterPage /> },
             { path: '/comment', element: <PrivateRouterAuthorCompany><CommentSection /></PrivateRouterAuthorCompany> },
             { path: '/profile', element: <PrivateRouterAuthorCompany><Profile /></PrivateRouterAuthorCompany> },
-            { path: '/companies', element: <PrivateRouterAuthorCompany><Companies /></PrivateRouterAuthorCompany> },
+            { path: '/company', element: <PrivateRouterAuthorCompany><Company /></PrivateRouterAuthorCompany> },
         ],
     },
     {
