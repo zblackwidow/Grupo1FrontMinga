@@ -21,16 +21,11 @@ function Login() {
         event.preventDefault()
 
         dispatch(login({ email, password }))
-<<<<<<< HEAD
-        
-    };[]
-=======
 
         setTimeout(() => {
             return navigate('/');
         }, 1000);
     }
->>>>>>> 6757f0793527874c00853f4de00eaac83411c1a1
 
     const handleGoogleSignIn = () => {
         window.location.href = 'http://localhost:8080/api/auth/signIn/google'
