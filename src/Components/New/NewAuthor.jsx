@@ -7,16 +7,16 @@ function NewAuthor() {
 
     let dataUser = JSON.parse(localStorage.getItem('userManga'));
     let token = dataUser.token;
-    let idUser = dataUser.user._id
+    let idUser = dataUser.user.id
     console.log(idUser);
 
     const [formData, setFormData] = useState({
+        user_id: idUser,
         name: '',
         lastName: '',
         city: '',
         birthday: '',
         photo: '',
-        user_id: idUser,
     });
 
     const [message, setMessage] = useState('');
@@ -39,7 +39,7 @@ function NewAuthor() {
             setMessage('Author created successfully!');
             
             // Almacenar el nuevo rol en el localStorage
-            const updatedUser = { ...dataUser.user, role: 2 }; // Actualizamos el rol
+            const updatedUser = { ...dataUser.user, role: 1 }; // Actualizamos el rol
             localStorage.setItem('userManga', JSON.stringify({
                 token: token,
                 user: updatedUser,
