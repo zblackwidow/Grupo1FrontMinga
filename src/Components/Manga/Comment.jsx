@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CommentModal from "./CommenModal";
 
 const CommentSection = () => {
   const [comments, setComments] = useState([
@@ -33,7 +34,6 @@ const CommentSection = () => {
   };
 
   return (
-    
     <div className="p-4">
       <button onClick={handleOpenModal} className="bg-pink-500 text-white px-4 py-2 rounded-lg">
         View Comments
@@ -44,7 +44,6 @@ const CommentSection = () => {
         comments={comments}
       />
     </div>
-  
   );
 };
 

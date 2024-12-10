@@ -1,31 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegCommentDots } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";  // Importamos dispatch y useSelector
 import Comment from "./Comment";
+import { getChapterById } from "../../Store/actions/chapterActions";  // Asegúrate de importar la acción
 
-const MangaChapter = ({ images = [], chapters = [] }) => {
-  console.log("Props recibidas en MangaChapter:", { images, chapters });
+const MangaChapter = ({ chapters = [] }) => {
+  const { id } = useParams(); // Obtenemos el ID del capítulo desde la URL
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
   const [showComments, setShowComments] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [showChapterList, setShowChapterList] = useState(false);
+  
 
-  const Navigate=useNavigate();
+  const token = localStorage.getItem("userManga"); // Obtenemos el token del localStorage
+
+  // Obtenemos el capítulo por ID desde el estado
+  const { chapter = { pages: [] }, loading, error } = useSelector((state) => state.chapter);
 
 
-  const processedChapters = chapters || []; // Garantiza que siempre sea un array
+  useEffect(() => {
+    if (id && token) {
+      // Llamamos a la acción solo si tenemos un ID válido y un token
+      dispatch(getChapterById({ id, token })).then(()=>{
+        console.log("chapter received: ", chapter);
+        
+      });
+    }
+  }, [id, token, dispatch]);
 
-
-console.log("Processed Chapters:", processedChapters);
+  if (loading) return <div>Cargando capítulo...</div>;
+  if (error) return <div>Error al cargar el capítulo: {error}</div>;
 
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
 
   const isFirstPage = currentPage === 0;
-  const isLastPage = currentPage === images.length - 1;
+  const isLastPage = chapter.pages && chapter.pages.length>0? currentPage === chapter.pages.length - 1:true;
 
   const goToNextPage = () => {
-    if (currentPage < images.length - 1) setCurrentPage(currentPage + 1);
+    if (chapter.pages &&  currentPage < chapter.pages.length - 1) setCurrentPage(currentPage + 1);
   };
 
   const goToPreviousPage = () => {
@@ -33,24 +49,21 @@ console.log("Processed Chapters:", processedChapters);
   };
 
   const handleChapterSelect = (chapterId) => {
-    Navigate(`/chapters/${chapterId}`);
+    Navigate(`/chapterByID/${chapterId}`);
   };
 
   return (
     <div className="min-h-screen bg-white text-black flex flex-col items-center p-4">
-      <header className="w-full flex justify-center top-8 py-8 mb-4 ">
+      <header className="w-full flex justify-center top-8 py-8 mb-4">
         <h1 className="text-2xl font-bold">Capítulo de Manga</h1>
-        <button className="px-4 py-2 bg-red-500 rounded hover:bg-red-600">
-          Volver al inicio
-        </button>
       </header>
 
-      {/* Contenedor del visor */}
+      {/* Visor de imagen */}
       <div className="relative w-full max-w-3xl bg-black border border-gray-700 rounded overflow-hidden">
-        {images.length > 0 ? (
+        {chapter && chapter.pages &&  chapter.pages.length > 0 ? (
           <>
             <img
-              src={images[currentPage]}
+              src={chapter.pages[currentPage]}
               alt={`Página ${currentPage + 1}`}
               className="w-full h-auto"
             />
@@ -61,12 +74,11 @@ console.log("Processed Chapters:", processedChapters);
                 className={`px-4 py-2 bg-transparent rounded ${
                   isFirstPage ? "opacity-50 cursor-not-allowed" : "hover:bg-[#f97316]"
                 }`}
-
               >
+                {/* Flecha izquierda */}
                 <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12.7485 9C13.3008 9 13.7485 8.55228 13.7485 8C13.7485 7.44772 13.3008 7 12.7485 7V9ZM0.292794 7.29289C-0.0977306 7.68342 -0.0977306 8.31658 0.292794 8.70711L6.65675 15.0711C7.04728 15.4616 7.68044 15.4616 8.07097 15.0711C8.46149 14.6805 8.46149 14.0474 8.07097 13.6569L2.41411 8L8.07097 2.34315C8.46149 1.95262 8.46149 1.31946 8.07097 0.928932C7.68044 0.538408 7.04728 0.538408 6.65675 0.928932L0.292794 7.29289ZM12.7485 7L0.999901 7V9L12.7485 9V7Z" fill="#424242"/>
+                  <path d="M12.7485 9C13.3008 9 13.7485 8.55228 13.7485 8C13.7485 7.44772 13.3008 7 12.7485 7V9ZM0.292794 7.29289C-0.0977306 7.68342 -0.0977306 8.31658 0.292794 8.70711L6.65675 15.0711C7.04728 15.4616 7.68044 15.4616 8.07097 15.0711C8.46149 14.6805 8.46149 14.0474 8.07097 13.6569L2.41411 8L8.07097 2.34315C8.46149 1.95262 8.46149 1.31946 8.07097 0.928932C7.68044 0.538408 7.04728 0.538408 6.65675 0.928932L0.292794 7.29289ZM12.7485 7L0.999901 7V9L12.7485 9V7Z" fill="#424242"/>
                 </svg>
-
               </button>
               <button
                 onClick={goToNextPage}
@@ -75,11 +87,10 @@ console.log("Processed Chapters:", processedChapters);
                   isLastPage ? "opacity-50 cursor-not-allowed" : "hover:bg-[#f97316]"
                 }`}
               >
-                {/* Flecha hacia adelante */}
+                {/* Flecha derecha */}
                 <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.25146 9C0.69918 9 0.251465 8.55228 0.251465 8C0.251465 7.44772 0.69918 7 1.25146 7V9ZM13.7072 7.29289C14.0977 7.68342 14.0977 8.31658 13.7072 8.70711L7.34325 15.0711C6.95272 15.4616 6.31956 15.4616 5.92903 15.0711C5.53851 14.6805 5.53851 14.0474 5.92903 13.6569L11.5859 8L5.92903 2.34315C5.53851 1.95262 5.53851 1.31946 5.92903 0.928932C6.31956 0.538408 6.95272 0.538408 7.34325 0.928932L13.7072 7.29289ZM1.25146 7L13.0001 7V9L1.25146 9V7Z" fill="#424242"/>
+                  <path d="M1.25146 9C0.69918 9 0.251465 8.55228 0.251465 8C0.251465 7.44772 0.69918 7 1.25146 7V9ZM13.7072 7.29289C14.0977 7.68342 14.0977 8.31658 13.7072 8.70711L7.34325 15.0711C6.95272 15.4616 6.31956 15.4616 5.92903 15.0711C5.53851 14.6805 5.53851 14.0474 5.92903 13.6569L11.5859 8L5.92903 2.34315C5.53851 1.95262 5.53851 1.31946 5.92903 0.928932C6.31956 0.538408 6.95272 0.538408 7.34325 0.928932L13.7072 7.29289ZM1.25146 7L13.0001 7V9L1.25146 9V7Z" fill="#424242"/>
                 </svg>
-
               </button>
             </div>
           </>
@@ -89,7 +100,6 @@ console.log("Processed Chapters:", processedChapters);
       </div>
 
       <div className="min-h-0 text-white flex items-center p-4">
-        {/* Botón para mostrar comentarios */}
         <div className="w-auto flex">
           <button
             onClick={handleCommentClick}
@@ -97,7 +107,6 @@ console.log("Processed Chapters:", processedChapters);
           >
             <FaRegCommentDots className="text-2xl" />
           </button>
-          {/* Botón para mostrar capítulos */}
           <div className="relative flex items-center px-4">
             <button
               onClick={() => setShowChapterList(!showChapterList)}
@@ -107,7 +116,7 @@ console.log("Processed Chapters:", processedChapters);
             </button>
             {showChapterList && (
               <div className="absolute top-12 left-0 bg-white border border-gray-200 rounded shadow-lg p-2 w-40 max-h-64 overflow-y-auto text-black">
-                {processedChapters.map((chapter, index) => (
+                {chapters.map((chapter, index) => (
                   <button
                     key={index}
                     onClick={() => handleChapterSelect(chapter.id)}
@@ -121,14 +130,10 @@ console.log("Processed Chapters:", processedChapters);
           </div>
         </div>
 
-        {/* Contenedor de comentarios */}
         <div
-          className={`fixed top-0 left-0 transition-transform duration-300 ${
-            showComments ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-          } bg-white w-full h-full z-50 overflow-auto`}
+          className={`fixed top-0 left-0 transition-transform duration-300 ${showComments ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"} bg-white w-full h-full z-50 overflow-auto`}
         >
           <div className="p-4">
-            {/* Botón para cerrar comentarios */}
             <button
               onClick={() => setShowComments(false)}
               className="text-white bg-[#f97316] hover:bg-red-600 px-4 py-2 rounded absolute top-4 right-4"
@@ -141,36 +146,9 @@ console.log("Processed Chapters:", processedChapters);
             </div>
           </div>
         </div>
-        <div className="mt-4">
-          <h3 className="text-lg font-semibold mb-2">Comentarios</h3>
-          <textarea
-            className="w-full h-24 p-2 bg-gray-800 border border-gray-700 rounded text-white"
-            placeholder="Escribe un comentario..."
-          ></textarea>
-          <button
-            className="mt-2 px-4 py-2 bg-blue-500 rounded hover:bg-blue-600"
-            onClick={() => onComment("Comentario enviado")}
-          >
-            Enviar comentario
-          </button>
-        </div>
       </div>
     </div>
   );
 };
 
 export default MangaChapter;
-
-// Ejemplo de uso
-// Asegúrate de pasar un array válido de imágenes.
-const images = [
-  "ruta-de-tu-imagen-1.png",
-  "ruta-de-tu-imagen-2.png",
-  "ruta-de-tu-imagen-3.png",
-];
-
-<MangaChapter
-  images={images}
-  onReaction={(reaction) => console.log(`Reacción: ${reaction}`)}
-  onComment={(comment) => console.log(`Comentario: ${comment}`)}
-/>;

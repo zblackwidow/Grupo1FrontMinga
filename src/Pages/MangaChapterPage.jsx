@@ -6,6 +6,7 @@ import { getManga } from "../Store/actions/mangaActions";
 import { getComments } from "../Store/actions/commentActions";
 import CommentModal from "../Components/Manga/CommenModal";
 
+
 const MangaChapterPage = () => {
   const navigate = useNavigate();
   const [colorButton, setColorButton] = useState({
@@ -199,6 +200,7 @@ const filterComments = (id) =>
         </div>
       )}
     </div>
+    
   );
 };
 
