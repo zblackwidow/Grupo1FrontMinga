@@ -1,12 +1,9 @@
-import React from 'react'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { validateToken } from '../../Store/actions/authActions'
 import { Navigate } from 'react-router-dom'
 import { logout } from '../../Store/actions/authActions.js'
-import { getUserById } from '../../Store/actions/userActions.js'
-import axios from 'axios'
 
 const Navbar = () => {
     // Estados para mostrar/ocultar los menús
@@ -18,10 +15,10 @@ const Navbar = () => {
     const closeMenu = () => setIsMenuOpen(false)
 
     let localData = JSON.parse(localStorage.getItem('userManga'))
-    let role = localData?.user?.role
+    // let role = localData?.user?.role
     //const { user } = useSelector((state) => state.user)
     const { user } = useSelector((state) => state.auth)
-    console.log(user?.role)
+    // console.log(user?.role)
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search)
@@ -51,10 +48,10 @@ const Navbar = () => {
                 setDataUser(storedUser) // Establecer datos del usuario
                 dispatch(validateToken(storedUser.token)).then((response) => {
                     if (response) {
-                        setDataUser(response) // Actualizar el usuario válido
+                        setDataUser(response) 
                         setUserLogeado(true)
                     } else {
-                        setDataUser(null) // Invalidar el usuario
+                        setDataUser(null) 
                         console.error('Invalid Token')
                         localStorage.removeItem('userManga')
                         window.location.reload()
@@ -79,61 +76,7 @@ const Navbar = () => {
         }
     }, [UserLogeado])
 
-    /*let infoUser = JSON.parse(localStorage.getItem('userManga'))
-    console.log(infoUser)
-    let token = infoUser?.token
-    let idUser = infoUser?.user?.id
-    let idUser2 = infoUser?.user?._id
-
-    console.log(token)
-    console.log(idUser)
-    console.log(idUser2)
-
-    let cont = "";
-    console.log(cont);
-
-    if (!idUser) {
-        cont = idUser2
-        
-    }else if (!idUser2) {
-        cont = idUser
-    }
-
-    console.log(cont)
-    console.log(token)
-
-    useEffect(() => {
-        if (cont) {
-            dispatch(getUserById({ cont, token }))
-        }
-    }, [])
-
-    //dispatch(getUserById({ cont, token }))
-
-    
-
-    console.log(user)
-
-    const [autor, setAutor] = useState(null)
-
-    
-    React.useEffect(() => {
-        const res = axios
-            .get(`http://localhost:8080/api/author/idUser/${cont}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                setAutor(res.data)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-    }, [setAutor,cont, idUser, token])
-
-    console.log(autor)*/
-
+  
     return (
         <nav className=" flex left-0 w-full h-14 justify-between px-12  bg-transparent text-white z-50">
             {/* Menú hamburguesa */}
