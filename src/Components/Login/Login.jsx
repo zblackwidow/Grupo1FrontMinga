@@ -21,7 +21,7 @@ function Login() {
         event.preventDefault()
 
         dispatch(login({ email, password }))
-
+        
         setTimeout(() => {
             return navigate('/');
         }, 1000);
