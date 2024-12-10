@@ -18,7 +18,7 @@ const getChapters = createAsyncThunk("GET_CHAPTERS", async ({ token }, thunkAPI)
 });
 
 // Obtener un capítulo por ID
-const getChapterById = createAsyncThunk("GET_CHAPTER_BY_ID", async ({ id, token }, thunkAPI) => { // Cambiado para recibir un objeto
+const getChapterById = createAsyncThunk("GET_CHAPTER_BY_ID_", async ({ id, token }, thunkAPI) => { // Cambiado para recibir un objeto
     try {
         const response = await axios.get(
             `http://localhost:8080/api/chapter/id/${id}`, {
@@ -30,6 +30,7 @@ const getChapterById = createAsyncThunk("GET_CHAPTER_BY_ID", async ({ id, token 
         console.log("Respuesta del servidor:", response.data);  // Verifica qué datos te está devolviendo el servidor
         return response.data;
     } catch (error) {
+        console.error("Error en la solicitud:", error.response?.status, error.response?.data);
         return thunkAPI.rejectWithValue(error.response?.data?.message || "Token validation failed");
     }
 });

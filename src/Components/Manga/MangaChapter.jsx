@@ -14,7 +14,9 @@ const MangaChapter = ({ chapters = [] }) => {
   const [showChapterList, setShowChapterList] = useState(false);
   
 
-  const token = localStorage.getItem("userManga"); // Obtenemos el token del localStorage
+  const dataUser = JSON.parse(localStorage.getItem("userManga"));
+  const token = dataUser?.token;
+// Obtenemos el token del localStorage
 
   // Obtenemos el capítulo por ID desde el estado
   const { chapter = { pages: [] }, loading, error } = useSelector((state) => state.chapter);
