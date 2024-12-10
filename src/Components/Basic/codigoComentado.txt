@@ -1,0 +1,54 @@
+  /*let infoUser = JSON.parse(localStorage.getItem('userManga'))
+    console.log(infoUser)
+    let token = infoUser?.token
+    let idUser = infoUser?.user?.id
+    let idUser2 = infoUser?.user?._id
+
+    console.log(token)
+    console.log(idUser)
+    console.log(idUser2)
+
+    let cont = "";
+    console.log(cont);
+
+    if (!idUser) {
+        cont = idUser2
+        
+    }else if (!idUser2) {
+        cont = idUser
+    }
+
+    console.log(cont)
+    console.log(token)
+
+    useEffect(() => {
+        if (cont) {
+            dispatch(getUserById({ cont, token }))
+        }
+    }, [])
+
+    //dispatch(getUserById({ cont, token }))
+
+    
+
+    console.log(user)
+
+    const [autor, setAutor] = useState(null)
+
+    
+    React.useEffect(() => {
+        const res = axios
+            .get(`http://localhost:8080/api/author/idUser/${cont}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                setAutor(res.data)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }, [setAutor,cont, idUser, token])
+
+    console.log(autor)*/
