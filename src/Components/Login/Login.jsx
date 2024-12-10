@@ -18,17 +18,19 @@ function Login() {
         event.preventDefault()
 
 
-        try { const response = await dispatch(login({ email, password })); if (response.payload && response.payload.success)
-             { navigate('/');  
-                } else { setError('Failed to login. Please check your credentials.'); } }
-                 catch (error)
-                  { setError('An error occurred. Please try again.'); } };
-//         dispatch(login({ email, password }))
+        try {
+            const response = await dispatch(login({ email, password })); if (response.payload && response.payload.success) {
+                navigate('/');
+            } else { setError('Invalid login, please try again'); }
+        }
+        catch (error) { setError('An error occurred. Please try again.'); }
+    };
+    //         dispatch(login({ email, password }))
 
-//         setTimeout(() => {
-//             return navigate('/');
-//         }, 1000);
-//     }
+    //         setTimeout(() => {
+    //             return navigate('/');
+    //         }, 1000);
+    //     }
 
     const handleGoogleSignIn = () => {
         window.location.href = 'http://localhost:8080/api/auth/signIn/google'
@@ -57,7 +59,7 @@ function Login() {
                             manga.
                         </p>
                     </div>
-                    {error && <p className="text-red-500">{error}</p>}
+                    {error && <div className='text-sm md:text-base p-2 md:p-0 md: h-11 mt-5 bg-red-400 rounded-lg items-center flex justify-center'><p className="text-white text-center">{error}</p></div>}
                     <form onSubmit={handleSubmit}>
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Email</label>
@@ -87,12 +89,19 @@ function Login() {
                             Sign in
                         </button>
                     </form>
+
+
                     <button
                         type="button"
                         onClick={handleGoogleSignIn}
-                        className="w-full mt-4 text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-primary-800"
+                        className="w-full mt-4 flex p-3 justify-center text-black rounder-xl border-2 border-gray-300 bg-white rounded-xl"
                     >
-                        Sign in with Google
+                        <img
+                            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                            alt="Google logo"
+                            className="w-5 h-5 mr-2"
+                        />
+                          Sign in with Google
                     </button>
                     <div className="mt-4 text-center">
                         <p className="text-gray-500">

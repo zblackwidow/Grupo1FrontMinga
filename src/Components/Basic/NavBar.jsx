@@ -295,7 +295,8 @@ const Navbar = () => {
                     </ul>
                 </div>
             )}
-        <img src="../../../public/logo.png" alt="logo" className="w-40 mr-8 h-32 object-contain" />
+        <img src="../../../public/logo.png" alt="logo" className="hidden md:block w-40 mr-8 h-32 object-contain" />
+        <p id="border" className=' md:hidden text-white  m-8 text-4xl '>雪</p>
         </nav>
     )
 }
