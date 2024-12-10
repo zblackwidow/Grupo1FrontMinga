@@ -3,10 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { login } from '../../Store/actions/authActions.js'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-
-
-//import axios from 'axios';
-import logo from '../../../public/logo.png' // Ajusta la ruta según tu estructura de archivos
+import logo from '../../../public/logo.png' 
 
 function Login() {
     const [email, setEmail] = useState('')
@@ -20,17 +17,11 @@ function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault()
 
-        dispatch(login({ email, password }))
-<<<<<<< HEAD
-        
-    };[]
-=======
-
-        setTimeout(() => {
-            return navigate('/');
-        }, 1000);
-    }
->>>>>>> 6757f0793527874c00853f4de00eaac83411c1a1
+        try { const response = await dispatch(login({ email, password })); if (response.payload && response.payload.success)
+             { navigate('/');  
+                } else { setError('Failed to login. Please check your credentials.'); } }
+                 catch (error)
+                  { setError('An error occurred. Please try again.'); } };
 
     const handleGoogleSignIn = () => {
         window.location.href = 'http://localhost:8080/api/auth/signIn/google'
