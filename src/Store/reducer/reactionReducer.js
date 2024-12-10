@@ -41,6 +41,7 @@ const reactionReducer = createReducer(initialState, (builder) => {
         .addCase(createReaction.fulfilled, (state, action) => {
             state.loading = false;
             state.reaction = action.payload;
+            state.reactions.push(action.payload);
         })
         .addCase(createReaction.rejected, (state, action) => {
             state.loading = false;
@@ -52,8 +53,13 @@ const reactionReducer = createReducer(initialState, (builder) => {
         })
         .addCase(updateReaction.fulfilled, (state, action) => {
             state.loading = false;
-            state.reaction = action.payload;
-        })
+            const index = state.reactions.findIndex(
+              (reaction) => reaction.id === action.payload.id
+            );
+            if (index !== -1) {
+              state.reactions[index] = action.payload; // Actualizar la reacción existente
+            }
+          })
         .addCase(updateReaction.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
