@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/home', element: <Home /> },
-            { path: '/mangas', element: <Mangas></Mangas>  },
+            { path: '/mangas', element: <Mangas></Mangas> },
             { path: '/*', element: <NotFound></NotFound> },
             { path: '/panel', element: <PrivateRouterAdmin><Panel></Panel></PrivateRouterAdmin> },
             { path: '/chapters/:id', element: <MangaChapterPage /> },
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
             { path: "/newChapter", element: <NewChapter /> },
             { path: "/newManga", element: <NewManga /> },
             { path: "/newCompany", element: <NewCompany /> },
-            { path: "/newRole", element: <PrivateRouteUser> <NewRole /> </PrivateRouteUser>},
+            { path: "/newRole", element:  <NewRole /> },
             { path: '/editAuthor', element: <EditAuthor /> },
             { path: '/editChapter', element: <EditChapter /> },
             { path: '/editManga', element: <EditManga /> },

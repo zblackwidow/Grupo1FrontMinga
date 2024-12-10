@@ -10,7 +10,7 @@ function NewAuthor() {
 
 
     let dataUser = JSON.parse(localStorage.getItem('userManga'))
-    console.log(dataUser) 
+    console.log(dataUser)
     let token = dataUser.token
     let idUser = dataUser?.user?.id
     let idUser2 = dataUser?.user?._id
@@ -18,13 +18,13 @@ function NewAuthor() {
     console.log(idUser)
     console.log(idUser2)
 
-    let cont = "";
-    console.log(cont);
+    let cont = ''
+    console.log(cont)
 
     if (!idUser) {
         cont = idUser2
-        
-    }else if (!idUser2) {
+    }
+    if (!idUser2) {
         cont = idUser
     }
 
@@ -50,7 +50,7 @@ function NewAuthor() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setMessage('')
-
+        
         try {
             //dispatch(createAuthor({ formData, token }))
 
@@ -71,7 +71,7 @@ function NewAuthor() {
                 })
             )
 
-            const user = await axios.get(`http://localhost:8080/api/user/id/${idUser}`, {
+            const user = await axios.get(`http://localhost:8080/api/user/id/${cont}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
