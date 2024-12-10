@@ -182,7 +182,7 @@ const Navbar = () => {
                                         />
                                     }
                                     {
-                                        <p className="text-sm text-white">
+                                        <p className=" text-white">
                                             {dataUser?.payload?.user.email}
                                         </p>
                                     }
@@ -191,38 +191,38 @@ const Navbar = () => {
                         )}
                         {!UserLogeado && (
                             <>
-                                <li className="w-full">
+                                <li className="w-full mb-4">
                                     <NavLink
                                         to="/home"
-                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
                                         href="/home"
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                                     >
                                         Home
                                     </NavLink>
                                 </li>
-                                <li className="w-full">
+                                <li className="w-full mb-4">
                                     <NavLink
                                         to="/mangas"
-                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                                     >
                                         Mangas
                                     </NavLink>
                                 </li>
-                                <li className="w-full">
+                                <li className="w-full mb-4">
                                     <NavLink
                                         to="/register"
-                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                                     >
                                         Register
                                     </NavLink>
                                 </li>
-                                <li className="w-full">
+                                <li className="w-full mb-4">
                                     <NavLink
                                         to="/login"
-                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                                     >
                                         Sign In
@@ -233,10 +233,10 @@ const Navbar = () => {
                         {UserLogeado && (
                             <>
                                 {user.role > 0 ? (
-                                    <li className="w-full">
+                                    <li className="w-full mb-4">
                                         <NavLink
                                             to="/profile"
-                                            className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                            className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
                                             href="/profile"
                                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                                         >
@@ -249,20 +249,20 @@ const Navbar = () => {
                                 ) : (
                                     ''
                                 )}
-                                <li className="w-full">
+                                <li className="w-full mb-4">
                                     <NavLink
                                         to="/home"
-                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
                                         href="/home"
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                                     >
                                         Home
                                     </NavLink>
                                 </li>
-                                <li className="w-full">
+                                <li className="w-full mb-4">
                                     <NavLink
                                         to="/mangas"
-                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                                     >
                                         Mangas
@@ -270,20 +270,20 @@ const Navbar = () => {
                                 </li>
 
                                 {user.role === 0 && (
-                                    <li className="w-full">
+                                    <li className="w-full mb-4">
                                         <NavLink
                                             to="/newRole"
-                                            className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                            className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
                                         >
                                             Chooise: Author or Company
                                         </NavLink>
                                     </li>
                                 )}
 
-                                <li className="w-full">
+                                <li className="w-full mb-4">
                                     <NavLink
                                         to="/"
-                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
                                         onClick={logoutt}
                                     >
                                         Logout
