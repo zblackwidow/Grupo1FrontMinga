@@ -1,193 +1,89 @@
+import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom'
+const Carousel = () => {
+    const [activeIndex, setActiveIndex] = useState(0);
 
-import Slice from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { useNavigate } from "react-router-dom";
+    const slides = [
+        {
+            image1: 'https://s3-alpha-sig.figma.com/img/8856/dd5e/290b26e8ccd3b394d453600dc140c09b?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=O9E~eoAgkKKBP8zT7kIg5AvK9QEyzAcSweRoJPM1OUZ8lbw6MTk-o7KWQn65ss3ruEkkNF~706FPLM5b2fixKxo1K14fFObHYmFJA5EJLZb1LNr13oAynHtbpSwhT8hCI7eY6k85a2bdvCjOCD7jjExdBo8NQTHIPh46XHB0IE-oKnOmbT-VnR1HvpHcSYuugNwss5YPAXxt9X8WqMmo9aSxwBODmnyzH3-IkEbnMMsTmW2uPLcPa0h5eYt9Vv2ojKUroE8s1stGHLtaNxa3yqgBeDk1OgMwM1oeLaLS9qEH2ETDribK5g6kj1V~NF9tCgBHaAT3Z6Ta2NKb2Bbiyg__', image2: 'https://s3-alpha-sig.figma.com/img/b3fe/fdeb/7c848fa5944ce73c1e0b7c954bf88cad?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UowBsYUK7SsOsvJJtRLI3abuhQjlNEK7aLHaT~47pwGHwtSQRr9TbUtFXDWTLybN8OY2dySLMelvlT1QsKm3W9nSB6lv19kABnXhzY8v9GViukQcQRFipfiukFpRmVQvdP9nENEHxx7NPaoHbu-pGBoZbm~fQcA5JUdAhvON~L40iQRRID1nbV2CMW6JlbbdZ704vuXTVHLoQvC~s5H6FyDelv-V6xFKS6Lr4TIW2K~hpU-mInFVjsS1dSVoC-2og7wq7R~0xYl40IKK1CMVl0LH51zSseH59no0ntzrz~2-0ide4vu-DjuHa9T476Eeav6XukYrmqhlAPOyYs9n4g__', title: 'Shonen', text: 'Is the manga that is aimed at adolescent boys. They are series with large amounts of action, in which humorous situations often occur.The camaraderie between members of acollective or a combat team stands out.'
+        },
+        { image1: 'https://s3-alpha-sig.figma.com/img/7010/55a8/ad631c0e34af539abb86743a2cafbda1?Expires=1734912000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=FVmG7w7ptYT3R79PmMF9cUd~sphJzwrq0z69i3sJzQhTKzxJiFCKPXQBE8kyPTUtz~CFNmrb5PZQ3IxLF1G~gimPV1Wejjdw5uGu7AortKSivCei-HgYHua4kUbymOAMQNv8R3PLAgyoIGtY7FqdcGVJt4VtkIqhJzP2eMhMRfD7BarzVUgy4-G42av4-5luOOYgYSMvlewEG~u6Y0krjVeC1W5eSw4EDdXGGKXK5WuTGXhfM-JmMd~qKza1XcPZyqUNYeI0Tf2tktmxdbASMdetJfrUixMnRXa6ZQCvfeZ0i68LOGzrueumZ~S6bK48C6Rch0njkr75PoHs9zn4Wg__', image2: 'https://s3-alpha-sig.figma.com/img/0b79/70a5/01731543bd32ac773a1b2fa236c42971?Expires=1734912000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XD6jq-ol7Dgezapuz5QBFsnSa31~dwt8q~4DBMQyj9IztOy-VMoCNH89QAUAb4gmuuS21QlLzLIljyIA22eHaS7P2eMDQ2iMR4yY5xeAzV13rvZfF4qX1AYlnGMhmcsVhlq1TR7UxYsErS8ApxHVnd3e4lJbtr0pbw1qEq8miC~o~B91VHbO71EN46h2BCKDUeRbMWmngD-ViCN4LlkzLoErL65rL5xJhFTD-a88jXaBf8fHuJ-Xkg~ASM2niRHCjuTuEoodhVaA53CxW53wX7nzFbpoSr~OahnEHnCtI2wHQCVNYK-HEiCMu2XXyr~VdgH9MvtgYbdLvaOnhw9alw__', title: 'My hero academia', text: 'Is an action-packed manga set in a world where nearly everyone has superpowers. The story follows Izuku Midoriya, a powerless boy, who aspires to become a great hero despite his challenges.' },
+        {
+            image1: 'https://s3-alpha-sig.figma.com/img/74c1/1422/523fb73c0843c17b79f58c0508ca9f7a?Expires=1734912000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=kzZY5NIhLUfcd6JEzBhN3AxDdBvBjF375QHGbyYEihS7WuOCDeQjhCBoGiCxnjstD5zIL8~XLyebK179g99lGmPBVAvGrMenMfiD7K3a4irkOjLQ5qvYQnoVN3qBL2EEwgAMTwoaKeH1HW68DK8eh6ij6d38kN1V7uktpTfAngHpBRF0BNgcvTS5nUg4wrqbTWo2MlAy7Lc9f3g~WMfzAj2Wm8WeRwbCER5LNDcU82gdGw3e5XCsF8GykXsIU1EEClyCurjEjC225hCFcRWUeHpIX2-7-~3dLQhBKOQQantwyAmJCVNTQ1A9UyHjuJks952BowU8v5Zil6resw0GeQ__', image2: 'https://s3-alpha-sig.figma.com/img/511b/7568/ef59acdd63429092bed163f4a51dbf16?Expires=1734912000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jBe7sFCXQvzoQbecPMm1x1mknbY3WTBt18PCeE07y827xBp58DbWc0Q8lUeIqnlQPQjWVRcnPI1wQKsldQokQBOyAGebGXPFIjS6SNXG-xTARLHMeBNmtTH8rJCUZKevtZmi1cHnBZpIeu~HVK2hCOlszF6qqDwaAXyGO9WSlnu9uzAVRwNBdPTyn00U0eV3tSKfVtcOLwV945k~eZiB-MMHdoyQiEvwEUhMRmPv36DgqcSjve6hpSvjeEsQ-kgH1gYdZtwqhaysUYEBjduzt9XmQNHRTM33iMJ1yVwc4QkXZtIjye8EcqKz9mXBX0ogzPWOh0nrocVUF~bpG3lNOw__', title: 'Trigun stamped', text: 'Is a reboot of the original Trigun series, blending action and sci-fi. It follows Vash the Stampede, a gunslinger with a mysterious past, as he navigates a chaotic world full of danger and intrigue.'
+        },
 
-export default function Carrousel() {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/cities");
-  };
-  const settings = {
-    accessibility: true,
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-  return (
-    <>
-      <div className="w-[80vw] max-[740px]:mt-[15%] m-auto text-white">
-        <h1 className="text-center font-serif text-3xl font-bold mb-9 text-[#191e3b]  underline decoration-sky-500"> 
-          Popular MyTineraries
-        </h1>
-        <Slice {...settings}>
-          {images.map((d) => (
-            <div
-              className="bg-[#0e304262] rounded-xl mb-10 "
-              key={d.id}
-            >
-              <div className="h-56 flex justify-stretch rounded-t-xl items-center">
-                <img
-                  src={d.url}
-                  alt={d.name}
-                  className="rounded-t-xl object-cover h-full w-full"
-                />
-              </div>
-              <div className="flex flex-col justify-center items-center p-4">
-                <div className="rounded-b-xl h-56 flex flex-col items-center justify-center gap-3 w-[90%]">
-                  <p className="bg-transparent text-xl font-semibold">
-                    {d.name}
-                  </p>
-                  <p className="bg-transparent">{d.descripcion}</p>
-                  <button
-                    onClick={() => handleClick("/cities")}
-                    className="bg-[#DBB0A1] bg-opacity-75 hover:bg-blue-400 text-white text-lg px-6 py-1 rounded-2xl"
-                  >
-                    Discover!
-                  </button>
+    ];
+
+    const nextSlide = () => {
+        setActiveIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1)); // Avanza 1 slide
+    };
+
+    const prevSlide = () => {
+        setActiveIndex((prevIndex) => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1)); // Retrocede 1 slide
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextSlide();
+        }, 5000); // Cambia el intervalo según tus necesidades
+
+        return () => clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+    }, [slides]);
+
+    return (
+        <div className="hidden lg:flex justify-center items-center p-20">
+            <div className="w-full h-[300px] bg-[#f97316] rounded-lg">
+                <div className="flex justify-between items-center w-full h-[300px] px-10 z-1">
+                    <button onClick={prevSlide} className="text-white"><div className="bg-[#FACDB0] rounded-full p-1">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-6"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
+                            />
+                        </svg>
+                    </div></button>
+                    <div className="z-2 flex justify-evenly w-full">
+                        <div className="h-[400px] z-3 flex space-x-36 justify-center">
+                            <img className="h-[350px] object-cover " src={slides[activeIndex].image1} alt="Slide 1" />
+                           <NavLink to="/mangas"> <img className="h-[300px] object-cover " src={slides[activeIndex].image2} alt="Slide 2" /></NavLink>
+                        </div>
+                        <div className="w-[400px]  z-3 flex justify-start items-center">
+                            <div>
+                                <h2 className="text-[24px] font-medium text-white">{slides[activeIndex].title}</h2>
+                                <p className="text-[14px] font-normal text-white">
+                                    {slides[activeIndex].text}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onClick={nextSlide} className="text-white"><div className="bg-[#FACDB0] rounded-full p-1">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-6"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                            />
+                        </svg>
+                    </div></button>
                 </div>
-              </div>
             </div>
-          ))}
-        </Slice>
-      </div>
-    </>
-  );
-}
+        </div>
+    );
+};
 
-const images = [
-  {
-    name: "Tokio, Japón",
-    url: "https://media.admagazine.com/photos/618a5ef1be961b98e9f09804/master/w_1600%2Cc_limit/91686.jpg",
-    descripcion:
-      "A vibrant metropolis that combines tradition and modernity, famous for its gastronomy, technology and pop culture.",
-    id: 1
-  },
-  {
-    name: "Barcelona, España",
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZhG6NwwlPfqeZXadLK1XzXyCmJKWNkR_MSw&s",
-    descripcion:
-      "Known for its unique Gaudí architecture, beaches and a rich cultural and gastronomic life.",
-    id: 2
-  },
-  {
-    name: "Nueva York, EE.UU.",
-    url: "https://media.admagazine.com/photos/61e5acc706c10ae95c71b902/16:9/w_2560%2Cc_limit/New-York-skyline.jpg",
-    descripcion:
-      "The city that never sleeps, famous for its skyscrapers, Broadway, museums, and cultural diversity.",
-    id: 3
-  },
-  {
-    name: "París, Francia",
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnbo-vIfVjh-kezUFRNpSwrrkNFikeVEF1WQ&s",
-    descripcion:
-      "The city of love, known for its iconic monuments, art and exquisite gastronomy.",
-    id: 4
-  },
-  {
-    name: "Sídney, Australia",
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkRphk1lpOJChnm27I3cTcErJs2lBvluv8Dw&s",
-    descripcion:
-      "Famous for its Opera and beautiful beaches, Sydney offers a mix of nature and urban life.",
-    id: 5
-  },
-  {
-    name: "Kioto, Japón",
-    url: "https://estaticos-cdn.prensaiberica.es/clip/a1767182-90e0-402e-9f29-e29ac48a2e7c_alta-aspect-ratio_default_0.jpg",
-    descripcion:
-      "A historical city known for its temples, traditional gardens, and Japanese culture.",
-    id: 6
-  },
-  {
-    name: "Cape Town, Sudáfrica",
-    url: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/10/2e/1e/cape-town.jpg?w=1200&h=700&s=1",
-    descripcion:
-      "With views of the Mesa mountain, it offers a mix of history, culture and nature.",
-    id: 7
-  },
-  {
-    name: "Reykjavik, Islandia",
-    url: "https://content.icelandtravel.is/wp-content/uploads/2019/03/Reykjavik.jpg",
-    descripcion:
-      "The northernmost capital in the world, famous for its natural landscapes and vibrant culture.",
-    id: 8
-  },
-  {
-    name: "Lima, Perú",
-    url: "https://www.clarin.com/2022/12/02/Kl5Kzlrvm_2000x1500__1.jpg",
-    descripcion:
-      "Known for its world-class gastronomy and rich colonial history. The best destination to enjoy.",
-    id: 9
-  },
-  {
-    name: "Berlín, Alemania",
-    url: "https://viajes.nationalgeographic.com.es/medio/2017/02/09/shutterstock-302415089_6b607cdb.jpg",
-    descripcion:
-      "A city with a rich history, contemporary art and a vibrant nightlife.",
-    id: 10
-  },
-  {
-    name: "Copenhague, Dinamarca",
-    url: "https://www.civitatis.com/blog/wp-content/uploads/2019/09/shutterstock_378539728-1920x1280.jpg",
-    descripcion:
-      "Known for its Scandinavian design, canals and cozy atmosphere.The best destination.",
-    id: 11
-  },
-  {
-    name: "Buenos Aires, Argentina",
-    url: "https://blogskystorage.s3.amazonaws.com/2021/07/skyairline_skyairline_image_182.jpeg",
-    descripcion:
-      "Famous for its tango culture, European architecture and delicious gastronomy.",
-    id: 12
-  },
-  {
-    name: "Cordoba, Argentina",
-    url: "https://www.argentinfo.com.ar/wp-content/uploads/2023/08/calamuchita.jpg",
-    descripcion:
-      "A city with a rich history, contemporary art and a vibrant nightlife.",
-    id: 13
-  },{
-    name: "Santiago, Chile",
-    url: "https://www.argentinfo.com.ar/wp-content/uploads/2023/08/calamuchita.jpg  ",
-    descripcion:
-      "A city with a rich history, contemporary art and a vibrant nightlife.",
-    id: 14
-  },{
-    name: "Quito, Ecuador",
-    url: "https://ecpe2k7qe53.exactdn.com/wp-content/uploads/2020/01/410A3DA6-3D43-4479-BE3E-7049A99C8132-scaled.jpeg?strip=all&lossy=1&ssl=1",
-    descripcion:
-      "A city with a rich history, contemporary art and a vibrant nightlife.",
-    id: 15
-  }
-];
+export default Carousel;
