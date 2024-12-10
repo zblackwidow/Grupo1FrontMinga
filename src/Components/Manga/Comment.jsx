@@ -57,7 +57,7 @@ const CommentSection = () => {
   };
 
   return (
-    <div className="bg-gray-100 mt-20 min-h-screen p-6 lg:p-8">
+    <div className="bg-gray-100 mt-20 mb-20 min-h-screen p-6 lg:p-8">
   <div className="space-y-4 pb-32">
     {comments.map((comment) => (
       <div
