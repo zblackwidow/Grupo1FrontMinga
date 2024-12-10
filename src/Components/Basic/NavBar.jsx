@@ -1,9 +1,12 @@
+import React from 'react'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { validateToken } from '../../Store/actions/authActions'
 import { Navigate } from 'react-router-dom'
 import { logout } from '../../Store/actions/authActions.js'
+import { getUserById } from '../../Store/actions/userActions.js'
+import axios from 'axios'
 
 const Navbar = () => {
     // Estados para mostrar/ocultar los menús
@@ -16,6 +19,9 @@ const Navbar = () => {
 
     let localData = JSON.parse(localStorage.getItem('userManga'))
     let role = localData?.user?.role
+    //const { user } = useSelector((state) => state.user)
+    const { user } = useSelector((state) => state.auth)
+    console.log(user?.role)
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search)
@@ -28,7 +34,7 @@ const Navbar = () => {
                     setDataUser(response) // Actualizar el estado local
                     localStorage.setItem(
                         'userManga',
-                        JSON.stringify({ user: response.payload.user, token: userToken })
+                        JSON.stringify({ user: response?.payload?.user, token: userToken })
                     )
                     setUserLogeado(true)
                     navigate('/') // Redirigir al home
@@ -58,7 +64,7 @@ const Navbar = () => {
         }
     }, [dispatch, navigate])
 
-    const logout = () => {
+    const logoutt = () => {
         localStorage.removeItem('userManga')
         setUserLogeado(false)
 
@@ -73,8 +79,63 @@ const Navbar = () => {
         }
     }, [UserLogeado])
 
+    /*let infoUser = JSON.parse(localStorage.getItem('userManga'))
+    console.log(infoUser)
+    let token = infoUser?.token
+    let idUser = infoUser?.user?.id
+    let idUser2 = infoUser?.user?._id
+
+    console.log(token)
+    console.log(idUser)
+    console.log(idUser2)
+
+    let cont = "";
+    console.log(cont);
+
+    if (!idUser) {
+        cont = idUser2
+        
+    }else if (!idUser2) {
+        cont = idUser
+    }
+
+    console.log(cont)
+    console.log(token)
+
+    useEffect(() => {
+        if (cont) {
+            dispatch(getUserById({ cont, token }))
+        }
+    }, [])
+
+    //dispatch(getUserById({ cont, token }))
+
+    
+
+    console.log(user)
+
+    const [autor, setAutor] = useState(null)
+
+    
+    React.useEffect(() => {
+        const res = axios
+            .get(`http://localhost:8080/api/author/idUser/${cont}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                setAutor(res.data)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }, [setAutor,cont, idUser, token])
+
+    console.log(autor)*/
+
     return (
-        <nav className="fixed top-8 flex left-0 w-full h-14 justify-between px-12  bg-transparent text-white z-50">
+        <nav className=" flex left-0 w-full h-14 justify-between px-12  bg-transparent text-white z-50">
             {/* Menú hamburguesa */}
             <button className="text-orange-500" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 <svg
@@ -199,6 +260,15 @@ const Navbar = () => {
                                 </li>
                                 <li className="w-full">
                                     <NavLink
+                                        to="/mangas"
+                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                    >
+                                        Mangas
+                                    </NavLink>
+                                </li>
+                                <li className="w-full">
+                                    <NavLink
                                         to="/register"
                                         className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -219,6 +289,23 @@ const Navbar = () => {
                         )}
                         {UserLogeado && (
                             <>
+                                {user.role > 0 ? (
+                                    <li className="w-full">
+                                        <NavLink
+                                            to="/profile"
+                                            className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                            href="/profile"
+                                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                        >
+                                            Profile: Autor{' '}
+                                            <button className="bg-white text-[#FF5722] px-2 py-1 rounded-md">
+                                                Edit
+                                            </button>
+                                        </NavLink>
+                                    </li>
+                                ) : (
+                                    ''
+                                )}
                                 <li className="w-full">
                                     <NavLink
                                         to="/home"
@@ -239,7 +326,7 @@ const Navbar = () => {
                                     </NavLink>
                                 </li>
 
-                                {role === 0 && (
+                                {user.role === 0 && (
                                     <li className="w-full">
                                         <NavLink
                                             to="/newRole"
@@ -254,7 +341,7 @@ const Navbar = () => {
                                     <NavLink
                                         to="/"
                                         className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
-                                        onClick={logout}
+                                        onClick={logoutt}
                                     >
                                         Logout
                                     </NavLink>
@@ -300,7 +387,6 @@ const Navbar = () => {
             <path
                 d="M131.08 9.36V8.36H130.08V9.36H131.08ZM131.08 13.12H130.08V14.12H131.08V13.12ZM160.76 13.12V14.12H161.76V13.12H160.76ZM160.76 9.36H161.76V8.36H160.76V9.36ZM133.92 19.96V18.96H132.92V19.96H133.92ZM133.92 23.08H132.92V24.08H133.92V23.08ZM142.24 23.08V24.08H143.24V23.08H142.24ZM142.24 19.96H143.24V18.96H142.24V19.96ZM133.04 24.56V23.56H132.04V24.56H133.04ZM133.04 27.68H132.04V28.68H133.04V27.68ZM142.28 27.68V28.68H143.28V27.68H142.28ZM142.28 24.56H143.28V23.56H142.28V24.56ZM149.48 24.56V23.56H148.48V24.56H149.48ZM149.48 27.68H148.48V28.68H149.48V27.68ZM158.84 27.68V28.68H159.84V27.68H158.84ZM158.84 24.56H159.84V23.56H158.84V24.56ZM149.48 19.96V18.96H148.48V19.96H149.48ZM149.48 23.08H148.48V24.08H149.48V23.08ZM157.88 23.08V24.08H158.88V23.08H157.88ZM157.88 19.96H158.88V18.96H157.88V19.96ZM132.92 35V34H131.92V35H132.92ZM132.92 38.6H131.92V39.6H132.92V38.6ZM156.88 38.6V39.6H157.88V38.6H156.88ZM156.88 35H157.88V34H156.88V35ZM131.44 40.6V39.6H130.44V40.6H131.44ZM131.44 44.44H130.44V45.44H131.44V44.44ZM157.2 44.44V45.44H158.2V44.44H157.2ZM157.2 40.6H158.2V39.6H157.2V40.6ZM143.52 10.8V9.8H142.52V10.8H143.52ZM143.52 28.12H142.52V29.12H143.52V28.12ZM148.2 28.12V29.12H149.2V28.12H148.2ZM148.2 10.8H149.2V9.8H148.2V10.8ZM132 29.32V28.32H131V29.32H132ZM132 33.08H131V34.08H132V33.08ZM154.88 33.08H155.88V32.08H154.88V33.08ZM154.88 45.72H153.88V46.72H154.88V45.72ZM159.64 45.72V46.72H160.64V45.72H159.64ZM159.64 29.32H160.64V28.32H159.64V29.32ZM128.36 14.76V13.76H127.36V14.76H128.36ZM128.36 23.92H127.36V24.92H128.36V23.92ZM132.6 23.92V24.92H133.6V23.92H132.6ZM132.6 18.44V17.44H131.6V18.44H132.6ZM159.24 18.44H160.24V17.44H159.24V18.44ZM159.24 23.92H158.24V24.92H159.24V23.92ZM163.68 23.92V24.92H164.68V23.92H163.68ZM163.68 14.76H164.68V13.76H163.68V14.76ZM130.08 9.36V13.12H132.08V9.36H130.08ZM131.08 14.12H160.76V12.12H131.08V14.12ZM161.76 13.12V9.36H159.76V13.12H161.76ZM160.76 8.36H131.08V10.36H160.76V8.36ZM132.92 19.96V23.08H134.92V19.96H132.92ZM133.92 24.08H142.24V22.08H133.92V24.08ZM143.24 23.08V19.96H141.24V23.08H143.24ZM142.24 18.96H133.92V20.96H142.24V18.96ZM132.04 24.56V27.68H134.04V24.56H132.04ZM133.04 28.68H142.28V26.68H133.04V28.68ZM143.28 27.68V24.56H141.28V27.68H143.28ZM142.28 23.56H133.04V25.56H142.28V23.56ZM148.48 24.56V27.68H150.48V24.56H148.48ZM149.48 28.68H158.84V26.68H149.48V28.68ZM159.84 27.68V24.56H157.84V27.68H159.84ZM158.84 23.56H149.48V25.56H158.84V23.56ZM148.48 19.96V23.08H150.48V19.96H148.48ZM149.48 24.08H157.88V22.08H149.48V24.08ZM158.88 23.08V19.96H156.88V23.08H158.88ZM157.88 18.96H149.48V20.96H157.88V18.96ZM131.92 35V38.6H133.92V35H131.92ZM132.92 39.6H156.88V37.6H132.92V39.6ZM157.88 38.6V35H155.88V38.6H157.88ZM156.88 34H132.92V36H156.88V34ZM130.44 40.6V44.44H132.44V40.6H130.44ZM131.44 45.44H157.2V43.44H131.44V45.44ZM158.2 44.44V40.6H156.2V44.44H158.2ZM157.2 39.6H131.44V41.6H157.2V39.6ZM142.52 10.8V28.12H144.52V10.8H142.52ZM143.52 29.12H148.2V27.12H143.52V29.12ZM149.2 28.12V10.8H147.2V28.12H149.2ZM148.2 9.8H143.52V11.8H148.2V9.8ZM131 29.32V33.08H133V29.32H131ZM132 34.08H154.88V32.08H132V34.08ZM153.88 33.08V45.72H155.88V33.08H153.88ZM154.88 46.72H159.64V44.72H154.88V46.72ZM160.64 45.72V29.32H158.64V45.72H160.64ZM159.64 28.32H132V30.32H159.64V28.32ZM127.36 14.76V23.92H129.36V14.76H127.36ZM128.36 24.92H132.6V22.92H128.36V24.92ZM133.6 23.92V18.44H131.6V23.92H133.6ZM132.6 19.44H159.24V17.44H132.6V19.44ZM158.24 18.44V23.92H160.24V18.44H158.24ZM159.24 24.92H163.68V22.92H159.24V24.92ZM164.68 23.92V14.76H162.68V23.92H164.68ZM163.68 13.76H128.36V15.76H163.68V13.76Z"
                 fill="black"
-                fill-opacity="0.2"
                 mask="url(#path-2-outside-1_2597_5124)"
             />
 

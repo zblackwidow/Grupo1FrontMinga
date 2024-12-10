@@ -34,6 +34,7 @@ function Login() {
 
     const handleGoogleSignIn = () => {
         window.location.href = 'http://localhost:8080/api/auth/signIn/google'
+        dispatch(login({ email, password }))
     }
 
     return (
