@@ -26,17 +26,16 @@ import PrivateRouterAdmin from './Components/Basic/PrivateRouterAdmin'
 import MangaChapterPage from './Pages/MangaChapterPage'
 import MangaChapter from './Components/Manga/MangaChapter'
 
-
 const router = createBrowserRouter([
     {
         element: <StandarLayout />,
         children: [
             { path: '/', element: <Home /> },
             { path: '/home', element: <Home /> },
-            { path: '/mangas', element: <PrivateRouteUser><Mangas></Mangas></PrivateRouteUser>  },
+            { path: '/mangas', element: <Mangas></Mangas>  },
             { path: '/*', element: <NotFound></NotFound> },
             { path: '/panel', element: <PrivateRouterAdmin><Panel></Panel></PrivateRouterAdmin> },
-            { path: '/chapters/:id', element: <PrivateRouterAuthorCompany><MangaChapterPage /></PrivateRouterAuthorCompany> },
+            { path: '/chapters/:id', element: <MangaChapterPage /> },
             { path: '/comment', element: <PrivateRouterAuthorCompany><CommentSection /></PrivateRouterAuthorCompany> },
             { path: '/profile', element: <PrivateRouterAuthorCompany><Profile /></PrivateRouterAuthorCompany> },
             { path: '/companies', element: <PrivateRouterAuthorCompany><Companies /></PrivateRouterAuthorCompany> },
@@ -52,13 +51,12 @@ const router = createBrowserRouter([
             { path: "/newChapter", element: <NewChapter /> },
             { path: "/newManga", element: <NewManga /> },
             { path: "/newCompany", element: <NewCompany /> },
-            { path: "/newRole", element: <NewRole /> },
+            { path: "/newRole", element: <PrivateRouteUser> <NewRole /> </PrivateRouteUser>},
             { path: '/editAuthor', element: <EditAuthor /> },
             { path: '/editChapter', element: <EditChapter /> },
             { path: '/editManga', element: <EditManga /> },
             { path: '/editCompany', element: <EditCompany /> },
             { path: '/*', element: <NotFound /> },
-
         ],
     },
 ])
