@@ -24,6 +24,8 @@ const setUser = createAction("SET_USER", (data) => {
   });   
 
   const getUserById = createAsyncThunk("GET_USER_BY_ID", async (id, token) => {
+    console.log(id);
+    console.log(token);
     try {
       const response = await axios.get(
         `http://localhost:8080/api/user/id/${id}`,

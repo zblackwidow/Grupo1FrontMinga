@@ -1,10 +1,91 @@
 import React from 'react'
-
-
+import Moment from 'react-moment'
+import moment from 'moment'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export default function Profile() {
+    const navigate = useNavigate()
+    let infoUser = JSON.parse(localStorage.getItem('userManga'))
+    //console.log(infoUser)
+    let token = infoUser?.token
+    let idUser = infoUser?.user?.id
+    let idUser2 = infoUser?.user?._id
 
-    
+    //console.log(token)
+    //console.log(idUser)
+    //console.log(idUser2)
+
+    let cont = ''
+    //console.log(cont)
+
+    if (!idUser) {
+        cont = idUser2
+    }
+    if (!idUser2) {
+        cont = idUser
+    }
+
+    //console.log(cont)
+
+    const [autor, setAutor] = useState(null)
+    const [formData, setFormData] = useState({
+        _id: '',
+        user_id: cont,
+    })
+
+    React.useEffect(() => {
+        const res = axios
+            .get(`http://localhost:8080/api/author/idUser/${cont}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                setAutor(res.data)
+                setFormData({ ...formData, _id: res.data.response[0]._id })
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }, [])
+
+    //console.log(autor)
+
+    const [message, setMessage] = useState('')
+
+    let handleDelete = async (e) => {
+        e.preventDefault()
+        //console.log(token)
+        //console.log(cont)
+        console.log(formData)
+
+        try {
+            const response = await axios.delete(`http://localhost:8080/api/author/delete`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                data: formData,
+            })
+
+            setMessage('Author Deteled successfully!')
+            setTimeout(() => {
+                return navigate('/')
+            }, 1000)
+            console.log('BIEN')
+        } catch (error) {
+            console.log(error)
+            if (error.response) {
+                setMessage(`Error: ${error.response.data.message}`)
+            } else {
+                setMessage('An error occurred. Please try again.')
+            }
+        }
+    }
+
+    let newDate = moment.utc(autor?.response[0].birthday).format('MM/DD/YY')
 
     return (
         <>
@@ -20,6 +101,7 @@ export default function Profile() {
                     </h1>
                 </div>
             </div>
+
             <div className="flex justify-center -mt-[100px] z-0">
                 <div className="flex justify-around items-center bg-white w-[97%] rounded-lg p-10">
                     <div className="">
@@ -29,7 +111,8 @@ export default function Profile() {
                                     type="text"
                                     name="nombre"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                    placeholder="Name"
+                                    placeholder={autor?.response[0].name}
+                                    defaultValue={autor?.response[0].name}
                                 />
                             </div>
                             <div className="mb-6">
@@ -38,6 +121,7 @@ export default function Profile() {
                                     name="surname"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                     placeholder="Surname"
+                                    defaultValue={autor?.response[0].lastName}
                                 />
                             </div>
                             <div className="mb-6">
@@ -46,21 +130,27 @@ export default function Profile() {
                                     name="city"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                     placeholder="City"
+                                    defaultValue={autor?.response[0].city}
                                 />
                             </div>
                             <div className="mb-6">
+                                {}
                                 <input
-                                    type="date"
+                                    type="text"
                                     name="birthday"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                    placeholder="Birthday"
+                                    defaultValue={newDate}
                                 />
                             </div>
+
                             <div className="mb-6">
                                 <input
                                     type="url"
                                     name="photo"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                     placeholder="Photo URL"
+                                    defaultValue={autor?.response[0].photo}
                                 />
                             </div>
                             <button
@@ -71,22 +161,34 @@ export default function Profile() {
                             </button>
                             <button
                                 type="submit"
+                                onClick={handleDelete}
                                 className="w-full bg-[#FBDDDC] text-[#EE8380] text-[24px] py-2 px-4 rounded-3xl hover:bg-blue-700"
                             >
                                 Delete Account
                             </button>
                         </form>
+                        {message && (
+                            <p
+                                className={`text-center ${
+                                    message.includes('successfully')
+                                        ? 'text-green-500'
+                                        : 'text-red-500'
+                                }`}
+                            >
+                                {message}
+                            </p>
+                        )}
                     </div>
                     <div className="flex flex-col justify-center items-center">
                         <div className="">
                             <img
                                 className="w-[178px] rounded-full"
-                                src="https://s3-alpha-sig.figma.com/img/d771/e8ee/4d516f000e29670bda6ceb5a6c836183?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TRB8FmOriCJyxjVdIa1fvNIW~oh~crxMLW~D0wz770m4mD7Q4v~l5XBiYu8GgPHk4623IdKHAZLSS4DN~WWQzOvQf6WrhpDp06uhV0g3HBt84-57IHvdICd56bXPBKrKNTnsE9SxYudT7ybVJiUyWyeeeW17CmWl3k56DKQ-puV4swXxB84Z~QTwQOXK3yqRA-yVFKM8cR26DnGSG5ag0CmLfZKxAl19TohkmKHd3ji8qyiJSTSwqTjdmN3BBc6dJpWUOJt3lO64JmNhfbSUqUvQA2a2bKuKkYG1syPEO~~fiGiZoe18JbFuzrhqNzNhzIlIJw223GC2nJONMnB2bA__"
+                                src={autor?.response[0].photo}
                                 alt=""
                             />
                         </div>
                         <div className="pt-6">
-                            <h2 className="text-[20px]">Nombre</h2>
+                            <h2 className="text-[20px]">{autor?.response[0].name}</h2>
                         </div>
                         <div className="">
                             <div className="flex justify-center items-center">
@@ -110,7 +212,9 @@ export default function Profile() {
                                     />
                                 </svg>
 
-                                <h2 className="text-[16px] text-[#9D9D9D] pl-2">Nombre</h2>
+                                <h2 className="text-[16px] text-[#9D9D9D] pl-2">
+                                    {autor?.response[0].city}
+                                </h2>
                             </div>
                             <div className="flex justify-center items-center">
                                 <svg
@@ -128,7 +232,9 @@ export default function Profile() {
                                     />
                                 </svg>
 
-                                <h2 className="text-[16px] text-[#9D9D9D] pl-2">Nombre</h2>
+                                <h2 className="text-[16px] text-[#9D9D9D] pl-2">
+                                    {autor?.response[0].birthday}
+                                </h2>
                             </div>
                         </div>
                     </div>
