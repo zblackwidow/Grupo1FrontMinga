@@ -117,7 +117,7 @@ const Navbar = () => {
     console.log(autor)
 
     return (
-        <nav className="fixed top-8 flex left-0 w-full h-14 justify-between px-12  bg-transparent text-white z-50">
+        <nav className=" flex left-0 w-full h-14 justify-between px-12  bg-transparent text-white z-50">
             {/* Menú hamburguesa */}
             <button className="text-orange-500" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 <svg

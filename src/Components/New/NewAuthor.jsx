@@ -31,6 +31,7 @@ function NewAuthor() {
     console.log(cont)
 
     const [formData, setFormData] = useState({
+        user_id: idUser,
         name: '',
         lastName: '',
         city: '',
