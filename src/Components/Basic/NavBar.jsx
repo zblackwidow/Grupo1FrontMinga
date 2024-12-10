@@ -78,9 +78,9 @@ const Navbar = () => {
 
 
     return (
-        <nav className="absolute flex w-full h-14 justify-between bg-transparent text-white z-50">
+        <nav className="absolute flex w-full h-15 justify-between items-center bg-transparent text-white z-50">
             {/* Menú hamburguesa */}
-            <button className="text-orange-500 m-5" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button className="text-orange-500 ml-8" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 <svg
                     width="57"
                     height="55"
@@ -295,7 +295,7 @@ const Navbar = () => {
                     </ul>
                 </div>
             )}
-        <img src="../../../public/logo.png" alt="logo" className="w-40 mr-8  h-32 object-contain" />
+        <img src="../../../public/logo.png" alt="logo" className="w-40 mr-8 h-32 object-contain" />
         </nav>
     )
 }
