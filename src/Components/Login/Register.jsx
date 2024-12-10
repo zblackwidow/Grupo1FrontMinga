@@ -32,7 +32,7 @@ function Register() {
             });
 
             if (response.data.success) {
-                navigate('/');
+                navigate('/login');
                 console.log("Usuario registrado exitosamente", response.data);
             } else {
                 setError('Hubo un problema al registrar al usuario.');
