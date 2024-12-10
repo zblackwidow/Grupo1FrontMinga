@@ -14,19 +14,17 @@ const MangaChapter = ({ chapters = [] }) => {
   const [showChapterList, setShowChapterList] = useState(false);
   
 
-  const token = localStorage.getItem("userManga"); // Obtenemos el token del localStorage
+  const dataUser = JSON.parse(localStorage.getItem("userManga")); // Obtenemos el token del localStorage
+  const token = dataUser.token
 
   // Obtenemos el capítulo por ID desde el estado
-  const { chapter = { pages: [] }, loading, error } = useSelector((state) => state.chapter);
+  const { chapter, loading, error } = useSelector((state) => state.chapter);
 
 
   useEffect(() => {
     if (id && token) {
-      // Llamamos a la acción solo si tenemos un ID válido y un token
-      dispatch(getChapterById({ id, token })).then(()=>{
-        console.log("chapter received: ", chapter);
-        
-      });
+     
+      dispatch(getChapterById({ id, token }))
     }
   }, [id, token, dispatch]);
 
@@ -36,12 +34,14 @@ const MangaChapter = ({ chapters = [] }) => {
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
+const pagesChapter = chapter?.response
+
 
   const isFirstPage = currentPage === 0;
-  const isLastPage = chapter.pages && chapter.pages.length>0? currentPage === chapter.pages.length - 1:true;
+  const isLastPage = pagesChapter?.pages && pagesChapter?.pages?.length>0? currentPage === pagesChapter?.pages?.length - 1:true;
 
   const goToNextPage = () => {
-    if (chapter.pages &&  currentPage < chapter.pages.length - 1) setCurrentPage(currentPage + 1);
+    if (pagesChapter?.pages &&  currentPage < pagesChapter.pages.length - 1) setCurrentPage(currentPage + 1);
   };
 
   const goToPreviousPage = () => {
@@ -60,10 +60,10 @@ const MangaChapter = ({ chapters = [] }) => {
 
       {/* Visor de imagen */}
       <div className="relative w-full max-w-3xl bg-black border border-gray-700 rounded overflow-hidden">
-        {chapter && chapter.pages &&  chapter.pages.length > 0 ? (
+        {pagesChapter && pagesChapter?.pages &&  pagesChapter.pages.length > 0 ? (
           <>
             <img
-              src={chapter.pages[currentPage]}
+              src={pagesChapter.pages[currentPage]}
               alt={`Página ${currentPage + 1}`}
               className="w-full h-auto"
             />
