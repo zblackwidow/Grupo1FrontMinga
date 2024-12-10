@@ -12,6 +12,7 @@ export default function Banner() {
                     alt=""
                     className="w-full h-screen lg:h-full object-cover object-[40%]"
                 />
+                
                 <div className="text-center lg:text-start absolute sm:hidden md:block top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] lg:left-[10%] lg:translate-x-[-00%]">
                     <div className="py-2 ">
                         <h1 className="text-[40px] lg:text-[64px] font-bold 	leading-[60.92px]	 font-poppins text-white">
