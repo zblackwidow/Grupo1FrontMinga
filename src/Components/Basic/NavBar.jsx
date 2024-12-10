@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { validateToken } from '../../Store/actions/authActions'
 import { Navigate } from 'react-router-dom'
+import { logout } from '../../Store/actions/authActions.js'
 
 const Navbar = () => {
     // Estados para mostrar/ocultar los menús
@@ -11,8 +12,10 @@ const Navbar = () => {
     const [UserLogeado, setUserLogeado] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
     const closeMenu = () => setIsMenuOpen(false)
+
+    let localData = JSON.parse(localStorage.getItem('userManga'))
+    let role = localData?.user?.role
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search)
@@ -58,6 +61,9 @@ const Navbar = () => {
     const logout = () => {
         localStorage.removeItem('userManga')
         setUserLogeado(false)
+
+        dispatch(logout())
+
         return <Navigate to="/" />
     }
 
@@ -232,6 +238,17 @@ const Navbar = () => {
                                         Mangas
                                     </NavLink>
                                 </li>
+
+                                {role === 0 && (
+                                    <li className="w-full">
+                                        <NavLink
+                                            to="/newRole"
+                                            className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        >
+                                            Chooise: Author or Company
+                                        </NavLink>
+                                    </li>
+                                )}
 
                                 <li className="w-full">
                                     <NavLink

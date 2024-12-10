@@ -3,12 +3,15 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../../../public/logo.png';
 
+
 function Register() {
     const [email, setEmail] = useState('');
     const [photo, setPhoto] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [message, setMessage] = useState('');
+
 
     const handleSubmit = async (event) => {
         
@@ -33,7 +36,11 @@ function Register() {
 
             if (response.data.success) {
                 navigate('/login');
-                console.log("Usuario registrado exitosamente", response.data);
+                setMessage('User created successfully!');
+                setTimeout(() => {
+                    return navigate('/login');
+                }, 1000);
+
             } else {
                 setError('Hubo un problema al registrar al usuario.');
             }
@@ -62,6 +69,7 @@ function Register() {
                         </p>
                     </div>
                     {error && <p className="text-red-500">{error}</p>}
+                    {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
                     <form onSubmit={handleSubmit}>
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Email</label>

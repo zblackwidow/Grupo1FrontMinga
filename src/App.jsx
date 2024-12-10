@@ -50,7 +50,7 @@ const router = createBrowserRouter([
             { path: "/newChapter", element: <NewChapter /> },
             { path: "/newManga", element: <NewManga /> },
             { path: "/newCompany", element: <NewCompany /> },
-            { path: "/newRole", element: <NewRole /> },
+            { path: "/newRole", element: <PrivateRouteUser> <NewRole /> </PrivateRouteUser>},
             { path: '/editAuthor', element: <EditAuthor /> },
             { path: '/editChapter', element: <EditChapter /> },
             { path: '/editManga', element: <EditManga /> },

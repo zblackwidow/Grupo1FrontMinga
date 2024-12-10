@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { login, validateToken } from "../actions/authActions";
+import { login, validateToken,logout } from "../actions/authActions";
 
 const initialState = {
     user: [],
@@ -36,6 +36,11 @@ const authReducer = createReducer(initialState, (builder) => {
         .addCase(validateToken.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;   
+        })
+        .addCase(logout,(state)=>{
+            localStorage.removeItem("token");
+            state.user = null;
+            state.token = null;
         })
     })
 
