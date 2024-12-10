@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { getComments, getCommentById, createComment, updateComment, deleteComment } from "../actions/commentActions";
 
 const initialState = {
     comments: [],
@@ -58,15 +59,15 @@ const commentReducer = createReducer(initialState, (builder) => {
             state.loading = false;
             state.error = action.payload;
         })
-        .addCase(deleteCommentById.pending, (state) => {
+        .addCase(deleteComment.pending, (state) => {
             state.loading = true;
             state.error = null;
         })
-        .addCase(deleteCommentById.fulfilled, (state, action) => {
+        .addCase(deleteComment.fulfilled, (state, action) => {
             state.loading = false;
             state.comment = action.payload;
         })
-        .addCase(deleteCommentById.rejected, (state, action) => {
+        .addCase(deleteComment.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         })

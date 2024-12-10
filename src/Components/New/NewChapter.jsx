@@ -1,7 +1,14 @@
 import { useState } from "react";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function NewChapter() {
+    const navigate = useNavigate();
+
+    let dataUser = JSON.parse(localStorage.getItem('userManga'));
+    let token = dataUser.token;
+    let idUser = dataUser.user.id ?? dataUser.user._id
+
     const [formData, setFormData] = useState({
         title: '',
         order: '',
@@ -11,21 +18,41 @@ function NewChapter() {
     const [message, setMessage] = useState('');
 
     const handleChange = (e) => {
-        const { title, value } = e.target;
-        setFormData({ ...formData, [title]: value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
+
         try {
-            const response = await axios.post('http://localhost:8080/api/chapter/create', formData);
-            console.log('Form Data Sent:', response.data);
-            setMessage('Author created successfully!');
+            const response = await axios.post('http://localhost:8080/api/chapter/create', formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setMessage('Chapter created successfully!');
+            
+            // Almacenar el nuevo rol en el localStorage
+            const updatedUser = { ...dataUser.user, role: 2 }; // Actualizamos el rol
+            localStorage.setItem('userManga', JSON.stringify({
+                token: token,
+                user: updatedUser,
+            }));
+    
+            const user = await axios.get(`http://localhost:8080/api/user/id/${idUser}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(user);
+
+            setTimeout(() => {
+                return navigate('/mangas');
+            }, 1000);
         } catch (error) {
-            console.error('Error sending form data:', error);
             if (error.response) {
-                console.error('Error details:', error.response.data);
                 setMessage(`Error: ${error.response.data.message}`);
             } else {
                 setMessage('An error occurred. Please try again.');
@@ -48,27 +75,27 @@ function NewChapter() {
                                 name="title"
                                 value={formData.title}
                                 onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                placeholder="Name"
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                placeholder="Title"
                             />
                         </div>
                         <div className="mb-6">
                             <input
-                                type="text"
-                                name="Order"
+                                type="number"
+                                name="order"
                                 value={formData.order}
                                 onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Order"
                             />
                         </div>
                         <div className="mb-6">
                             <input
-                                type="text"
-                                name="Pages"
+                                type="number"
+                                name="pages"
                                 value={formData.pages}
                                 onChange={handleChange}
-                                className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Pages"
                             />
                         </div>

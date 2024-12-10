@@ -12,22 +12,23 @@ export const getMangas = createAsyncThunk("GET_MANGAS", async (search) => {
 })
 
 export const getMangaById = createAction("GET_MANGA_BY_ID")
-export const getManga = createAsyncThunk("GET_MANGA", async (id, token, thunkAPI) => {
-    try {
-        const response = await axios.get(
-            `http://localhost:8080/api/manga/id/${id}`,{
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        )
-        return response.data
-    } catch (error) {
-        if (error.response.status === 401) {
-            localStorage.removeItem("userManga")
+export const getManga = createAsyncThunk("GET_MANGA", async ({id, token}, thunkAPI) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8080/api/manga/mangaById/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    return response.data
+  } catch (error) {
+    if (error.response.status === 401) {
+      
     }
     return thunkAPI.rejectWithValue(error.response?.data?.message || "Token validation failed")
-    }
+  }
 })
 
 export const getMangasByAuthor = createAsyncThunk(
@@ -35,12 +36,12 @@ export const getMangasByAuthor = createAsyncThunk(
     async ({ author_id, token }, thunkAPI) => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/manga/mangasByAuthor`,
+          `http://localhost:8080/api/manga/mangasByAuthor?author=${author_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            params: { author_id }, // Pasar `author_id` como parámetro
+         
           }
         );
         return response.data.response;

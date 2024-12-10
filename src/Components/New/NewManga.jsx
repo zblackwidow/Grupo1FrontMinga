@@ -53,12 +53,10 @@ function NewManga() {
                         <div className="mb-6">
                             <input list="categoryOptions" name="category" value={formData.category} onChange={handleChange} className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent" placeholder="Insert Category" />
                             <datalist id="categoryOptions" className="p-2 bg-white border border-gray-300 rounded-lg shadow-lg">
-                                <option value="Action" />
-                                <option value="Adventure" />
-                                <option value="Comedy" />
-                                <option value="Drama" />
-                                <option value="Fantasy" />
-                                <option value="Horror" />
+                                <option value="Shojo" />
+                                <option value="Shonen" />
+                                <option value="Comics" />
+                                <option value="Seinen" />
                             </datalist>
                         </div>
 

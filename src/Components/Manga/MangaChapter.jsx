@@ -25,7 +25,7 @@ console.log("Processed Chapters:", processedChapters);
   const isLastPage = currentPage === images.length - 1;
 
   const goToNextPage = () => {
-    if (!isLastPage) setCurrentPage(currentPage + 1);
+    if (currentPage < images.length - 1) setCurrentPage(currentPage + 1);
   };
 
   const goToPreviousPage = () => {
@@ -40,8 +40,12 @@ console.log("Processed Chapters:", processedChapters);
     <div className="min-h-screen bg-white text-black flex flex-col items-center p-4">
       <header className="w-full flex justify-center top-8 py-8 mb-4 ">
         <h1 className="text-2xl font-bold">Capítulo de Manga</h1>
+        <button className="px-4 py-2 bg-red-500 rounded hover:bg-red-600">
+          Volver al inicio
+        </button>
       </header>
 
+      {/* Contenedor del visor */}
       <div className="relative w-full max-w-3xl bg-black border border-gray-700 rounded overflow-hidden">
         {images.length > 0 ? (
           <>
@@ -137,9 +141,36 @@ console.log("Processed Chapters:", processedChapters);
             </div>
           </div>
         </div>
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold mb-2">Comentarios</h3>
+          <textarea
+            className="w-full h-24 p-2 bg-gray-800 border border-gray-700 rounded text-white"
+            placeholder="Escribe un comentario..."
+          ></textarea>
+          <button
+            className="mt-2 px-4 py-2 bg-blue-500 rounded hover:bg-blue-600"
+            onClick={() => onComment("Comentario enviado")}
+          >
+            Enviar comentario
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default MangaChapter;
+
+// Ejemplo de uso
+// Asegúrate de pasar un array válido de imágenes.
+const images = [
+  "ruta-de-tu-imagen-1.png",
+  "ruta-de-tu-imagen-2.png",
+  "ruta-de-tu-imagen-3.png",
+];
+
+<MangaChapter
+  images={images}
+  onReaction={(reaction) => console.log(`Reacción: ${reaction}`)}
+  onComment={(comment) => console.log(`Comentario: ${comment}`)}
+/>;
