@@ -65,10 +65,10 @@ const Navbar = () => {
         localStorage.removeItem('userManga')
         setUserLogeado(false)
 
-        dispatch(logout())
+    dispatch(logout());
 
-        return <Navigate to="/" />
-    }
+    return <Navigate to="/" />;
+  };
 
     useEffect(() => {
         if (!UserLogeado) {
