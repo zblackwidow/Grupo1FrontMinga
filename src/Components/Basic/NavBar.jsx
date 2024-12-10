@@ -1,9 +1,11 @@
+import React from 'react'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { validateToken } from '../../Store/actions/authActions'
 import { Navigate } from 'react-router-dom'
 import { logout } from '../../Store/actions/authActions.js'
+import axios from 'axios'
 
 const Navbar = () => {
     // Estados para mostrar/ocultar los menús
@@ -28,7 +30,7 @@ const Navbar = () => {
                     setDataUser(response) // Actualizar el estado local
                     localStorage.setItem(
                         'userManga',
-                        JSON.stringify({ user: response.payload.user, token: userToken })
+                        JSON.stringify({ user: response?.payload?.user, token: userToken })
                     )
                     setUserLogeado(true)
                     navigate('/') // Redirigir al home
@@ -58,7 +60,7 @@ const Navbar = () => {
         }
     }, [dispatch, navigate])
 
-    const logout = () => {
+    const logoutt = () => {
         localStorage.removeItem('userManga')
         setUserLogeado(false)
 
@@ -72,6 +74,47 @@ const Navbar = () => {
             setDataUser(false)
         }
     }, [UserLogeado])
+
+    let infoUser = JSON.parse(localStorage.getItem('userManga'))
+    console.log(infoUser)
+    let token = infoUser?.token
+    let idUser = infoUser?.user?.id
+    let idUser2 = infoUser?.user?._id
+
+    console.log(token)
+    console.log(idUser)
+    console.log(idUser2)
+
+    let cont = "";
+    console.log(cont);
+
+    if (!idUser) {
+        cont = idUser2
+        
+    }else if (!idUser2) {
+        cont = idUser
+    }
+
+    console.log(cont)
+
+    const [autor, setAutor] = useState(null)
+
+    React.useEffect(() => {
+        const res = axios
+            .get(`http://localhost:8080/api/author/idUser/${cont}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                setAutor(res.data)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }, [setAutor, idUser, token])
+
+    console.log(autor)
 
     return (
         <nav className="fixed top-8 flex left-0 w-full h-14 justify-between px-12  bg-transparent text-white z-50">
@@ -199,6 +242,15 @@ const Navbar = () => {
                                 </li>
                                 <li className="w-full">
                                     <NavLink
+                                        to="/mangas"
+                                        className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                    >
+                                        Mangas
+                                    </NavLink>
+                                </li>
+                                <li className="w-full">
+                                    <NavLink
                                         to="/register"
                                         className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
                                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -219,6 +271,23 @@ const Navbar = () => {
                         )}
                         {UserLogeado && (
                             <>
+                                {autor ? (
+                                    <li className="w-full">
+                                        <NavLink
+                                            to="/profile"
+                                            className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
+                                            href="/profile"
+                                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                        >
+                                            Profile: Autor{' '}
+                                            <button className="bg-white text-[#FF5722] px-2 py-1 rounded-md">
+                                                Edit
+                                            </button>
+                                        </NavLink>
+                                    </li>
+                                ) : (
+                                    ''
+                                )}
                                 <li className="w-full">
                                     <NavLink
                                         to="/home"
@@ -254,7 +323,7 @@ const Navbar = () => {
                                     <NavLink
                                         to="/"
                                         className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2 text-sm font-medium text-center"
-                                        onClick={logout}
+                                        onClick={logoutt}
                                     >
                                         Logout
                                     </NavLink>

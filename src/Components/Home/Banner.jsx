@@ -30,7 +30,7 @@ export default function Banner() {
                     </div>
                     <div className="py-2 ">
                         <button className="bg-[#ffffff] text-[#ff5722] rounded-md w-[240px] h-[55px] text-[24px] font-medium  font-poppins">
-                            {auth.user._id ? (
+                            {auth?.user?._id ? (
                                 <NavLink to={'/mangas'}>Get Started</NavLink>
                             ) : (
                                 <NavLink to={'/login'}>Sign In!</NavLink>
