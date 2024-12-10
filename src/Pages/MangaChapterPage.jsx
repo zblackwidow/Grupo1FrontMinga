@@ -7,6 +7,7 @@ import { getComments } from "../Store/actions/commentActions";
 import CommentModal from "../Components/Manga/CommenModal";
 import ReactionBar from "../Components/Manga/MangaReaction";
 
+
 const MangaChapterPage = () => {
   const navigate = useNavigate();
   const [colorButton, setColorButton] = useState({
