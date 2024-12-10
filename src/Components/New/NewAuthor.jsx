@@ -8,6 +8,7 @@ function NewAuthor() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+
     let dataUser = JSON.parse(localStorage.getItem('userManga'))
     console.log(dataUser)
     let token = dataUser.token
@@ -30,6 +31,7 @@ function NewAuthor() {
     console.log(cont)
 
     const [formData, setFormData] = useState({
+        user_id: idUser,
         name: '',
         lastName: '',
         city: '',
@@ -52,7 +54,7 @@ function NewAuthor() {
         try {
             //dispatch(createAuthor({ formData, token }))
 
-            const response = await axios.post('http://localhost:8080/api/author/create', formData, {
+            await axios.post('http://localhost:8080/api/author/create', formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

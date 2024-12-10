@@ -35,10 +35,8 @@ function Register() {
             });
 
             if (response.data.success) {
+                navigate('/login');
                 setMessage('User created successfully!');
-                
-                console.log("Usuario registrado exitosamente", response.data);
-
                 setTimeout(() => {
                     return navigate('/login');
                 }, 1000);

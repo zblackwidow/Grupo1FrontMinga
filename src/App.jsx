@@ -24,7 +24,7 @@ import PrivateRouteUser from './Components/Basic/PrivateRouteUser'
 import PrivateRouterAuthorCompany from './Components/Basic/PrivateRouterAuthorCompany'
 import PrivateRouterAdmin from './Components/Basic/PrivateRouterAdmin'
 import MangaChapterPage from './Pages/MangaChapterPage'
-
+import MangaChapter from './Components/Manga/MangaChapter'
 
 const router = createBrowserRouter([
     {
@@ -45,6 +45,7 @@ const router = createBrowserRouter([
         element: <LayoutExceptFooter />,
         children: [
             { path: '/login', element: <Login /> },
+            { path: '/chapterByID/:id', element: <MangaChapter /> },
             { path: '/register', element: <Register /> },
             { path: "/newAuthor", element: <NewAuthor /> },
             { path: "/newChapter", element: <NewChapter /> },
@@ -56,7 +57,6 @@ const router = createBrowserRouter([
             { path: '/editManga', element: <EditManga /> },
             { path: '/editCompany', element: <EditCompany /> },
             { path: '/*', element: <NotFound /> },
-
         ],
     },
 ])
