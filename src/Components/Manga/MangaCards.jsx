@@ -7,7 +7,7 @@ const MangaCards = ({ selectedCategory }) => {
   const { mangas } = useSelector((state) => state.manga);
   const { search } = useSelector((state) => state.manga);
   const dispatch = useDispatch();
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getMangas({}));
@@ -25,34 +25,24 @@ const navigate = useNavigate();
 
     return matchesCategory && matchesTitle;
   });
-  let dataUser = JSON.parse(localStorage.getItem("userManga"))
-  let role = dataUser.user.role ?? dataUser.user.payload.user.role
 
+ 
   const handleViewMore = (mg) => {
-
-    if (role > 0) {
-      
+  
       navigate(`/chapters/${mg}`);
-    }else{
-      navigate(`/newRole`, { state: mg._id });
-    }
-
-
+   
   };
 
-  
-
   return (
-   
-      
-      <div className=" w-full flex flex-wrap justify-center gap-5">
-        {filteredMangas.map((mg) => (
+    <div className="w-full flex flex-wrap justify-center gap-5">
+      {filteredMangas.length > 0 ? (
+        filteredMangas.map((mg) => (
           <div
             key={mg._id}
             className="flex flex-row w-full sm:w-1/2 lg:w-1/3 m-2 transform transition duration-500 hover:scale-105"
           >
             <div
-              className={`flex items-center rounded-2xl w-full  m-4  overflow-hidden shadow-lg border-l-[10px]`}
+              className={`flex items-center rounded-2xl w-full m-4 overflow-hidden shadow-lg border-l-[10px]`}
               style={{
                 borderLeftColor: mg.category_id?.color || "gray-300",
               }}
@@ -61,24 +51,24 @@ const navigate = useNavigate();
                 <div className="flex flex-col h-full items-start justify-center w-full font-ro">
                   <p className="text-black font-bold text-center">{mg.title}</p>
                   <p
-                  className="text-sm font-medium text-center"
-                  style={{
-                    color: mg.category_id?.color || "#000", // Pintar las letras del color de la categoría
-                  }}
-                >
-                  {mg.category_id?.name.charAt(0).toUpperCase()+mg.category_id.name.slice(1)  || "Unknown"} {/* Mostrar el nombre de la categoría */}
-                </p>
+                    className="text-sm font-medium text-center"
+                    style={{
+                      color: mg.category_id?.color || "#000", // Pintar las letras del color de la categoría
+                    }}
+                  >
+                    {mg.category_id?.name.charAt(0).toUpperCase() +
+                      mg.category_id.name.slice(1) || "Unknown"}
+                  </p>
                 </div>
                 <div className="flex items-end justify-self-start h-full w-full">
-                 <button
-                      className="mt-2 bg-emerald-300 text-white rounded-3xl hover:bg-slate-500 h-[45%] w-[35%]"
-                      onClick={() => handleViewMore(mg._id)}
-                    >
-                      Read
-                    </button>
+                  <button
+                    className="mt-2 bg-emerald-300 text-white rounded-3xl hover:bg-slate-500 h-[45%] w-[35%]"
+                    onClick={() => handleViewMore(mg._id)}
+                  >
+                    Read
+                  </button>
                 </div>
               </div>
-
               <img
                 src={mg.cover_photo}
                 alt={mg.title}
@@ -86,9 +76,15 @@ const navigate = useNavigate();
               />
             </div>
           </div>
-        ))}
-      </div>
-  
+        ))
+      ) : (
+        
+        <p className="text-orange-500 border-t-2 border-black/20 p-3 text-xl text-wrap text-center font-bold m-5 ">
+         No results found matching your criteria. Try adjusting the filters!
+        </p>
+
+      )}
+    </div>
   );
 };
 
