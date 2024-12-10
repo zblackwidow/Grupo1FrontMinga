@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { validateToken } from '../../Store/actions/authActions'
 import { Navigate } from 'react-router-dom'
 import { logout } from '../../Store/actions/authActions.js'
+import { getUserById } from '../../Store/actions/userActions.js'
 import axios from 'axios'
 
 const Navbar = () => {
@@ -18,6 +19,9 @@ const Navbar = () => {
 
     let localData = JSON.parse(localStorage.getItem('userManga'))
     let role = localData?.user?.role
+    //const { user } = useSelector((state) => state.user)
+    const { user } = useSelector((state) => state.auth)
+    console.log(user?.role)
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search)
@@ -75,7 +79,7 @@ const Navbar = () => {
         }
     }, [UserLogeado])
 
-    let infoUser = JSON.parse(localStorage.getItem('userManga'))
+    /*let infoUser = JSON.parse(localStorage.getItem('userManga'))
     console.log(infoUser)
     let token = infoUser?.token
     let idUser = infoUser?.user?.id
@@ -96,9 +100,23 @@ const Navbar = () => {
     }
 
     console.log(cont)
+    console.log(token)
+
+    useEffect(() => {
+        if (cont) {
+            dispatch(getUserById({ cont, token }))
+        }
+    }, [])
+
+    //dispatch(getUserById({ cont, token }))
+
+    
+
+    console.log(user)
 
     const [autor, setAutor] = useState(null)
 
+    
     React.useEffect(() => {
         const res = axios
             .get(`http://localhost:8080/api/author/idUser/${cont}`, {
@@ -112,9 +130,9 @@ const Navbar = () => {
             .catch((error) => {
                 console.error(error)
             })
-    }, [setAutor, idUser, token])
+    }, [setAutor,cont, idUser, token])
 
-    console.log(autor)
+    console.log(autor)*/
 
     return (
         <nav className="fixed top-8 flex left-0 w-full h-14 justify-between px-12  bg-transparent text-white z-50">
@@ -271,7 +289,7 @@ const Navbar = () => {
                         )}
                         {UserLogeado && (
                             <>
-                                {autor ? (
+                                {user.role > 0 ? (
                                     <li className="w-full">
                                         <NavLink
                                             to="/profile"
@@ -308,7 +326,7 @@ const Navbar = () => {
                                     </NavLink>
                                 </li>
 
-                                {role === 0 && (
+                                {user.role === 0 && (
                                     <li className="w-full">
                                         <NavLink
                                             to="/newRole"
