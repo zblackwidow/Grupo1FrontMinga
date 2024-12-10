@@ -5,6 +5,7 @@ import { getChapterByMangaId } from "../Store/actions/chapterActions";
 import { getManga } from "../Store/actions/mangaActions";
 import { getComments } from "../Store/actions/commentActions";
 import CommentModal from "../Components/Manga/CommenModal";
+import ReactionBar from "../Components/Manga/MangaReaction";
 
 const MangaChapterPage = () => {
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ const filterComments = (id) =>
   };
 
   return (
-    <div className="flex flex-col lg:flex-row mt-10 justify-center gap-4 bg-[#ebebeb] min-h-screen">
+    <div className="flex flex-col lg:flex-row mt-24 justify-center gap-4 bg-[#ebebeb] min-h-screen">
   {/* Manga Cover and Info */}
   <div className="p-2 lg:w-1/4">
     <img
@@ -121,6 +122,7 @@ const filterComments = (id) =>
         <p className="text-[12px] text-[#9D9D9D]">Language</p>
       </div>
     </div>
+    <ReactionBar></ReactionBar>
   </div>
 
   {/* Manga Content */}
@@ -130,14 +132,14 @@ const filterComments = (id) =>
       <button
         style={{ color: colorButton.color }}
         onClick={buttonInfoLeft}
-        className="w-[50%] rounded-[20px] text-[12px] z-[1] font-montserrat font-normal text-center transition-all duration-300"
+        className="w-[50%] rounded-[20px] text-[12px] z-[1]  font-montserrat font-bold text-center transition-all duration-300"
       >
         Manga
       </button>
       <button
         style={{ color: colorButton2.color }}
         onClick={buttonInfoRight}
-        className="w-[50%] z-[1] rounded-[20px] text-[12px] font-montserrat font-normal text-center transition-all duration-300"
+        className="w-[50%] z-[1] rounded-[20px] text-[12px] font-montserrat font-bold text-center transition-all duration-300"
       >
         Chapters
       </button>
@@ -179,13 +181,13 @@ const filterComments = (id) =>
                     onClose={handleCloseModal}
                     comments={filterComments(chapter._id)}
                   />
-                  <p>{filterComments(chapter._id).length}</p>
-                </div>
+                  <p className="-mt-14">{filterComments(chapter._id).length}</p>
               </div>
 
+                </div>
               <button
-                className="bg-[#9D9D9D] text-white px-4 py-2 rounded"
-                 style={{ color: colorButton.color }}
+                className=" bg-orange-500 text-white px-5 py-2 rounded-3xl ml-4"
+                 
                 onClick={() => navigate(`/chapterByID/${chapter._id}`)}
               >
                 Read
