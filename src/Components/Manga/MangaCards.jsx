@@ -79,7 +79,7 @@ const MangaCards = ({ selectedCategory }) => {
         ))
       ) : (
         
-        <p className="text-orange-500 border-t-2 border-black/20 p-3 text-xl text-wrap text-center font-bold m-5 ">
+        <p className="text-orange-500 border-t-2 h-[50vh]  border-black/20 p-3 text-xl text-wrap text-center font-bold m-5 ">
          No results found matching your criteria. Try adjusting the filters!
         </p>
 
