@@ -20,7 +20,7 @@ function Login() {
         
         dispatch(login({ email, password }))
         
-    };
+    };[]
 
     const handleGoogleSignIn = () => {
         window.location.href = "http://localhost:8080/api/auth/signIn/google";
