@@ -31,15 +31,15 @@ const ReactionBar = ({ contentId, userToken }) => {
   ];
 
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-4 justify-center">
       {reactions.map((reaction) => (
         <button
           key={reaction.type}
           onClick={() => handleReactionClick(reaction.type)}
-          className={`p-4 text-2xl ${
+          className={`p-4 text-2xl rounded-full mt-4 ${
             selectedReaction === reaction.type
-              ? "bg-blue-500 text-white rounded-lg"
-              : "bg-gray-200"
+              ? "bg-orange-500 text-white rounded-full"
+              : "bg-gray-300 hover:bg-orange-400"
           }`}
         >
           {reaction.emoji}
