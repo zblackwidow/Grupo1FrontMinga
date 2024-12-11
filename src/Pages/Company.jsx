@@ -50,6 +50,8 @@ export default function Company() {
         user_id: cont,
     })
 
+    
+
     useEffect(() => {
         const resp = axios
             .get(`http://localhost:8080/api/author/idUser/${cont}`, {
