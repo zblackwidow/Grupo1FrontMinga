@@ -57,7 +57,7 @@ const MangaCards = ({ selectedCategory }) => {
                     }}
                   >
                     {mg.category_id?.name.charAt(0).toUpperCase() +
-                      mg.category_id.name.slice(1) || "Unknown"}
+                      mg.category_id?.name.slice(1) || "Unknown"}
                   </p>
                 </div>
                 <div className="flex items-end justify-self-start h-full w-full">

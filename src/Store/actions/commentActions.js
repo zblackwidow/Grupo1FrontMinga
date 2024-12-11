@@ -33,17 +33,30 @@ const getCommentById = createAsyncThunk("GET_COMMENT_BY_ID", async (id, token) =
     }
 })
 
-const createComment = createAsyncThunk("CREATE_COMMENT", async (comment, token) => {
+const getCommentsByChapterId = createAsyncThunk("GET_COMMENTS_BY_CHAPTER_ID", async (id) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:8080/api/comment/commentByChapterId/${id}`
+        )
+        return response.data
+    } catch (error) {
+        return error.response?.data?.message || "Token validation failed"
+        
+    }
+    
+})
+
+const createComment = createAsyncThunk("CREATE_COMMENT", async (comment) => {
     try {
         const response = await axios.post(
             "http://localhost:8080/api/comment/create", comment, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                
             }
         )
         return response.data
     } catch (error) {
+        console.log(error);
+        
         return error.response?.data?.message || "Token validation failed"
         
     }
@@ -65,20 +78,20 @@ const updateComment = createAsyncThunk("UPDATE_COMMENT", async (comment, token) 
     }
 })
 
-const deleteComment = createAsyncThunk("DELETE_COMMENT", async (id, token) => {
+const deleteComment = createAsyncThunk("DELETE_COMMENT", async (id) => {
     try {
         const response = await axios.delete(
-            `http://localhost:8080/api/comment/destroy`, id, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+            `http://localhost:8080/api/comment/destroy/${id}`, {
+                
             }
         )
         return response.data
     } catch (error) {
+        console.log(error.response.data);
+        
         return error.response?.data?.message || "Token validation failed"
         
     }
 })
 
-export { getComments, getCommentById, createComment, updateComment, deleteComment }
+export { getComments, getCommentById, createComment, updateComment, deleteComment, getCommentsByChapterId }

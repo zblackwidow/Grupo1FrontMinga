@@ -16,7 +16,7 @@ const getAuthors = createAsyncThunk("GET_AUTHORS", async (token) => {
 
 const getAuthorById = createAsyncThunk(
   "GET_AUTHOR_BY_ID",
-  async (id, token) => {
+  async ({id, token}) => {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/author/id/${id}`,
@@ -33,6 +33,20 @@ const getAuthorById = createAsyncThunk(
   }
 );
 
+const getAuthorByUserId = createAsyncThunk(
+  "GET_AUTHOR_BY_USER_ID",
+  async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/author/idUser/${id}`,
+       
+      );
+      return response.data;
+    } catch (error) {
+      return error.response?.data || "Token validation failed";
+    }
+  }
+);
 const createAuthor = createAsyncThunk(
   "CREATE_AUTHOR",
   async (author, token) => {
@@ -90,4 +104,4 @@ const deleteAuthor = createAsyncThunk("DELETE_AUTHOR", async (id, token) => {
   }
 });
 
-export { getAuthors, getAuthorById, createAuthor, updateAuthor, deleteAuthor };
+export { getAuthors, getAuthorById, getAuthorByUserId, createAuthor, updateAuthor, deleteAuthor };

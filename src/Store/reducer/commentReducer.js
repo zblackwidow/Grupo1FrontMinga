@@ -1,9 +1,10 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getComments, getCommentById, createComment, updateComment, deleteComment } from "../actions/commentActions";
+import { getComments, getCommentById, createComment, updateComment, deleteComment, getCommentsByChapterId } from "../actions/commentActions";
 
 const initialState = {
     comments: [],
     comment: null,
+    commentsByChapterId: [],
     error: null,
     loading: false,
 };
@@ -31,6 +32,18 @@ const commentReducer = createReducer(initialState, (builder) => {
             state.comment = action.payload;
         })
         .addCase(getCommentById.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        })
+        .addCase(getCommentsByChapterId.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(getCommentsByChapterId.fulfilled, (state, action) => {
+            state.loading = false;
+            state.commentsByChapterId = action.payload;
+        })
+        .addCase(getCommentsByChapterId.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         })

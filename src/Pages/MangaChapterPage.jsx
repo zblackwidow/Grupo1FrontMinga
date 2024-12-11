@@ -36,7 +36,7 @@ const MangaChapterPage = () => {
     );
     setIsHovered(false);
   }
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeModalChapter, setActiveModalChapter] = useState(null);
   const [isHovered, setIsHovered] = useState(true);
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -49,6 +49,7 @@ const MangaChapterPage = () => {
 
   useEffect(() => {
     if (id && token) {
+      // Cargar solo datos esenciales para este componente
       dispatch(getChapterByMangaId({ id, token }));
       dispatch(getManga({ id, token }));
       dispatch(getComments({ token }));
@@ -70,17 +71,14 @@ const MangaChapterPage = () => {
   const chapters = chapter?.response || [];
   const mangaDetails = manga?.response || {};
   const commentsList = comments?.response || [];
-  console.log(chapters);
-  console.log(commentsList);
 
-  console.log(filterComments("675397a65c85eb3f667feae6"));
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  const handleOpenModal = (chapterId) => {
+    setActiveModalChapter(chapterId);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setActiveModalChapter(null);
   };
 
   return (
@@ -175,16 +173,17 @@ const MangaChapterPage = () => {
                 </p>
               </div>
               <div className="flex justify-center gap-6">
-                <button onClick={handleOpenModal}>
+              <button onClick={() => handleOpenModal(chapter._id)}>
                   <img
                     src="https://s3-alpha-sig.figma.com/img/c6ca/d4a8/50eb70cf6e6a2e8e874cb25836f927e4?Expires=1734912000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Cg6-IuHbcTcjo3jLeNv9GdbsMU8UDOQbeTx6qKdr8MZgI1U1yE5qpL9060Z6owVayeaqoAA~9fyvcGldZOQR7~JcC4NNyaeUT9uBcdpWLMB-rQgsgyzCA7Ing3lVxOSBPBH5oN0wqLRATPqD5kuMh2VnPHQB0tNmp4qOKtMEWByb320urujqAOmxX1BS7RZ1dOfQ6n9mfZSwXx2TetRxhjHIHURj9hWq0vnxcHIxFMwd1jJN6QqS4vcQLGOqd3b91vrOzDwO-wJXBq~fX4gYIb9eP0knUuSAmcew9ZVRjiGzmtRNqky8lKvX0Y7M2L1Jhht6UwFFaE1RkuQvHDsS2A__"
                     alt=""
                   />
                 </button>
                 <CommentModal
-                  isOpen={isModalOpen}
+                  isOpen={activeModalChapter === chapter._id}
                   onClose={handleCloseModal}
-                  comments={filterComments(chapter._id)}
+                  commentsID={chapter._id}
+                  className="max-h-[90vh]"
                 />
 
                 <p>{filterComments(chapter._id).length}</p>
