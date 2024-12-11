@@ -4,10 +4,9 @@ import axios from "axios";
 function EditCompany() {
     const [formData, setFormData] = useState({
         name: '',
-        surname: '',
-        city: '',
-        birthday: '',
+        website: '',
         photo: '',
+        description: '',
     });
 
     const handleChange = (e) => {
