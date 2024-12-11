@@ -14,7 +14,7 @@ function Register() {
 
 
     const handleSubmit = async (event) => {
-        
+
         event.preventDefault();
         setError('');
 
@@ -42,13 +42,13 @@ function Register() {
                 }, 1000);
 
             } else {
-                setError('Hubo un problema al registrar al usuario.');
+                setError('Invalid register, please try again');
             }
         } catch (error) {
             if (error.response) {
                 setError(error.response.data.message);
             } else {
-                setError('Hubo un error en el servidor.');
+                setError('Server error.');
             }
         }
     };
@@ -68,35 +68,37 @@ function Register() {
                             Discover manga, manhua and manhwa, track your progress, have fun, read manga.
                         </p>
                     </div>
-                    {error && <p className="text-red-500">{error}</p>}
+                    {error && <div className='text-sm md:text-base p-2 md: h-11 mt-5 bg-red-400 rounded-lg items-center flex justify-center'>
+                        <p className="text-white text-center">{error}</p></div>}
+
                     {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
                     <form onSubmit={handleSubmit}>
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Email</label>
-                            <input 
-                                type="email" 
-                                className="w-full px-3 py-2 border rounded-lg" 
-                                placeholder="Email" 
+                            <input
+                                type="email"
+                                className="w-full px-3 py-2 border rounded-lg"
+                                placeholder="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Photo URL</label>
-                            <input 
-                                type="url" 
-                                className="w-full px-3 py-2 border rounded-lg" 
-                                placeholder="Photo URL" 
+                            <input
+                                type="url"
+                                className="w-full px-3 py-2 border rounded-lg"
+                                placeholder="Photo URL"
                                 value={photo}
                                 onChange={(e) => setPhoto(e.target.value)}
                             />
                         </div>
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Password</label>
-                            <input 
-                                type="password" 
-                                className="w-full px-3 py-2 border rounded-lg" 
-                                placeholder="Password" 
+                            <input
+                                type="password"
+                                className="w-full px-3 py-2 border rounded-lg"
+                                placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
@@ -115,7 +117,7 @@ function Register() {
                             alt="Google logo"
                             className="w-5 h-5 mr-2"
                         />
-                          Sign in with Google
+                        Sign in with Google
                     </button>
                     <div className="mt-4 text-center">
                         <p className="text-gray-500">
