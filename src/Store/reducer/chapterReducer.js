@@ -10,6 +10,7 @@ const initialState = {
 
 const chapterReducer = createReducer(initialState, (builder) => {
   builder
+    // getChapters
     .addCase(getChapters.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -46,6 +47,8 @@ const chapterReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.payload;
     })
+    
+    // createChapter
     .addCase(createChapter.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -58,6 +61,8 @@ const chapterReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.payload;
     })
+    
+    // updateChapter
     .addCase(updateChapter.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -70,6 +75,8 @@ const chapterReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.payload;
     })
+    
+    // deleteChapter
     .addCase(deleteChapter.pending, (state) => {
       state.loading = true;
       state.error = null;

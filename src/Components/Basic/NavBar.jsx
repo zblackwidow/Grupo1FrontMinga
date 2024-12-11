@@ -6,7 +6,6 @@ import { Navigate } from 'react-router-dom'
 import { logout } from '../../Store/actions/authActions.js'
 
 const Navbar = () => {
-    // Estados para mostrar/ocultar los menús
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [dataUser, setDataUser] = useState(null)
     const [UserLogeado, setUserLogeado] = useState(false)
@@ -15,26 +14,22 @@ const Navbar = () => {
     const closeMenu = () => setIsMenuOpen(false)
 
     let localData = JSON.parse(localStorage.getItem('userManga'))
-    // let role = localData?.user?.role
-    //const { user } = useSelector((state) => state.user)
     const { user } = useSelector((state) => state.auth)
-    // console.log(user?.role)
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search)
-        const userToken = params.get('token') // Obtener el token desde la URL
+        const userToken = params.get('token') 
 
         if (userToken) {
-            // Validar el token con Redux
             dispatch(validateToken(userToken)).then((response) => {
                 if (response) {
-                    setDataUser(response) // Actualizar el estado local
+                    setDataUser(response) 
                     localStorage.setItem(
                         'userManga',
                         JSON.stringify({ user: response?.payload?.user, token: userToken })
                     )
                     setUserLogeado(true)
-                    navigate('/') // Redirigir al home
+                    navigate('/') 
                 } else {
                     console.error('Invalid Token')
                     localStorage.removeItem('userManga')
@@ -42,10 +37,9 @@ const Navbar = () => {
                 }
             })
         } else {
-            // Si no hay token en la URL, verificar si hay datos en localStorage
             const storedUser = JSON.parse(localStorage.getItem('userManga'))
             if (storedUser) {
-                setDataUser(storedUser) // Establecer datos del usuario
+                setDataUser(storedUser) 
                 dispatch(validateToken(storedUser.token)).then((response) => {
                     if (response) {
                         setDataUser(response)
@@ -292,7 +286,8 @@ const Navbar = () => {
                     </ul>
                 </div>
             )}
-        <img src="../../../public/logo.png" alt="logo" className="w-40 mr-8 h-32 object-contain" />
+        <img src="../../../public/logo.png" alt="logo" className="hidden md:block w-40 mr-8 h-32 object-contain" />
+        <p id="border" className=' md:hidden text-white  m-8 text-4xl '>雪</p>
         </nav>
     )
 }
