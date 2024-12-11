@@ -63,7 +63,7 @@ function Login() {
                             manga.
                         </p>
                     </div>
-                    {error && <div className='text-sm md:text-base p-2 md:p-0 md: h-11 mt-5 bg-red-400 rounded-lg items-center flex justify-center'><p className="text-white text-center">{error}</p></div>}
+                    {error && <div className='text-sm md:text-base p-2 md:p-0 md: h-auto mt-5 bg-red-400 rounded-lg items-center flex justify-center'><p className="text-white text-center">{error}</p></div>}
                     <form onSubmit={handleSubmit}>
                         <div className="my-4">
                             <label className="block text-[#f8781a]">Email</label>
