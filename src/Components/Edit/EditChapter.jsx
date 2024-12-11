@@ -3,11 +3,9 @@ import axios from "axios";
 
 function EditChapter() {
     const [formData, setFormData] = useState({
-        name: '',
-        surname: '',
-        city: '',
-        birthday: '',
-        photo: '',
+        title: '',
+        order: '',
+        pages: '',
     });
 
     const handleChange = (e) => {
