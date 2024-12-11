@@ -13,6 +13,8 @@ const MangaCards = ({ selectedCategory }) => {
     dispatch(getMangas({}))
   }, [dispatch])
 
+  console.log(mangas)
+
   const filteredMangas = mangas.filter((manga) => {
     if (!manga || !manga.category_id) return false;
 
