@@ -58,11 +58,7 @@ useEffect(() => {
 
   const handleToggleActiveAuthor = (author) => {
     const updatedAuthor = { ...author, active: !author.active };
-
-    // Enviar actualización al backend
     dispatch(updateAuthor({ author: { _id: author._id, active: updatedAuthor.active }, token: tokenString }));
-    
-    // Actualizar el estado local de forma segura
     setLocalAuthors((prevAuthors) =>
       prevAuthors.map((auth) =>
         auth._id === author._id ? updatedAuthor : auth
@@ -72,7 +68,7 @@ useEffect(() => {
 
   return (
     <div className="">
-      <div className="w-full h-min-screen bg-[length:w-full_721px] bg-no-repeat bg-panel px-10">
+      <div className="w-full h-min-screen bg-cover bg-no-repeat bg-panel px-10">
         <h1 className="flex justify-center items-center text-[64px] text-white pt-[260px] h-[500px]">
           Panel
         </h1>
