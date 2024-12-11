@@ -13,6 +13,7 @@ const ReactionBar = ({ contentId, userToken }) => {
       contentId,
       reactionType: reaction,
     };
+    console.log(selectedReaction);
 
     // Si ya existe una reacción seleccionada, actualízala
     if (selectedReaction) {

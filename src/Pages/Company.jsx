@@ -8,8 +8,8 @@ import {
 } from "../Store/actions/mangaActions";
 import { getCategories } from "../Store/actions/categoryActions";
 
-export default function Companies() {
-  const user = JSON.parse(localStorage.getItem("userManga"));
+export default function Company() {
+  /*const user = JSON.parse(localStorage.getItem("userManga"));
   const role = user.user.role;
   const token = user.token;
   const author = user.user.author.id;
@@ -39,7 +39,7 @@ export default function Companies() {
 
   console.log("Mangas by author:", mangaByAuthor);
   console.log("Categories:", categories);
-  console.log(categories[0]);
+  console.log(categories[0]);*/
 
   return (
     <>
@@ -51,7 +51,7 @@ export default function Companies() {
         />
         <div className="absolute top-[32%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
           <h1 className="font-roboto text-[64px] font-bold text-white">
-            {role === 2 ? "Companie" : "Author"}
+            Companie
           </h1>
         </div>
       </div>

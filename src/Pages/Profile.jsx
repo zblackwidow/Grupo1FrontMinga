@@ -31,10 +31,46 @@ export default function Profile() {
     //console.log(cont)
 
     const [autor, setAutor] = useState(null)
+
     const [formData, setFormData] = useState({
         _id: '',
         user_id: cont,
     })
+
+    const [formDataUpdate, setFormDataUpdate] = useState({
+        _id: '',
+        name: '',
+        lastName: '',
+        city: '',
+        birthday: '',
+        photo: '',
+        user_id: cont,
+    })
+
+    const onChangeName = (e) => {
+        let value = e.target.value
+        setFormDataUpdate({ ...formDataUpdate, name: value })
+    }
+
+    const onChangeLastName = (e) => {
+        let value = e.target.value
+        setFormDataUpdate({ ...formDataUpdate, lastName: value })
+    }
+
+    const onChangeCity = (e) => {
+        let value = e.target.value
+        setFormDataUpdate({ ...formDataUpdate, city: value })
+    }
+
+    const onChangeBirthday = (e) => {
+        let value = e.target.value
+        setFormDataUpdate({ ...formDataUpdate, birthday: value })
+    }
+
+    const onChangePhoto = (e) => {
+        let value = e.target.value
+        setFormDataUpdate({ ...formDataUpdate, photo: value })
+    }
 
     React.useEffect(() => {
         const res = axios
@@ -45,7 +81,17 @@ export default function Profile() {
             })
             .then((res) => {
                 setAutor(res.data)
+
                 setFormData({ ...formData, _id: res.data.response[0]._id })
+                setFormDataUpdate({
+                    ...formDataUpdate,
+                    _id: res.data.response[0]._id,
+                    name: res.data.response[0].name,
+                    lastName: res.data.response[0].lastName,
+                    city: res.data.response[0].city,
+                    birthday: moment.utc(autor?.response[0].birthday).format('MM/DD/YY'),
+                    photo: res.data.response[0].photo,
+                })
             })
             .catch((error) => {
                 console.error(error)
@@ -87,6 +133,28 @@ export default function Profile() {
 
     let newDate = moment.utc(autor?.response[0].birthday).format('MM/DD/YY')
 
+    let handleUpdate = async (e) => {
+        e.preventDefault()
+
+        console.log(formDataUpdate)
+
+        try {
+            const response = await axios.put(`http://localhost:8080/api/author/update`, formDataUpdate, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            console.log('BIEN')
+        } catch (error) {
+            console.log(error)
+            if (error.response) {
+                setMessage(`Error: ${error.response.data.message}`)
+            } else {
+                setMessage('An error occurred. Please try again.')
+            }
+        }
+    }
+
     return (
         <>
             <div className="z-1">
@@ -111,8 +179,8 @@ export default function Profile() {
                                     type="text"
                                     name="nombre"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                    placeholder={autor?.response[0].name}
-                                    defaultValue={autor?.response[0].name}
+                                    value={formDataUpdate.name}
+                                    onChange={onChangeName}
                                 />
                             </div>
                             <div className="mb-6">
@@ -120,8 +188,8 @@ export default function Profile() {
                                     type="text"
                                     name="surname"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                    placeholder="Surname"
-                                    defaultValue={autor?.response[0].lastName}
+                                    value={formDataUpdate.lastName}
+                                    onChange={onChangeLastName}
                                 />
                             </div>
                             <div className="mb-6">
@@ -129,8 +197,8 @@ export default function Profile() {
                                     type="text"
                                     name="city"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                    placeholder="City"
-                                    defaultValue={autor?.response[0].city}
+                                    value={formDataUpdate.city}
+                                    onChange={onChangeCity}
                                 />
                             </div>
                             <div className="mb-6">
@@ -139,8 +207,8 @@ export default function Profile() {
                                     type="text"
                                     name="birthday"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                    placeholder="Birthday"
-                                    defaultValue={newDate}
+                                    value={formDataUpdate.birthday}
+                                    onChange={onChangeBirthday}
                                 />
                             </div>
 
@@ -149,12 +217,13 @@ export default function Profile() {
                                     type="url"
                                     name="photo"
                                     className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
-                                    placeholder="Photo URL"
-                                    defaultValue={autor?.response[0].photo}
+                                    value={formDataUpdate.photo}
+                                    onChange={onChangePhoto}
                                 />
                             </div>
                             <button
                                 type="submit"
+                                onClick={handleUpdate}
                                 className="w-full bg-[#34D399]   text-white text-[24px] py-2 px-4 rounded-3xl hover:bg-blue-700"
                             >
                                 Save
