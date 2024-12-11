@@ -6,10 +6,11 @@ import { getAuthorByUserId } from "../../Store/actions/authorActions";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { RiDeleteBin7Line } from "react-icons/ri";
+import { useParams } from "react-router-dom";
 
 const CommentModal = ({ isOpen, onClose, commentsID }) => {
   if (!isOpen) return null;
-
+  const { id } = useParams();
   const { user } = useSelector((state) => state.auth);
   const { author } = useSelector((state) => state.author);
   const { company } = useSelector((state) => state.company);
@@ -19,18 +20,26 @@ const CommentModal = ({ isOpen, onClose, commentsID }) => {
   const handleError = (e) => {
     e.target.src = "../../../public/erroruser.png";
 };
+const [commenstById, setCommentsById] = useState(commentsID);
   const [refreshComments, setRefreshComments] = useState(false); // Nuevo estado
+  useEffect (() => {
+    if (commentsID === undefined) {
+      setCommentsById(id);
+    }
+  }, [commentsID]);
   const [newComment, setNewComment] = useState({
-    chapter_id: commentsID,
+    chapter_id: commenstById,
     message: "",
   });
 
+  console.log(commenstById);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCommentsByChapterId(commentsID));
+    dispatch(getCommentsByChapterId(commenstById));
     setRefreshComments(false);
-  }, [dispatch, commentsID, refreshComments]); // Añade refreshComments como dependencia
+  }, [dispatch, commenstById, refreshComments]); // Añade refreshComments como dependencia
 
   useEffect(() => {
     if (user.role === 1) {
@@ -82,7 +91,7 @@ const CommentModal = ({ isOpen, onClose, commentsID }) => {
             comments.map((comment) => (
               <div
                 key={comment._id}
-                className="flex justify-between items-center bg-gray-100 p-3 rounded-lg"
+                className="flex justify-between w-[100%] items-center bg-gray-100 p-3 rounded-lg"
               >
                 <div className="flex flex-col">
                   <div className="flex items-center gap-1 mb-2">
@@ -112,13 +121,13 @@ const CommentModal = ({ isOpen, onClose, commentsID }) => {
                   </div>
                   <p className="text-sm text-gray-700">{comment.message}</p>
                 </div>
-                <div className="flex items-start h-full">
+                <div className="flex items-start justify-end h-full">
                   <button onClick={(e) => {handleDeleteComment(e, comment._id)}}>
                   <RiDeleteBin7Line />
                   </button>
 
                 </div>
-                  <p className="text-xs text-gray-500">{comment.time}</p>
+                
                 
               </div>
             ))
