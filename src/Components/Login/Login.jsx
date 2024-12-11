@@ -11,19 +11,24 @@ function Login() {
     const [error, setError] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate();
-
-    //    const auth = useSelector((state) => state.auth)
-
     const handleSubmit = async (event) => {
         event.preventDefault()
-
-
         try {
             const response = await dispatch(login({ email, password })); if (response.payload && response.payload.success) {
                 navigate('/');
-            } else { setError('Invalid login, please try again'); }
+            } 
+            else { 
+                setError('Invalid login, please try again'); 
+            }
         }
-        catch (error) { setError('An error occurred. Please try again.'); }
+        catch (error)
+         {
+            if (error.response) {
+                setError(error.response.data.message);
+            } else {
+                setError('Server error.');
+            }
+         }
     };
     //         dispatch(login({ email, password }))
 
@@ -36,7 +41,6 @@ function Login() {
         window.location.href = 'http://localhost:8080/api/auth/signIn/google'
         dispatch(login({ email, password }))
     }
-
     return (
         <main className="w-full flex justify-center items-center font-poppins">
             <div className="hidden md:block md:w-[50%]">
@@ -89,8 +93,6 @@ function Login() {
                             Sign in
                         </button>
                     </form>
-
-
                     <button
                         type="button"
                         onClick={handleGoogleSignIn}
@@ -125,5 +127,4 @@ function Login() {
         </main>
     )
 }
-
 export default Login
