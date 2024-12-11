@@ -13,16 +13,17 @@ const MangaCards = ({ selectedCategory }) => {
         dispatch(getMangas({}))
     }, [dispatch])
 
-    // Filtrar mangas según categoría y título
+   
     const filteredMangas = mangas.filter((manga) => {
-        const matchesCategory = selectedCategory ? manga.category_id._id === selectedCategory : true // Si no hay categoría seleccionada, no se filtra por categoría
-
-        const matchesTitle = search
-            ? manga.title.toLowerCase().includes(search.toLowerCase())
-            : true // Si no hay título, no se filtra por título
-
-        return matchesCategory && matchesTitle
-    })
+      if (!manga || !manga.category_id) return false; 
+    
+      const matchesCategory = selectedCategory ? manga.category_id._id === selectedCategory : true;
+      const matchesTitle = search
+        ? manga.title.toLowerCase().includes(search.toLowerCase())
+        : true;
+    
+      return matchesCategory && matchesTitle;
+    });
 
  
 
@@ -57,7 +58,7 @@ const MangaCards = ({ selectedCategory }) => {
                     }}
                   >
                     {mg.category_id?.name.charAt(0).toUpperCase() +
-                      mg.category_id.name.slice(1) || "Unknown"}
+                      mg.category_id?.name.slice(1) || "Unknown"}
                   </p>
                 </div>
                 <div className="flex items-end justify-self-start h-full w-full">
