@@ -118,7 +118,7 @@ function Register() {
                             alt="Google logo"
                             className="w-5 h-5 mr-2"
                         />
-                        Sign in with Google
+                        Sign Up with Google
                     </button>
                     <div className="mt-4 text-center">
                         <p className="text-gray-500">
