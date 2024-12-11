@@ -12,6 +12,7 @@ function Register() {
     const navigate = useNavigate();
     const [message, setMessage] = useState('');
 
+    
 
     const handleSubmit = async (event) => {
 
@@ -68,7 +69,7 @@ function Register() {
                             Discover manga, manhua and manhwa, track your progress, have fun, read manga.
                         </p>
                     </div>
-                    {error && <div className='text-sm md:text-base p-2 md: h-11 mt-5 bg-red-400 rounded-lg items-center flex justify-center'>
+                    {error && <div className='text-sm md:text-base p-2 md: h-auto mt-5 bg-red-400 rounded-lg items-center flex justify-center'>
                         <p className="text-white text-center">{error}</p></div>}
 
                     {message && <p className={`text-center ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}

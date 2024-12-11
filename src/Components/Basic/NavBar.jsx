@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { validateToken } from '../../Store/actions/authActions'
 import { Navigate } from 'react-router-dom'
 import { logout } from '../../Store/actions/authActions.js'
+import '../../../public/erroruser.png'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -12,7 +13,10 @@ const Navbar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const closeMenu = () => setIsMenuOpen(false)
-
+    const handleError = (e) => {
+        e.target.src = "../../../public/erroruser.png";
+    };
+ 
     let localData = JSON.parse(localStorage.getItem('userManga'))
     const { user } = useSelector((state) => state.auth)
 
@@ -174,6 +178,7 @@ const Navbar = () => {
                                             src={dataUser?.payload?.user?.photo}
                                             alt="user"
                                             className="w-10 h-10 rounded-full"
+                                            onError={handleError}
                                         />
                                     }
                                     {
