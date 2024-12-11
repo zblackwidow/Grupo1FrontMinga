@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom'
 const Carousel = () => {
     const [activeIndex, setActiveIndex] = useState(0);
-
     const slides = [
         {
             image1: 'https://s3-alpha-sig.figma.com/img/8856/dd5e/290b26e8ccd3b394d453600dc140c09b?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=O9E~eoAgkKKBP8zT7kIg5AvK9QEyzAcSweRoJPM1OUZ8lbw6MTk-o7KWQn65ss3ruEkkNF~706FPLM5b2fixKxo1K14fFObHYmFJA5EJLZb1LNr13oAynHtbpSwhT8hCI7eY6k85a2bdvCjOCD7jjExdBo8NQTHIPh46XHB0IE-oKnOmbT-VnR1HvpHcSYuugNwss5YPAXxt9X8WqMmo9aSxwBODmnyzH3-IkEbnMMsTmW2uPLcPa0h5eYt9Vv2ojKUroE8s1stGHLtaNxa3yqgBeDk1OgMwM1oeLaLS9qEH2ETDribK5g6kj1V~NF9tCgBHaAT3Z6Ta2NKb2Bbiyg__', image2: 'https://s3-alpha-sig.figma.com/img/b3fe/fdeb/7c848fa5944ce73c1e0b7c954bf88cad?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UowBsYUK7SsOsvJJtRLI3abuhQjlNEK7aLHaT~47pwGHwtSQRr9TbUtFXDWTLybN8OY2dySLMelvlT1QsKm3W9nSB6lv19kABnXhzY8v9GViukQcQRFipfiukFpRmVQvdP9nENEHxx7NPaoHbu-pGBoZbm~fQcA5JUdAhvON~L40iQRRID1nbV2CMW6JlbbdZ704vuXTVHLoQvC~s5H6FyDelv-V6xFKS6Lr4TIW2K~hpU-mInFVjsS1dSVoC-2og7wq7R~0xYl40IKK1CMVl0LH51zSseH59no0ntzrz~2-0ide4vu-DjuHa9T476Eeav6XukYrmqhlAPOyYs9n4g__', title: 'Shonen', text: 'Is the manga that is aimed at adolescent boys. They are series with large amounts of action, in which humorous situations often occur.The camaraderie between members of acollective or a combat team stands out.'
@@ -13,7 +12,6 @@ const Carousel = () => {
         },
 
     ];
-
     const nextSlide = () => {
         setActiveIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1));
     };
@@ -29,7 +27,6 @@ const Carousel = () => {
 
         return () => clearInterval(interval);
     }, [slides]);
-
     return (
         <div className="hidden lg:flex justify-center items-center p-20">
             <div className="w-full h-[300px] bg-[#f97316] rounded-lg">
