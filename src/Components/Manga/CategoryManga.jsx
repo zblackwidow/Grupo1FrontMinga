@@ -11,11 +11,11 @@ export default function CategoryManga({ onCategorySelect }) {
   }, [dispatch]);
 
   const handleViewAll = () => {
-    onCategorySelect(null); // Selecciona "todas las categorías"
+    onCategorySelect(null);
   };
 
   const handleViewMore = (category) => {
-    onCategorySelect(category._id); // Selecciona una categoría específica
+    onCategorySelect(category._id); 
   };
 
   return (
