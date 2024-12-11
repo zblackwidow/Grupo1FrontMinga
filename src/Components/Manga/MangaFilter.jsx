@@ -1,5 +1,3 @@
-// Components/Manga/FilterManga.js
-import React from "react";
 import { useDispatch } from "react-redux";
 import { setSearch } from "../../Store/actions/mangaActions"
 

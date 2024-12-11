@@ -3,11 +3,10 @@ import axios from "axios";
 
 function EditManga() {
     const [formData, setFormData] = useState({
-        name: '',
-        surname: '',
-        city: '',
-        birthday: '',
+        title: '',
         photo: '',
+        category: '',
+        description: ''
     });
 
     const handleChange = (e) => {

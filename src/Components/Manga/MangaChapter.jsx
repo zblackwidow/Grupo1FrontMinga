@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { FaRegCommentDots } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";  // Importamos dispatch y useSelector
+import { useDispatch, useSelector } from "react-redux";
 import Comment from "./Comment";
-import { getChapterById } from "../../Store/actions/chapterActions";  // Asegúrate de importar la acción
+import { getChapterById } from "../../Store/actions/chapterActions";
 
 const MangaChapter = ({ chapters = [] }) => {
-  const { id } = useParams(); // Obtenemos el ID del capítulo desde la URL
+  const { id } = useParams();
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   const [showComments, setShowComments] = useState(false);
@@ -17,15 +17,12 @@ const MangaChapter = ({ chapters = [] }) => {
 
   const dataUser = JSON.parse(localStorage.getItem("userManga"));
   const token = dataUser?.token;
-// Obtenemos el token del localStorage
-
-  // Obtenemos el capítulo por ID desde el estado
   const { chapter, loading, error } = useSelector((state) => state.chapter);
 
 
   useEffect(() => {
     if (id && token) {
-     
+
       dispatch(getChapterById({ id, token }))
     }
   }, [id, token, dispatch]);
@@ -36,16 +33,16 @@ const MangaChapter = ({ chapters = [] }) => {
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
-const pagesChapter = chapter?.response
-const chapterList = chapter?.response.pages || []; // Asegúrate de manejar un arreglo por defecto
-console.log(chapterList);
+  const pagesChapter = chapter?.response
+  const chapterList = chapter?.response.pages || [];
+  console.log(chapterList);
 
 
   const isFirstPage = currentPage === 0;
-  const isLastPage = pagesChapter?.pages && pagesChapter?.pages?.length>0? currentPage === pagesChapter?.pages?.length - 1:true;
+  const isLastPage = pagesChapter?.pages && pagesChapter?.pages?.length > 0 ? currentPage === pagesChapter?.pages?.length - 1 : true;
 
   const goToNextPage = () => {
-    if (pagesChapter?.pages &&  currentPage < pagesChapter.pages.length - 1) setCurrentPage(currentPage + 1);
+    if (pagesChapter?.pages && currentPage < pagesChapter.pages.length - 1) setCurrentPage(currentPage + 1);
   };
 
   const goToPreviousPage = () => {
@@ -58,11 +55,11 @@ console.log(chapterList);
 
   return (
     <div className="min-h-screen bg-white text-black flex flex-col items-center p-4">
-     <header className="w-auto flex justify-center items-center top-8 py-8 mb-4 px-4">
-  <h1 className="text-lg sm:text-xl md:text-2xl font-bold w-full text-center truncate">
-    {pagesChapter.title}
-  </h1>
-</header>
+      <header className="w-auto flex justify-center items-center top-8 py-8 mb-4 px-4">
+        <h1 className="text-lg sm:text-xl md:text-2xl font-bold w-full text-center truncate">
+          {pagesChapter.title}
+        </h1>
+      </header>
 
 
 <div className="relative w-full max-w-4xl bg-gray-400 border border-gray-700 rounded overflow-hidden py-4">
@@ -146,39 +143,38 @@ console.log(chapterList);
             <FaRegCommentDots className="text-2xl" />
           </button>
           <div className="relative flex items-center px-4">
-  <button
-    onClick={() => setShowChapterList(!showChapterList)}
-    className="flex items-center justify-center px-4 py-2 rounded-full hover:bg-gray-400 bg-gray-200 text-black"
-  >
-    {currentPage + 1} de {pagesChapter?.pages?.length || 0}
-  </button>
-  {showChapterList && (
-    <div className="absolute top-12 left-0 bg-white border border-gray-200 rounded shadow-lg p-2 w-40 max-h-64 overflow-y-auto text-black">
-      {/* Generar botones para cada página */}
-      {pagesChapter?.pages && pagesChapter.pages.length > 0 ? (
-        (() => {
-          const buttons = [];
-          for (let i = 0; i < pagesChapter.pages.length; i++) {
-            buttons.push(
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i)} // Cambiar la página actual
-                className={`block w-full text-left px-2 py-1 hover:bg-gray-100 ${
-                  i === currentPage ? "bg-gray-200 font-bold" : ""
-                }`}
-              >
-                 {i + 1}
-              </button>
-            );
-          }
-          return buttons;
-        })()
-      ) : (
-        <p className="text-gray-500 text-center">No pages available</p>
-      )}
-    </div>
-  )}
-</div>
+            <button
+              onClick={() => setShowChapterList(!showChapterList)}
+              className="flex items-center justify-center px-4 py-2 rounded-full hover:bg-gray-400 bg-gray-200 text-black"
+            >
+              {currentPage + 1} de {pagesChapter?.pages?.length || 0}
+            </button>
+            {showChapterList && (
+              <div className="absolute top-12 left-0 bg-white border border-gray-200 rounded shadow-lg p-2 w-40 max-h-64 overflow-y-auto text-black">
+                {/* Generar botones para cada página */}
+                {pagesChapter?.pages && pagesChapter.pages.length > 0 ? (
+                  (() => {
+                    const buttons = [];
+                    for (let i = 0; i < pagesChapter.pages.length; i++) {
+                      buttons.push(
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPage(i)} // Cambiar la página actual
+                          className={`block w-full text-left px-2 py-1 hover:bg-gray-100 ${i === currentPage ? "bg-gray-200 font-bold" : ""
+                            }`}
+                        >
+                          {i + 1}
+                        </button>
+                      );
+                    }
+                    return buttons;
+                  })()
+                ) : (
+                  <p className="text-gray-500 text-center">No pages available</p>
+                )}
+              </div>
+            )}
+          </div>
 
         </div>
 
@@ -190,7 +186,7 @@ console.log(chapterList);
               onClick={() => setShowComments(false)}
               className="text-white bg-[#f97316] hover:bg-red-600 px-4 py-2 rounded absolute top-4 right-4"
             >
-             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path></svg>
             </button>
 
             <div className="mt-8">
