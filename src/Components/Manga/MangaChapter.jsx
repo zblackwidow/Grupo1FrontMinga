@@ -6,6 +6,7 @@ import Comment from "./Comment";
 import { getChapterById } from "../../Store/actions/chapterActions"; // Asegúrate de importar la acción
 import { SlArrowRight } from "react-icons/sl";
 import { SlArrowLeft } from "react-icons/sl";
+import { WiDaySunny } from "react-icons/wi";
 
 const MangaChapter = ({ chapters = [] }) => {
   const { id } = useParams();
@@ -16,13 +17,16 @@ const MangaChapter = ({ chapters = [] }) => {
   const [showChapterList, setShowChapterList] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationClass, setAnimationClass] = useState("");
-
+  const [isDay, setIsDay]=useState(true);  
   const dataUser = JSON.parse(localStorage.getItem("userManga"));
   const token = dataUser?.token;
   // Obtenemos el token del localStorage
 
   // Obtenemos el capítulo por ID desde el estado
   const { chapter, loading, error } = useSelector((state) => state.chapter);
+  const toggleTheme=()=>{
+    setIsDay((prev)=> !prev);
+  }
 
   useEffect(() => {
     if (id && token) {
@@ -86,12 +90,45 @@ const MangaChapter = ({ chapters = [] }) => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center p-4">
+    <div
+    className={`min-h-screen ${
+      isDay ? "bg-white text-black" : "bg-black text-white"
+    } transition-colors duration-500 flex flex-col items-center p-4`}
+  >
+    
+   
       <header className="w-auto flex justify-center items-center top-8 py-8 mb-4 px-4">
         <h1 className="text-lg sm:text-xl md:text-2xl font-bold w-full text-center truncate">
           {pagesChapter.title}
         </h1>
       </header>
+      <div className="w-full flex justify-center">
+     {/* Botón de día/noche */}
+     <button
+      onClick={toggleTheme}
+      className=" top-4 right-4 mb-4 bg-gray-300 dark:bg-gray-700 p-2 rounded-full shadow-lg flex items-center justify-center"
+    >
+      <div
+        className={`relative flex items-center justify-center w-10 h-5 rounded-full bg-gray-500`}
+      >
+        {/* Sol y Luna */}
+        <span
+          className={`absolute transition-transform duration-500 ${
+            isDay ? "translate-x-0" : "translate-x-5"
+          }`}
+        >
+          🌞
+        </span>
+        <span
+          className={`absolute transition-transform duration-500 ${
+            isDay ? "-translate-x-5" : "translate-x-0"
+          }`}
+        >
+          🌜
+        </span>
+      </div>
+    </button>
+    </div>
 
       <div className="relative w-full max-w-3xl bg-black border border-gray-700 rounded overflow-hidden py-0 sm:py-4">
         <div className="w-auto flex justify-center">
