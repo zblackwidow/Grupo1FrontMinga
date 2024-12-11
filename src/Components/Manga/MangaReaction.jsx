@@ -1,17 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createReaction, updateReaction } from "../../Store/actions/reactionActions";
+import { createReaction, getReactions, updateReaction } from "../../Store/actions/reactionActions";
 
-const ReactionBar = ({ contentId, userToken }) => {
+const ReactionBar = ({ contentId, rolId }) => {
+
   const dispatch = useDispatch();
-  const [selectedReaction, setSelectedReaction] = useState(null);
 
-  const handleReactionClick = (reaction) => {
-    setSelectedReaction(reaction);
+  const [selectedReaction, setSelectedReaction] = useState(null); // Estado para la reacción seleccionada
+
+  // Obtenemos las reacciones del estado Redux, asegurándonos que es un arreglo
+  const reactionsFromState = useSelector((state) =>
+    Array.isArray(state.reaction) ? state.reaction.reactions : []
+  );
+
+
+
+  // Cargar las reacciones cuando el componente se monta o se actualiza
+  useEffect(() => {
+    dispatch(getReactions());
+  }, [dispatch]);
+
+  useEffect(() => {
+    // Al cargar las reacciones buscamos si existe una reacción registrada
+    if (reactionsFromState.length > 0) {
+      const userReaction = reactionsFromState.find(
+        (reaction) =>
+          reaction.manga_id === contentId ||
+          reaction.author_id === rolId ||
+          reaction.company_id === rolId
+      );
+      if (userReaction) {
+        setSelectedReaction(userReaction.reaction); 
+      }
+    }
+  }, [reactionsFromState, contentId, rolId]);
+  // Función para manejar el click en una reacción
+  const handleReactionClick = (reactionValue) => {
+    setSelectedReaction(reactionValue); 
 
     const reactionPayload = {
-      contentId,
-      reactionType: reaction,
+      manga_id: contentId, 
+      reaction: reactionValue,
     };
     console.log(selectedReaction);
 
@@ -19,15 +48,16 @@ const ReactionBar = ({ contentId, userToken }) => {
     if (selectedReaction) {
       dispatch(updateReaction({ ...reactionPayload }, userToken));
     } else {
-      dispatch(createReaction(reactionPayload, userToken));
+      dispatch(createReaction(reactionPayload));
     }
   };
 
+  
   const reactions = [
-    { emoji: "👍", type: "like" },
-    { emoji: "👎️", type: "dislike" },
-    { emoji: "😮", type: "wow" },
-    { emoji: "😍", type: "love" },
+    { emoji: "👍", value: 1 }, 
+    { emoji: "👎", value: 2 }, 
+    { emoji: "😮", value: 3 }, 
+    { emoji: "😍", value: 4 }, 
   ];
 
   return (
