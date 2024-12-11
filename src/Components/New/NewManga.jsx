@@ -1,20 +1,24 @@
-import React from 'react'
+import { useState } from 'react'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 import { NavLink } from 'react-router-dom'
 import { getCategories } from '../../Store/actions/categoryActions'
 
-import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
-import { ChevronUpDownIcon } from '@heroicons/react/16/solid'
-import { CheckIcon } from '@heroicons/react/20/solid'
-
-
-
 function NewManga() {
-   
+    const navigate = useNavigate()
+
+    const { categories } = useSelector((state) => state.category)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getCategories({}))
+    }, [dispatch])
+
+    //console.log(categories)
 
     let infoUser = JSON.parse(localStorage.getItem('userManga'))
     //console.log(infoUser)
@@ -34,15 +38,15 @@ function NewManga() {
     if (!idUser2) {
         cont = idUser
     }
-    console.log(cont)
+    //console.log(cont)
 
     const { user } = useSelector((state) => state.auth)
 
-    console.log(user)
+    //console.log(user)
 
     const [autor, setAutor] = useState(null)
 
-    const [formData, setFormData] = useState({
+    const [formData2, setFormData2] = useState({
         _id: '',
         user_id: cont,
     })
@@ -67,7 +71,7 @@ function NewManga() {
             .then((res) => {
                 setAutor(res.data)
 
-                setFormData({ ...formData, _id: res.data.response[0]._id })
+                setFormData2({ ...formData2, _id: res.data.response[0]._id })
                 setFormDataUpdate({
                     ...formDataUpdate,
                     _id: res.data.response[0]._id,
@@ -85,48 +89,53 @@ function NewManga() {
             })
     }, [])
 
-    console.log(formDataUpdate)
-
-    const { categories } = useSelector((state) => state.category)
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getCategories({}))
-    }, [dispatch])
-
-    console.log(categories)
-
-    const [selected, setSelected] = useState(categories[3])
-
-    const [formData2, setFormData2] = useState({
-        title: '',
-        category: '',
-        photo: '',
-        description: '',
-        author_id: formDataUpdate._id,
-    })
+    //console.log(formDataUpdate)
 
     const [message, setMessage] = useState('')
 
+    const [formData, setFormData] = useState({
+        title: '',
+        category: '',
+        cover_photo: '',
+        description: '',
+        category_id: '',
+        user_id: cont,
+    })
+
     const handleChange = (e) => {
+        console.log(e.target);
         const { name, value } = e.target
-        setFormData2({ ...formData2, [name]: value })
+        console.log(name);
+        console.log(value);
+        setFormData({ ...formData, [name]: value })
     }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setMessage('')
-        console.log(formData2)
-        /*try {
-            await axios.post('http://localhost:8080/api/manga/create', formData2);
-            setMessage('Author created successfully!');
+
+        console.log(formData)
+        
+        try {
+            await axios.post('http://localhost:8080/api/manga/create', formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            setMessage('Author created successfully!')
+            setTimeout(() => {
+                return navigate('/company')
+            }, 1000)
         } catch (error) {
+            console.log(error)
             if (error.response) {
-                setMessage(`Error: ${error.response.data.message}`);
+                setMessage(`Error: ${error.response.data.message}`)
             } else {
-                setMessage('An error occurred. Please try again.');
+                setMessage('An error occurred. Please try again.')
             }
-        }*/
+        }
     }
 
     return (
@@ -155,21 +164,48 @@ function NewManga() {
                             <input
                                 type="text"
                                 name="title"
-                                value={formData2.title}
+                                value={formData.title}
                                 onChange={handleChange}
                                 className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Name"
                             />
                         </div>
-                        
+                        <div className="mb-6">
+                            <select
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparen"
+                                value={formData.category_id}
+                                name="category_id"
+                                onChange={handleChange}
+                            >
+                                {categories.map((i) => (
+                                    <option key={i._id} value={i._id}>
+                                        {i.name}
+                                    </option>
+                                ))}
+                            </select>
 
-                        
+                            {/* <input
+                                list="categoryOptions"
+                                name="category"
+                                value={formData.category_id}
+                                onChange={handleChange}
+                                className="w-full px-3 border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
+                                placeholder="Insert Category"
+                            />
+
+                            <datalist id="categoryOptions" className="p-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                                <option value="67539793281cd2607766f72e" />
+                                <option value="67539793281cd2607766f72f" />
+                                <option value="67539793281cd2607766f730" />
+                                <option value="67539793281cd2607766f731" />
+                            </datalist> */}
+                        </div>
 
                         <div className="mb-6">
                             <input
                                 type="url"
-                                name="photo"
-                                value={formData2.photo}
+                                name="cover_photo"
+                                value={formData.cover_photo}
                                 onChange={handleChange}
                                 className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Insert cover photo"
@@ -179,55 +215,12 @@ function NewManga() {
                             <input
                                 type="text"
                                 name="description"
-                                value={formData2.description}
+                                value={formData.description}
                                 onChange={handleChange}
                                 className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent"
                                 placeholder="Description"
                             />
                         </div>
-
-                        <Listbox value={selected} onChange={setSelected}>
-                            <Label className="block text-sm/6 font-medium text-gray-900">
-                            Insert Category
-                            </Label>
-                            <div className="relative mt-2">
-                                <ListboxButton className="w-full px-3  border-0 outline-none border-b-2 border-gray-400 focus:border-gray-500 bg-transparent">
-                                    <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-                                        
-                                        <span className="block truncate">{selected.name}</span>
-                                    </span>
-                                    <ChevronUpDownIcon
-                                        aria-hidden="true"
-                                        className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                                    />
-                                </ListboxButton>
-
-                                <ListboxOptions
-                                    transition
-                                    className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none data-[closed]:data-[leave]:opacity-0 data-[leave]:transition data-[leave]:duration-100 data-[leave]:ease-in sm:text-sm"
-                                >
-                                    {categories.map((person) => (
-                                        <ListboxOption
-                                            key={person.id}
-                                            value={person}
-                                            placeholder="Select a person"
-                                            className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-white data-[focus]:outline-none"
-                                        >
-                                            <div className="flex items-center">
-                                                
-                                                <span className="ml-3 block truncate font-normal group-data-[selected]:font-semibold">
-                                                    {person.name}
-                                                </span>
-                                            </div>
-
-                                            <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-[&:not([data-selected])]:hidden group-data-[focus]:text-white">
-                                                <CheckIcon aria-hidden="true" className="size-5" />
-                                            </span>
-                                        </ListboxOption>
-                                    ))}
-                                </ListboxOptions>
-                            </div>
-                        </Listbox>
                         <button
                             type="submit"
                             className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700"
