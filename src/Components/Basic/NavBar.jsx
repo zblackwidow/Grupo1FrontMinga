@@ -235,15 +235,12 @@ const Navbar = () => {
                                 {user.role > 0 ? (
                                     <li className="w-full mb-4">
                                         <NavLink
-                                            to="/profile"
+                                            to="/company"
                                             className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
-                                            href="/profile"
+                                            href="/company"
                                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                                         >
-                                            Profile: Autor{' '}
-                                            <button className="bg-white text-[#FF5722] px-2 py-1 rounded-md">
-                                                Edit
-                                            </button>
+                                            Profile
                                         </NavLink>
                                     </li>
                                 ) : (
