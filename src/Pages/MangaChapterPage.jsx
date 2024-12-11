@@ -146,64 +146,65 @@ const MangaChapterPage = () => {
           </button>
         </div>
 
-        {isHovered ? (
-          <div className="mt-4">
-            <p>{mangaDetails?.description}</p>
-          </div>
-        ) : (
-          <div className="mt-4">
-            {chapters.length > 0 ? (
-              chapters.map((chapter) => (
-                <div
-                  key={chapter._id}
-                  className="flex justify-between items-center p-4 bg-white rounded-lg mb-4 shadow-md"
-                >
+    {isHovered ? (
+      <div className="mt-4">
+        <p>{mangaDetails?.description}</p>
+      </div>
+    ) : (
+      <div className="mt-4">
+        {chapters.length > 0 ? (
+          chapters.map((chapter) => (
+            <div
+            key={chapter._id}
+            className="flex justify-between items-centerp-4 rounded-lg mb-4"
+          >
+            <img
+              src={mangaDetails?.cover_photo}
+              alt=""
+              className="w-[83px] h-[74px] rounded-[8px]"
+            />
+            <div className="flex flex-col ">
+              <div className="flex flex-row">
+                <p className="text-lg text-black font-bold">
+                  {" "}
+                  {chapter.title}
+                </p>
+                <p className="text-lg text-black font-bold">
+                  {" "}
+                  #{chapter.order}
+                </p>
+              </div>
+              <div className="flex justify-center gap-6">
+                <button onClick={handleOpenModal}>
                   <img
-                    src={mangaDetails?.cover_photo}
+                    src="https://s3-alpha-sig.figma.com/img/c6ca/d4a8/50eb70cf6e6a2e8e874cb25836f927e4?Expires=1734912000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Cg6-IuHbcTcjo3jLeNv9GdbsMU8UDOQbeTx6qKdr8MZgI1U1yE5qpL9060Z6owVayeaqoAA~9fyvcGldZOQR7~JcC4NNyaeUT9uBcdpWLMB-rQgsgyzCA7Ing3lVxOSBPBH5oN0wqLRATPqD5kuMh2VnPHQB0tNmp4qOKtMEWByb320urujqAOmxX1BS7RZ1dOfQ6n9mfZSwXx2TetRxhjHIHURj9hWq0vnxcHIxFMwd1jJN6QqS4vcQLGOqd3b91vrOzDwO-wJXBq~fX4gYIb9eP0knUuSAmcew9ZVRjiGzmtRNqky8lKvX0Y7M2L1Jhht6UwFFaE1RkuQvHDsS2A__"
                     alt=""
-                    className="w-[83px] h-[74px] rounded-[8px]"
                   />
-                  <div className="flex flex-col flex-grow ml-4">
-                    <div className="flex flex-row justify-between">
-                      <p className="text-lg text-black font-bold">
-                        {chapter.title}
-                      </p>
-                      <p className="text-lg text-black font-bold">
-                        #{chapter.order}
-                      </p>
-                    </div>
-                    <div className="flex justify-start items-center gap-4 mt-2">
-                      <button onClick={handleOpenModal}>
-                        <img
-                          src="https://s3-alpha-sig.figma.com/img/c6ca/d4a8/50eb70cf6e6a2e8e874cb25836f927e4"
-                          alt=""
-                        />
-                      </button>
-                      <CommentModal
-                        isOpen={isModalOpen}
-                        onClose={handleCloseModal}
-                        comments={filterComments(chapter._id)}
-                      />
-                      <p className="-mt-14">
-                        {filterComments(chapter._id).length}
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    className=" bg-orange-500 text-white px-5 py-2 rounded-3xl ml-4"
-                    onClick={() => navigate(`/chapterByID/${chapter._id}`)}
-                  >
-                    Read
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>No chapters available.</p>
-            )}
-          </div>
+                </button>
+                <CommentModal
+                  isOpen={isModalOpen}
+                  onClose={handleCloseModal}
+                  comments={filterComments(chapter._id)}
+                />
+
+                <p>{filterComments(chapter._id).length}</p>
+              </div>
+            </div >
+              <button
+                className=" bg-orange-500 text-white w-auto h-[30%] px-3 py-1 rounded-3xl ml-4"
+                 
+                onClick={() => navigate(`/chapterByID/${chapter._id}`)}
+              >
+                Read
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>No chapters available.</p>
         )}
       </div>
-    </div>
-  );
-};
+    )}
+  </div>
+</div>
+)}
 export default MangaChapterPage;
