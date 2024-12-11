@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CommentModal from "./CommenModal";
 
 const CommentSection = () => {

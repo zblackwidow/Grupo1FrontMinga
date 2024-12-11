@@ -6,7 +6,7 @@ import Comment from "./Comment";
 import { getChapterById } from "../../Store/actions/chapterActions"; // Asegúrate de importar la acción
 
 const MangaChapter = ({ chapters = [] }) => {
-  const { id } = useParams(); // Obtenemos el ID del capítulo desde la URL
+  const { id } = useParams();
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   const [showComments, setShowComments] = useState(false);
