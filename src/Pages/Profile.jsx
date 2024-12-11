@@ -120,7 +120,6 @@ export default function Profile() {
             setTimeout(() => {
                 return navigate('/')
             }, 1000)
-            console.log('BIEN')
         } catch (error) {
             console.log(error)
             if (error.response) {
@@ -144,7 +143,10 @@ export default function Profile() {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            console.log('BIEN')
+            setMessage('Author Updated successfully!')
+            setTimeout(() => {
+                return navigate('/company')
+            }, 1000)
         } catch (error) {
             console.log(error)
             if (error.response) {

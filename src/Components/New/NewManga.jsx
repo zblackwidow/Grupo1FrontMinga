@@ -187,7 +187,7 @@ function NewManga() {
                         </div>
 
                         <Listbox value={selected} onChange={setSelected}>
-                            <Label className="block text-sm/6 font-medium text-gray-400">
+                            <Label className="block text-sm/6 font-medium text-gray-900">
                             Insert Category
                             </Label>
                             <div className="relative mt-2">
@@ -230,7 +230,7 @@ function NewManga() {
                         </Listbox>
                         <button
                             type="submit"
-                            className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700 my-4"
+                            className="w-full bg-[#f8781a] text-white py-2 px-4 rounded-3xl hover:bg-blue-700"
                         >
                             Send
                         </button>
