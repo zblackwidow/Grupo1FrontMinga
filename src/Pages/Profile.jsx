@@ -1,35 +1,22 @@
 import React from 'react'
-import Moment from 'react-moment'
 import moment from 'moment'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Profile() {
     const navigate = useNavigate()
     let infoUser = JSON.parse(localStorage.getItem('userManga'))
-    //console.log(infoUser)
     let token = infoUser?.token
     let idUser = infoUser?.user?.id
     let idUser2 = infoUser?.user?._id
-
-    //console.log(token)
-    //console.log(idUser)
-    //console.log(idUser2)
-
     let cont = ''
-    //console.log(cont)
-
     if (!idUser) {
         cont = idUser2
     }
     if (!idUser2) {
         cont = idUser
     }
-
-    //console.log(cont)
-
     const [autor, setAutor] = useState(null)
 
     const [formData, setFormData] = useState({
@@ -97,15 +84,9 @@ export default function Profile() {
                 console.error(error)
             })
     }, [])
-
-    //console.log(autor)
-
     const [message, setMessage] = useState('')
-
     let handleDelete = async (e) => {
         e.preventDefault()
-        //console.log(token)
-        //console.log(cont)
         console.log(formData)
 
         try {
@@ -135,9 +116,7 @@ export default function Profile() {
 
     let handleUpdate = async (e) => {
         e.preventDefault()
-
         console.log(formDataUpdate)
-
         try {
             const response = await axios.put(`http://localhost:8080/api/author/update`, formDataUpdate, {
                 headers: {
