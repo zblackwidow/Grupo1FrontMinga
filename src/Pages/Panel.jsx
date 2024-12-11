@@ -20,13 +20,13 @@ const Panel = () => {
   
   const dispatch = useDispatch();
 
-  // Cargar datos iniciales
+ 
   useEffect(() => {
     dispatch(getCompanies(token));
     dispatch(getAuthors(token));
   }, [dispatch]);
 
-  // Sincronizar el estado local con las compañías desde el store
+  
   useEffect(() => {
     if (companies) {
       setLocalCompanies(companies);
@@ -39,16 +39,16 @@ useEffect(() => {
   }
 }, [authors]);
 
-  // Manejar el cambio de estado de 'active' al interactuar con el checkbox
+ 
   const handleToggleActive = (company) => {
     const updatedCompany = { ...company, active: !company.active };
 
-    // Actualizar en el backend
+  
     dispatch(
       updateCompany({ _id: company._id, active: updatedCompany.active }, tokenString)
     );
 
-    // Actualizar en el estado local
+  
     setLocalCompanies((prevCompanies) =>
       prevCompanies.map((comp) =>
         comp._id === company._id ? updatedCompany : comp

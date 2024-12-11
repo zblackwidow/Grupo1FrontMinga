@@ -7,12 +7,13 @@ import { getChapterById } from "../../Store/actions/chapterActions"; // Asegúra
 import { SlArrowRight } from "react-icons/sl";
 import { SlArrowLeft } from "react-icons/sl";
 import { WiDaySunny } from "react-icons/wi";
+import CommenModal from "./CommenModal";
 
 const MangaChapter = ({ chapters = [] }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const Navigate = useNavigate();
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [showChapterList, setShowChapterList] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -88,7 +89,9 @@ const MangaChapter = ({ chapters = [] }) => {
       }, 300); // Duración de la animación
     }
   };
-
+  const handleCloseModal = () => {
+    setShowComments(null);
+  };
   return (
     <div
     className={`min-h-screen ${
@@ -99,7 +102,7 @@ const MangaChapter = ({ chapters = [] }) => {
    
       <header className="w-auto flex justify-center items-center top-8 py-8 mb-4 px-4">
         <h1 className="text-lg sm:text-xl md:text-2xl font-bold w-full text-center truncate">
-          {pagesChapter.title}
+          {pagesChapter?.title}
         </h1>
       </header>
       <div className="w-full flex justify-center">
@@ -241,15 +244,13 @@ const MangaChapter = ({ chapters = [] }) => {
         >
           <div className="p-4">
             
-            <button
-              onClick={() => setShowComments(false)}
-              className="text-white bg-[#f97316] hover:bg-red-600 px-4 py-2 rounded absolute top-4 right-4"
-            >
-             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path></svg>
-            </button>
+           
 
             <div className="mt-8">
-              <Comment />
+              <CommenModal
+              isOpen={showComments}
+              onClose={handleCloseModal}
+              comments={id} />
             </div>
           </div>
         </div>

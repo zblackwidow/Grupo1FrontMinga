@@ -33,6 +33,17 @@ const getCompanyById = createAsyncThunk("GET_COMPANY_BY_ID", async (id, token) =
     }
 })
 
+const getCompanyByUserId = createAsyncThunk("GET_COMPANY_BY_USER_ID", async (id) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:8080/api/company/companyByUserId/${id}`
+        )
+        return response.data
+    } catch (error) {
+        return error.response?.data?.message || "Token validation failed"
+        
+    }
+})
 const createCompany = createAsyncThunk("CREATE_COMPANY", async (company, token) => {
     try {
         const response = await axios.post(
@@ -81,4 +92,4 @@ const deleteCompany = createAsyncThunk("DELETE_COMPANY", async (id, token) => {
     }
 })
 
-export { getCompanies, getCompanyById, createCompany, updateCompany, deleteCompany }
+export { getCompanies, getCompanyById, getCompanyByUserId, createCompany, updateCompany, deleteCompany }

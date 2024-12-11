@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getCompanies, getCompanyById, createCompany, updateCompany, deleteCompany } from "../actions/companyActions";
+import { getCompanies, getCompanyById, getCompanyByUserId, createCompany, updateCompany, deleteCompany } from "../actions/companyActions";
 
 const initialState = {
     companies: [],
@@ -31,6 +31,18 @@ const companyReducer = createReducer(initialState, (builder) => {
             state.company = action.payload;
         })
         .addCase(getCompanyById.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        })
+        .addCase(getCompanyByUserId.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(getCompanyByUserId.fulfilled, (state, action) => {
+            state.loading = false;
+            state.company = action.payload;
+        })
+        .addCase(getCompanyByUserId.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         })
