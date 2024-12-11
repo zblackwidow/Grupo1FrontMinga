@@ -9,7 +9,9 @@ const Panel = () => {
   const [localAuthors, setLocalAuthors] = useState([]);
   const { companies } = useSelector((state) => state.company);
   const { authors } = useSelector((state) => state.author);
-
+  const handleError = (e) => {
+    e.target.src = "../../../public/erroruser.png";
+};
   const tokenData = JSON.parse(localStorage.getItem("userManga"));
   const token = tokenData.token;
   const tokenString = JSON.stringify(token);
@@ -56,8 +58,6 @@ useEffect(() => {
 
   const handleToggleActiveAuthor = (author) => {
     const updatedAuthor = { ...author, active: !author.active };
-
-    
 
     // Enviar actualización al backend
     dispatch(updateAuthor({ author: { _id: author._id, active: updatedAuthor.active }, token: tokenString }));
@@ -122,17 +122,18 @@ useEffect(() => {
                         src={company.photo}
                         alt={company.name}
                         className="w-8 h-8 rounded-full"
+                        onError={handleError}
                       />
                     </td>
                     <td className="border border-gray-300 p-2 text-center">
-                      <label class="relative inline-flex items-center cursor-pointer">
+                      <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
-                          class="sr-only peer"
+                          className="sr-only peer"
                           checked={company.active}
                           onChange={() => handleToggleActive(company)}
                         />
-                        <div class="group peer bg-gray-200 rounded-full duration-300 w-10 h-5 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-4 after:w-4 after:top-[2px] after:left-[2px] after:flex after:justify-center after:items-center peer-checked:after:translate-x-5 peer-hover:after:scale-95"></div>
+                        <div className="group peer bg-gray-200 rounded-full duration-300 w-10 h-5 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-4 after:w-4 after:top-[2px] after:left-[2px] after:flex after:justify-center after:items-center peer-checked:after:translate-x-5 peer-hover:after:scale-95"></div>
 
                       </label>
                     </td>
@@ -149,20 +150,19 @@ useEffect(() => {
                     <td className="border border-gray-300 border-r-transparent p-2">{new Date(auth.date).toLocaleDateString()}</td>
                     <td className="border border-gray-300 border-r-transparent p-2">{auth.city}</td>
                     <td className="border border-gray-300 p-2">
-                      <img src={auth.photo} alt={auth.name} className="w-8 h-8 rounded-full border-r-transparent mx-auto" />
+                      <img src={auth.photo} alt={auth.name} className="w-8 h-8 rounded-full border-r-transparent mx-auto"onError={handleError} />
                     </td>
                     <td className="border border-gray-300 p-2">
                     <div className="flex justify-center items-center">
 
-                      <label class="relative inline-flex items-center cursor-pointer">
+                      <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
-                          class="sr-only peer"
+                          className="sr-only peer"
                           checked={auth.active}
                           onChange={() => handleToggleActiveAuthor(auth)}
                         />
-                        <div class="group peer bg-gray-200 rounded-full duration-300 w-10 h-5 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-4 after:w-4 after:top-[2px] after:left-[2px] after:flex after:justify-center after:items-center peer-checked:after:translate-x-5 peer-hover:after:scale-95"></div>
-
+                        <div className="group peer bg-gray-200 rounded-full duration-300 w-10 h-5 ring-2 ring-gray-200 after:duration-300 after:bg-white peer-checked:bg-[#FF5722] peer-checked:ring-[#FF5722] after:rounded-full after:absolute after:h-4 after:w-4 after:top-[2px] after:left-[2px] after:flex after:justify-center after:items-center peer-checked:after:translate-x-5 peer-hover:after:scale-95"></div>
                       </label>
                     </div>
                     </td>

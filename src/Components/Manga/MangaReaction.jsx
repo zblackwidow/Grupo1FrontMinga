@@ -42,20 +42,11 @@ const ReactionBar = ({ contentId, rolId }) => {
       manga_id: contentId, 
       reaction: reactionValue,
     };
+    console.log(selectedReaction);
 
-   
-    if (rolId) {
-      reactionPayload.author_id = rolId;
-    }
-
-    console.log("Payload enviado:", reactionPayload);
-
-  
-    if (selectedReaction === reactionValue) {
-      console.log("La reacción ya está seleccionada.");
-    } else if (selectedReaction) {
-     
-      dispatch(updateReaction(reactionPayload));
+    // Si ya existe una reacción seleccionada, actualízala
+    if (selectedReaction) {
+      dispatch(updateReaction({ ...reactionPayload }, userToken));
     } else {
       dispatch(createReaction(reactionPayload));
     }
@@ -70,12 +61,16 @@ const ReactionBar = ({ contentId, rolId }) => {
   ];
 
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-4 justify-center">
       {reactions.map((reaction) => (
         <button
-          key={reaction.value}
-          onClick={() => handleReactionClick(reaction.value)}
-          className={`p-4 text-2xl ${selectedReaction === reaction.value ? "bg-blue-500 text-white rounded-lg" : "bg-gray-200"}`}
+          key={reaction.type}
+          onClick={() => handleReactionClick(reaction.type)}
+          className={`p-4 text-2xl rounded-full mt-4 ${
+            selectedReaction === reaction.type
+              ? "bg-orange-500 text-white rounded-full"
+              : "bg-gray-300 hover:bg-orange-400"
+          }`}
         >
           {reaction.emoji}
         </button>
