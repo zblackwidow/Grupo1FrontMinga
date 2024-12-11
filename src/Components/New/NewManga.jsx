@@ -89,7 +89,8 @@ function NewManga() {
             })
     }, [])
 
-    //console.log(formDataUpdate)
+    let autorID = formDataUpdate._id
+    console.log(autorID)
 
     const [message, setMessage] = useState('')
 
@@ -99,7 +100,7 @@ function NewManga() {
         cover_photo: '',
         description: '',
         category_id: '',
-        user_id: cont,
+        author_id: autorID
     })
 
     const handleChange = (e) => {
@@ -114,6 +115,8 @@ function NewManga() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setMessage('')
+
+        formData.author_id = autorID
 
         console.log(formData)
         

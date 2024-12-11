@@ -271,6 +271,7 @@ const Navbar = () => {
                                         <NavLink
                                             to="/newRole"
                                             className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
+                                            onClick={() => setIsMenuOpen(!isMenuOpen)}
                                         >
                                             Chooise: Author or Company
                                         </NavLink>
@@ -282,6 +283,7 @@ const Navbar = () => {
                                         <NavLink
                                             to="/panel"
                                             className="block cursor-pointer rounded-md hover:text-[#FF5722] hover:bg-white px-3 py-2  font-medium text-center"
+                                            onClick={() => setIsMenuOpen(!isMenuOpen)}
                                         >
                                             Panel
                                         </NavLink>
