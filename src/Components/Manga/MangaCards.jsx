@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMangas } from '../../Store/actions/mangaActions'
 import { useNavigate } from 'react-router-dom'
@@ -9,28 +9,24 @@ const MangaCards = ({ selectedCategory }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-    useEffect(() => {
-        dispatch(getMangas({}))
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(getMangas({}))
+  }, [dispatch])
 
-    // Filtrar mangas según categoría y título
-    const filteredMangas = mangas.filter((manga) => {
-        const matchesCategory = selectedCategory ? manga.category_id._id === selectedCategory : true // Si no hay categoría seleccionada, no se filtra por categoría
+  const filteredMangas = mangas.filter((manga) => {
+    if (!manga || !manga.category_id) return false;
 
-        const matchesTitle = search
-            ? manga.title.toLowerCase().includes(search.toLowerCase())
-            : true // Si no hay título, no se filtra por título
+    const matchesCategory = selectedCategory ? manga.category_id._id === selectedCategory : true;
 
-        return matchesCategory && matchesTitle
-    })
+    const matchesTitle = search
+      ? manga.title.toLowerCase().includes(search.toLowerCase())
+      : true;
 
- 
+    return matchesCategory && matchesTitle;
+  });
 
- 
   const handleViewMore = (mg) => {
-  
-      navigate(`/chapters/${mg}`);
-   
+    navigate(`/chapters/${mg}`);
   };
 
   return (
@@ -53,7 +49,7 @@ const MangaCards = ({ selectedCategory }) => {
                   <p
                     className="text-sm font-medium text-center"
                     style={{
-                      color: mg.category_id?.color || "#000", // Pintar las letras del color de la categoría
+                      color: mg.category_id?.color || "#000",
                     }}
                   >
                     {mg.category_id?.name.charAt(0).toUpperCase() +
@@ -62,7 +58,7 @@ const MangaCards = ({ selectedCategory }) => {
                 </div>
                 <div className="flex items-end justify-self-start h-full w-full">
                   <button
-                    className="mt-2 bg-emerald-300 text-white rounded-3xl hover:bg-slate-500 h-[45%] w-[35%]"
+                    className="mt-2  p-2 bg-emerald-300 text-white text-sm lg:text-lg rounded-3xl hover:bg-slate-500 h-auto w-auto"
                     onClick={() => handleViewMore(mg._id)}
                   >
                     Read
@@ -78,14 +74,12 @@ const MangaCards = ({ selectedCategory }) => {
           </div>
         ))
       ) : (
-        
         <p className="text-orange-500 border-t-2 h-[50vh]  border-black/20 p-3 text-xl text-wrap text-center font-bold m-5 ">
-         No results found matching your criteria. Try adjusting the filters!
+          No results found matching your criteria. Try adjusting the filters!
         </p>
-
       )}
     </div>
   );
-}; 
+};
 
-export default MangaCards
+export default MangaCards;
