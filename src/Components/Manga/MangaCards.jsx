@@ -62,7 +62,7 @@ const MangaCards = ({ selectedCategory }) => {
                 </div>
                 <div className="flex items-end justify-self-start h-full w-full">
                   <button
-                    className="mt-2 bg-emerald-300 text-white rounded-3xl hover:bg-slate-500 h-[45%] w-[35%]"
+                    className="mt-2  p-2 bg-emerald-300 text-white text-sm lg:text-lg rounded-3xl hover:bg-slate-500 h-auto w-auto"
                     onClick={() => handleViewMore(mg._id)}
                   >
                     Read

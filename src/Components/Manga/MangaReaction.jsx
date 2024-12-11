@@ -1,45 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createReaction, updateReaction } from "../../Store/actions/reactionActions";
+import { createReaction, getReactions, updateReaction } from "../../Store/actions/reactionActions";
 
-const ReactionBar = ({ contentId, userToken }) => {
+const ReactionBar = ({ contentId, rolId }) => {
+
   const dispatch = useDispatch();
-  const [selectedReaction, setSelectedReaction] = useState(null);
 
-  const handleReactionClick = (reaction) => {
-    setSelectedReaction(reaction);
+  const [selectedReaction, setSelectedReaction] = useState(null); // Estado para la reacción seleccionada
+
+  // Obtenemos las reacciones del estado Redux, asegurándonos que es un arreglo
+  const reactionsFromState = useSelector((state) =>
+    Array.isArray(state.reaction) ? state.reaction.reactions : []
+  );
+
+
+
+  // Cargar las reacciones cuando el componente se monta o se actualiza
+  useEffect(() => {
+    dispatch(getReactions());
+  }, [dispatch]);
+
+  useEffect(() => {
+    // Al cargar las reacciones buscamos si existe una reacción registrada
+    if (reactionsFromState.length > 0) {
+      const userReaction = reactionsFromState.find(
+        (reaction) =>
+          reaction.manga_id === contentId ||
+          reaction.author_id === rolId ||
+          reaction.company_id === rolId
+      );
+      if (userReaction) {
+        setSelectedReaction(userReaction.reaction); 
+      }
+    }
+  }, [reactionsFromState, contentId, rolId]);
+  // Función para manejar el click en una reacción
+  const handleReactionClick = (reactionValue) => {
+    setSelectedReaction(reactionValue); 
 
     const reactionPayload = {
-      contentId,
-      reactionType: reaction,
+      manga_id: contentId, 
+      reaction: reactionValue,
     };
 
-    // Si ya existe una reacción seleccionada, actualízala
-    if (selectedReaction) {
-      dispatch(updateReaction({ ...reactionPayload }, userToken));
+   
+    if (rolId) {
+      reactionPayload.author_id = rolId;
+    }
+
+    console.log("Payload enviado:", reactionPayload);
+
+  
+    if (selectedReaction === reactionValue) {
+      console.log("La reacción ya está seleccionada.");
+    } else if (selectedReaction) {
+     
+      dispatch(updateReaction(reactionPayload));
     } else {
-      dispatch(createReaction(reactionPayload, userToken));
+      dispatch(createReaction(reactionPayload));
     }
   };
 
+  
   const reactions = [
-    { emoji: "👍", type: "like" },
-    { emoji: "👎️", type: "dislike" },
-    { emoji: "😮", type: "wow" },
-    { emoji: "😍", type: "love" },
+    { emoji: "👍", value: 1 }, 
+    { emoji: "👎", value: 2 }, 
+    { emoji: "😮", value: 3 }, 
+    { emoji: "😍", value: 4 }, 
   ];
 
   return (
     <div className="flex space-x-4">
       {reactions.map((reaction) => (
         <button
-          key={reaction.type}
-          onClick={() => handleReactionClick(reaction.type)}
-          className={`p-4 text-2xl ${
-            selectedReaction === reaction.type
-              ? "bg-blue-500 text-white rounded-lg"
-              : "bg-gray-200"
-          }`}
+          key={reaction.value}
+          onClick={() => handleReactionClick(reaction.value)}
+          className={`p-4 text-2xl ${selectedReaction === reaction.value ? "bg-blue-500 text-white rounded-lg" : "bg-gray-200"}`}
         >
           {reaction.emoji}
         </button>
