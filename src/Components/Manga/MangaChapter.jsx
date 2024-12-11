@@ -142,45 +142,58 @@ const MangaChapter = ({ chapters = [] }) => {
         </div>
       </div>
 
-      <div className="min-h-0 text-white flex items-center p-4">
-        <div className="w-auto flex">
-          <button
+      <div className="min-h-0 text-white flex px-4">
+      <button
             onClick={handleCommentClick}
             className="flex items-center justify-center px-4 py-2 my-8 rounded-full hover:bg-gray-400 bg-gray-200 text-black"
           >
             <FaRegCommentDots className="text-2xl" />
           </button>
-          <div className="relative flex items-center px-4">
-            <button
-              onClick={() => setShowChapterList(!showChapterList)}
-              className="flex items-center justify-center px-4 py-2 rounded-full hover:bg-gray-400 bg-gray-200 text-black"
-            >
-              {currentPage + 1} de {pagesChapter?.pages?.length || 0}
-            </button>
-            {showChapterList && (
-              <div className="absolute bottom-12 left-0 bg-white border border-gray-200 rounded shadow-lg p-2 w-40 max-h-64 overflow-y-auto text-black">
-                {pagesChapter?.pages && pagesChapter.pages.length > 0 ? (
-                  pagesChapter.pages.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        setCurrentPage(i);
-                        setShowChapterList(false);
-                      }}
-                      className={`block w-full text-left px-2 py-1 hover:bg-gray-100 ${
-                        i === currentPage ? "bg-gray-200 font-bold" : ""
-                      }`}
-                    >
-                      {i + 1}
-                    </button>
-                  ))
-                ) : (
-                  <p className="text-gray-500 text-center">No pages available</p>
-                )}
-              </div>
-            )}
+      <div className="w-auto flex relative px-4 ">
+     
+
+  <button
+    onClick={() => setShowChapterList(!showChapterList)}
+    className="flex items-center justify-center px-4 py-2 my-8 rounded-full hover:bg-gray-400 bg-gray-200 text-black"
+  >
+    {currentPage + 1} - {pagesChapter?.pages?.length || 0}
+  </button>
+
+  {/* Galería interactiva de capítulos */}
+  {showChapterList && (
+    <div className="absolute bottom-12 left-0 bg-white border border-gray-200 rounded shadow-lg p-2 w-60 max-h-64 overflow-y-auto text-black">
+      {pagesChapter?.pages && pagesChapter.pages.length > 0 ? (
+        pagesChapter.pages.map((page, i) => (
+          <div
+            key={i}
+            onClick={() => {
+              setCurrentPage(i);
+              setShowChapterList(false);
+            }}
+            className={`group cursor-pointer p-1 ${
+              i === currentPage ? "bg-gray-200 font-bold" : ""
+            }`}
+          >
+              {/* Número de página */}
+          <div className="text-center text-sm font-bold text-gray-700 mb-1">
+            {i + 1}
           </div>
-        </div>
+
+            {/* Miniatura con animación hover */}
+           
+            <img
+              src={page} // URL de la página
+              alt={`Página ${i + 1}`}
+              className="w-full h-auto rounded hover:scale-105 transition-transform duration-200"
+            />
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500 text-center">No pages available</p>
+      )}
+    </div>
+  )}
+</div>
 
         <div
           className={`fixed top-0 left-0 transition-transform duration-300 ${
@@ -190,6 +203,7 @@ const MangaChapter = ({ chapters = [] }) => {
           } bg-white w-full h-full z-50 overflow-auto`}
         >
           <div className="p-4">
+            
             <button
               onClick={() => setShowComments(false)}
               className="text-white bg-[#f97316] hover:bg-red-600 px-4 py-2 rounded absolute top-4 right-4"
