@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 import { NavLink } from 'react-router-dom'
+import { getMangasByAuthor } from '../Store/actions/mangaActions'
 
 export default function Company() {
-
+    const { mangas } = useSelector((state) => state.manga)
+    const dispatch = useDispatch()
 
     let infoUser = JSON.parse(localStorage.getItem('userManga'))
     //console.log(infoUser)
@@ -27,13 +29,14 @@ export default function Company() {
     if (!idUser2) {
         cont = idUser
     }
-    console.log(cont)
+    //console.log(cont)
 
     const { user } = useSelector((state) => state.auth)
 
-    console.log(user)
+    //console.log(user)
 
     const [autor, setAutor] = useState(null)
+    const [autorID, setAutorID] = useState(null)
 
     const [formData, setFormData] = useState({
         _id: '',
@@ -49,8 +52,6 @@ export default function Company() {
         photo: '',
         user_id: cont,
     })
-
-    
 
     useEffect(() => {
         const resp = axios
@@ -72,8 +73,11 @@ export default function Company() {
                     birthday: moment.utc(autor?.response[0].birthday).format('MM/DD/YY'),
                     photo: res.data.response[0].photo,
                 })
-                console.log(res)
-                console.log(resp)
+                setAutorID(res.data.response[0]._id)
+
+                let autorID5 = res.data.response[0]._id
+
+                dispatch(getMangasByAuthor({ author_id: autorID5, token }))
             })
             .catch((error) => {
                 console.error(error)
@@ -81,6 +85,7 @@ export default function Company() {
     }, [])
 
     console.log(formDataUpdate)
+    console.log(mangas)
 
     /*const user = JSON.parse(localStorage.getItem("userManga"));
   const role = user.user.role;
@@ -163,344 +168,78 @@ export default function Company() {
                             >
                                 Edit Profile
                             </NavLink>
-                            
                         </div>
                     </div>
-                    <div className="w-full flex justify-center items-center p-4">
-                        <div className="w-[500px]  bg-slate-100 mx-16 flex shadow-lg rounded-lg border-2">
-                            <div className="w-[50%] flex flex-col justify-between">
-                                <div className="flex gap-2 p-4 pl-6">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-6"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                        />
-                                    </svg>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-5"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                                        />
-                                    </svg>
+
+                    <div className="w-full flex flex-wrap justify-center gap-5 p-8">
+
+                    {mangas.length === 0 && 
+                        (
+                            <p className='text-2xl text-red-500 p-4'>No mangas found.</p>
+                        )
+                    
+                    }
+
+                        {mangas.map((manga) => (
+                            <div
+                                key={manga._id}
+                                className="w-[500px] h-[220px] bg-slate-100 mx-16 flex shadow-lg rounded-lg border-2"
+                            >
+                                <div className="w-[250px] flex flex-col justify-between">
+                                    <div className="flex gap-2 p-4 pl-6">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={1.5}
+                                            stroke="currentColor"
+                                            className="size-6"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                            />
+                                        </svg>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={1.5}
+                                            stroke="currentColor"
+                                            className="size-5"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <div className=" h-[150px] absolute mt-8 flex flex-col justify-center border-l-[6px] pl-4 pb-4 border-black">
+                                        <h2 className="leading-6 text-[24px] font-roboto ">
+                                            {manga.title}
+                                        </h2>
+                                        <h3>{manga.category_id.name}</h3>
+                                    </div>
+                                    <div className="flex  -bottom-8 ml-3 p-4 gap-2">
+                                        <button className="rounded-full text-[12px] font-semibold bg-[#E0DBFF] p-3 text-[#8883F0] ">
+                                            Editar
+                                        </button>
+                                        <button className="rounded-full text-[12px] font-semibold bg-[#FFE0DF] p-3 text-[#EF8481] ">
+                                            Eliminar
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className=" h-[150px] absolute mt-8 flex flex-col justify-center border-l-[6px] pl-4 pb-4 border-black">
-                                    <h2 className="leading-6 text-[24px] font-roboto ">
-                                        Superman Comic
-                                    </h2>
-                                    <h3>Type</h3>
-                                </div>
-                                <div className="flex  -bottom-8 ml-3 p-4 gap-2">
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#E0DBFF] p-3 text-[#8883F0] ">
-                                        Editar
-                                    </button>
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#FFE0DF] p-3 text-[#EF8481] ">
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-[50%] ">
-                                <img
-                                    className="rounded-l-[100px] rounded-r-lg"
-                                    src="/23df9c394ce60d455dc954325d648410 3@2x.png"
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                        <div className="w-[500px]  bg-slate-100 mx-16 flex shadow-lg rounded-lg border-2">
-                            <div className="w-[50%] flex flex-col justify-between">
-                                <div className="flex gap-2 p-4 pl-6">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-6"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                        />
-                                    </svg>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-5"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                                        />
-                                    </svg>
-                                </div>
-                                <div className=" h-[150px] absolute mt-8 flex flex-col justify-center border-l-[6px] pl-4 pb-4 border-black">
-                                    <h2 className="leading-6 text-[24px] font-roboto ">
-                                        Superman Comic
-                                    </h2>
-                                    <h3>Type</h3>
-                                </div>
-                                <div className="flex  -bottom-8 ml-3 p-4 gap-2">
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#E0DBFF] p-3 text-[#8883F0] ">
-                                        Editar
-                                    </button>
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#FFE0DF] p-3 text-[#EF8481] ">
-                                        Eliminar
-                                    </button>
+                                <div className="w-[50%] ">
+                                    <img
+                                        className="rounded-l-[100px] h-[220px] rounded-r-lg object-cover "
+                                        src={manga.cover_photo}
+                                        alt=""
+                                    />
                                 </div>
                             </div>
-                            <div className="w-[50%] ">
-                                <img
-                                    className="rounded-l-[100px] rounded-r-lg"
-                                    src="/23df9c394ce60d455dc954325d648410 3@2x.png"
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="w-full flex justify-center items-center p-4">
-                        <div className="w-[500px]  bg-slate-100 mx-16 flex shadow-lg rounded-lg border-2">
-                            <div className="w-[50%] flex flex-col justify-between">
-                                <div className="flex gap-2 p-4 pl-6">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-6"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                        />
-                                    </svg>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-5"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                                        />
-                                    </svg>
-                                </div>
-                                <div className=" h-[150px] absolute mt-8 flex flex-col justify-center border-l-[6px] pl-4 pb-4 border-black">
-                                    <h2 className="leading-6 text-[24px] font-roboto ">
-                                        Superman Comic
-                                    </h2>
-                                    <h3>Type</h3>
-                                </div>
-                                <div className="flex  -bottom-8 ml-3 p-4 gap-2">
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#E0DBFF] p-3 text-[#8883F0] ">
-                                        Editar
-                                    </button>
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#FFE0DF] p-3 text-[#EF8481] ">
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-[50%] ">
-                                <img
-                                    className="rounded-l-[100px] rounded-r-lg"
-                                    src="/23df9c394ce60d455dc954325d648410 3@2x.png"
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                        <div className="w-[500px]  bg-slate-100 mx-16 flex shadow-lg rounded-lg border-2">
-                            <div className="w-[50%] flex flex-col justify-between">
-                                <div className="flex gap-2 p-4 pl-6">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-6"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                        />
-                                    </svg>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-5"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                                        />
-                                    </svg>
-                                </div>
-                                <div className=" h-[150px] absolute mt-8 flex flex-col justify-center border-l-[6px] pl-4 pb-4 border-black">
-                                    <h2 className="leading-6 text-[24px] font-roboto ">
-                                        Superman Comic
-                                    </h2>
-                                    <h3>Type</h3>
-                                </div>
-                                <div className="flex  -bottom-8 ml-3 p-4 gap-2">
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#E0DBFF] p-3 text-[#8883F0] ">
-                                        Editar
-                                    </button>
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#FFE0DF] p-3 text-[#EF8481] ">
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-[50%] ">
-                                <img
-                                    className="rounded-l-[100px] rounded-r-lg"
-                                    src="/23df9c394ce60d455dc954325d648410 3@2x.png"
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="w-full flex justify-center items-center p-4">
-                        <div className="w-[500px]  bg-slate-100 mx-16 flex shadow-lg rounded-lg border-2">
-                            <div className="w-[50%] flex flex-col justify-between">
-                                <div className="flex gap-2 p-4 pl-6">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-6"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                        />
-                                    </svg>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-5"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                                        />
-                                    </svg>
-                                </div>
-                                <div className=" h-[150px] absolute mt-8 flex flex-col justify-center border-l-[6px] pl-4 pb-4 border-black">
-                                    <h2 className="leading-6 text-[24px] font-roboto ">
-                                        Superman Comic
-                                    </h2>
-                                    <h3>Type</h3>
-                                </div>
-                                <div className="flex  -bottom-8 ml-3 p-4 gap-2">
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#E0DBFF] p-3 text-[#8883F0] ">
-                                        Editar
-                                    </button>
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#FFE0DF] p-3 text-[#EF8481] ">
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-[50%] ">
-                                <img
-                                    className="rounded-l-[100px] rounded-r-lg"
-                                    src="/23df9c394ce60d455dc954325d648410 3@2x.png"
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                        <div className="w-[500px]  bg-slate-100 mx-16 flex shadow-lg rounded-lg border-2">
-                            <div className="w-[50%] flex flex-col justify-between">
-                                <div className="flex gap-2 p-4 pl-6">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-6"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                        />
-                                    </svg>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-5"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                                        />
-                                    </svg>
-                                </div>
-                                <div className=" h-[150px] absolute mt-8 flex flex-col justify-center border-l-[6px] pl-4 pb-4 border-black">
-                                    <h2 className="leading-6 text-[24px] font-roboto ">
-                                        Superman Comic
-                                    </h2>
-                                    <h3>Type</h3>
-                                </div>
-                                <div className="flex  -bottom-8 ml-3 p-4 gap-2">
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#E0DBFF] p-3 text-[#8883F0] ">
-                                        Editar
-                                    </button>
-                                    <button className="rounded-full text-[12px] font-semibold bg-[#FFE0DF] p-3 text-[#EF8481] ">
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-[50%] ">
-                                <img
-                                    className="rounded-l-[100px] rounded-r-lg"
-                                    src="/23df9c394ce60d455dc954325d648410 3@2x.png"
-                                    alt=""
-                                />
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
